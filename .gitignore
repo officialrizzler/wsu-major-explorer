@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .env.local
+
+# Local data artifacts (not committed)
+2.xlsx
+data_source/
+data/generated/
