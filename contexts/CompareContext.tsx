@@ -5,6 +5,7 @@ import { Program } from '../types';
 interface CompareContextType {
     compareList: Program[];
     addToCompare: (program: Program) => boolean;
+    setCompareList: (programs: Program[]) => void;
     removeFromCompare: (programId: string) => void;
     clearCompare: () => void;
     isComparing: (programId: string) => boolean;
@@ -38,7 +39,7 @@ export const CompareProvider: React.FC<{ children: ReactNode }> = ({ children })
     };
 
     return (
-        <CompareContext.Provider value={{ compareList, addToCompare, removeFromCompare, clearCompare, isComparing }}>
+        <CompareContext.Provider value={{ compareList, addToCompare, setCompareList, removeFromCompare, clearCompare, isComparing }}>
             {children}
         </CompareContext.Provider>
     );
