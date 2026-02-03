@@ -8,8 +8,10 @@ import ProgramCard from '../components/ProgramCard';
 import { interestMappings } from '../data/wsuData';
 import DynamicBackground from '../components/DynamicBackground';
 
-const useClickOutside = (ref: React.RefObject<HTMLDivElement>, handler: () => void) => {
+const useClickOutside = (ref: React.RefObject<HTMLDivElement>, handler: () => void, isActive: boolean) => {
     useEffect(() => {
+        if (!isActive) return;
+
         const listener = (event: PointerEvent) => {
             if (!ref.current || ref.current.contains(event.target as Node)) {
                 return;
@@ -20,7 +22,7 @@ const useClickOutside = (ref: React.RefObject<HTMLDivElement>, handler: () => vo
         return () => {
             document.removeEventListener('pointerdown', listener);
         };
-    }, [ref, handler]);
+    }, [ref, handler, isActive]);
 };
 
 const FilterDropdown: React.FC<{
@@ -31,7 +33,7 @@ const FilterDropdown: React.FC<{
 }> = ({ title, options, selected, onChange }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    useClickOutside(dropdownRef, () => setIsOpen(false));
+    useClickOutside(dropdownRef, () => setIsOpen(false), isOpen);
 
     const handleOptionChange = (option: string) => {
         onChange(option);
