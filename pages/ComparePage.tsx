@@ -55,7 +55,7 @@ const ComparePage: React.FC = () => {
                 <div className="text-center container mx-auto px-4 relative z-10">
                     <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Compare Programs</h1>
                     <p className="mt-4 text-gray-300 font-body">You haven't selected any programs to compare yet.</p>
-                    <button onClick={() => setAddModalOpen(true)} className="mt-6 inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 font-semibold transition font-body">
+                    <button onClick={() => setAddModalOpen(true)} className="mt-6 inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-md mouse:hover:bg-primary-700 font-semibold transition font-body">
                         <Plus size={18} /> Add Programs to Compare
                     </button>
                 </div>
@@ -74,7 +74,7 @@ const ComparePage: React.FC = () => {
                 <div className="rounded-xl border border-gray-800 bg-gray-950/50 backdrop-blur-lg">
                     {compareList.length < 4 && (
                         <div className="p-4 border-b border-gray-800 flex justify-start items-center sticky top-16 z-50 bg-gray-950/90 backdrop-blur-lg">
-                            <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-4 py-2 border border-primary-700 text-sm font-semibold rounded-md text-primary-300 hover:bg-primary-900/50">
+                            <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-4 py-2 border border-primary-700 text-sm font-semibold rounded-md text-primary-300 mouse:hover:bg-primary-900/50">
                                 <Plus size={16} /> Add Program
                             </button>
                         </div>
@@ -104,7 +104,7 @@ const ComparePage: React.FC = () => {
                                                 </p>
                                                 <button
                                                     onClick={() => removeFromCompare(p.program_id)}
-                                                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
+                                                    className="absolute top-2 right-2 text-gray-400 mouse:hover:text-red-500"
                                                     aria-label={`Remove ${p.program_name}`}
                                                 >
                                                     <X size={16} />
@@ -120,7 +120,7 @@ const ComparePage: React.FC = () => {
 
                                     return (
                                         <tr key={metric.label} className="group">
-                                            <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-200 font-body bg-gray-950 z-20 border-b border-gray-800 border-r border-gray-800/50 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.5)] transition-colors group-hover:bg-gray-800">
+                                            <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-200 font-body bg-gray-950 z-20 border-b border-gray-800 border-r border-gray-800/50 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.5)] transition-colors mouse:group-hover:bg-gray-800">
                                                 <span className="text-xs sm:text-sm">{metric.label}</span>
                                             </td>
                                             {compareList.map(p => {
@@ -133,7 +133,7 @@ const ComparePage: React.FC = () => {
                                                 const alignClass = metric.isNumeric ? 'text-center' : 'text-left';
 
                                                 return (
-                                                    <td key={p.program_id} className={`p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 ${alignClass} ${isBest ? 'text-green-400 font-bold' : 'text-gray-100'} transition-colors group-hover:bg-gray-800/80`}>
+                                                    <td key={p.program_id} className={`p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 ${alignClass} ${isBest ? 'text-green-400 font-bold' : 'text-gray-100'} transition-colors mouse:group-hover:bg-gray-800/80`}>
                                                         {displayValue}
                                                     </td>
                                                 )
@@ -150,7 +150,7 @@ const ComparePage: React.FC = () => {
                     <div className="mt-8 text-center">
                         <button
                             onClick={handleStillCantDecide}
-                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-500 transition"
+                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 mouse:hover:bg-primary-500 transition"
                         >
                             <MessageCircle size={20} />
                             Still can't decide? Ask Advisor
@@ -232,18 +232,18 @@ const AddProgramModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <div className="px-4 pb-2 flex-grow overflow-y-auto">
                     <ul className="space-y-1">
                         {filteredPrograms.map(p => (
-                            <li key={p.program_id} className="flex justify-between items-start py-3 px-2 rounded-md hover:bg-gray-800">
+                            <li key={p.program_id} className="flex justify-between items-start py-3 px-2 rounded-md mouse:hover:bg-gray-800">
                                 <div className="flex-1 min-w-0 mr-4 text-left">
                                     <p className="font-body truncate font-medium text-white">{p.program_name}</p>
                                     <p className="font-body text-xs text-gray-400">{p.department?.college_name}</p>
                                 </div>
-                                <button onClick={() => handleAdd(p)} className="flex-shrink-0 text-primary-500 hover:text-primary-400 text-sm font-semibold pt-0.5">Add</button>
+                                <button onClick={() => handleAdd(p)} className="flex-shrink-0 text-primary-500 mouse:hover:text-primary-400 text-sm font-semibold pt-0.5">Add</button>
                             </li>
                         ))}
                     </ul>
                 </div>
                 <div className="p-4 border-t border-gray-800 flex-shrink-0">
-                    <button onClick={handleClose} className="w-full px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 font-body">Done</button>
+                    <button onClick={handleClose} className="w-full px-4 py-2 bg-primary-600 text-white rounded-md mouse:hover:bg-primary-700 font-body">Done</button>
                 </div>
             </div>
         </div>

@@ -54,13 +54,13 @@ const Header: React.FC = () => {
                     {/* Right-aligned content */}
                     <div className="flex items-center gap-2 sm:gap-4">
                         {/* Desktop: Full text badge */}
-                        <div className="hidden lg:flex items-center gap-2 px-3 py-1 text-sm font-medium text-yellow-500 bg-yellow-500/10 rounded-full border border-yellow-500/20">
+                        <div className="hidden xl:flex items-center gap-2 px-3 py-1 text-sm font-medium text-yellow-500 bg-yellow-500/10 rounded-full border border-yellow-500/20">
                             <Hammer size={16} />
-                            <span>This site is actively under construction</span>
+                            <span>This site is actively under construction as of 2/2/2026</span>
                         </div>
 
                         {/* Mobile/Tablet: Icon only with popover */}
-                        <div className="lg:hidden relative">
+                        <div className="xl:hidden relative">
                             <button
                                 className="flex items-center justify-center p-2 text-yellow-500 bg-yellow-500/10 rounded-full border border-yellow-500/20 hover:bg-yellow-500/20 transition-colors"
                                 onClick={() => setIsConstructionTooltipOpen(!isConstructionTooltipOpen)}
@@ -76,7 +76,7 @@ const Header: React.FC = () => {
                                 className={`absolute right-0 top-full mt-2 w-48 p-3 bg-gray-900 border border-gray-700 rounded-lg shadow-xl text-xs text-yellow-500 transition-all duration-200 z-50 ${isConstructionTooltipOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
                             >
                                 <div className="absolute top-0 right-3 -mt-1 w-2 h-2 bg-gray-900 border-t border-l border-gray-700 transform rotate-45"></div>
-                                This site is actively under construction.
+                                This site is actively under construction as of 2/2/2026.
                             </div>
                         </div>
 

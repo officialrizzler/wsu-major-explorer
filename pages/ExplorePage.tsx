@@ -43,7 +43,7 @@ const FilterDropdown: React.FC<{
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium hover:bg-gray-800"
+                className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium mouse:hover:bg-gray-800"
             >
                 <span className="font-body">{title} {selected.length > 0 && `(${selected.length})`}</span>
                 <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -53,7 +53,7 @@ const FilterDropdown: React.FC<{
             >
                 <div className="max-h-60 overflow-y-auto">
                     {options.map(option => (
-                        <label key={option} className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-800 cursor-pointer text-sm font-body">
+                        <label key={option} className="flex items-center gap-2 p-2 rounded-md mouse:hover:bg-gray-800 cursor-pointer text-sm font-body">
                             <input
                                 type="checkbox"
                                 className="h-4 w-4 rounded border-gray-700 text-primary-600 focus:ring-primary-500 bg-gray-800"
@@ -196,7 +196,7 @@ const ExplorePage: React.FC = () => {
                                 />
                             ))}
                             {activeFilterCount > 0 && (
-                                <button onClick={clearFilters} className="px-4 py-2 text-sm font-semibold text-red-500 hover:text-red-400 flex-shrink-0 font-body">Clear Filters ({activeFilterCount})</button>
+                                <button onClick={clearFilters} className="px-4 py-2 text-sm font-semibold text-red-500 mouse:hover:text-red-400 flex-shrink-0 font-body">Clear Filters ({activeFilterCount})</button>
                             )}
                         </div>
                     </div>
