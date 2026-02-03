@@ -66,7 +66,7 @@ const DynamicBackground: React.FC<{ children?: React.ReactNode; className?: stri
 
     return (
         <div className={`aurora-background ${className || ''}`} style={auroraStyles}>
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 pointer-events-none">
                 {blobs.map((blob, i) => (
                     <div
                         key={i}
