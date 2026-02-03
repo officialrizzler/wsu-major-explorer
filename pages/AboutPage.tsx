@@ -31,10 +31,10 @@ const AboutPage: React.FC = () => {
             </div>
           </Section>
 
-          <Section title="Data Methodology" icon={<ListChecks />}>
+          <Section title="Methodology" icon={<ListChecks />}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h4 className="font-semibold text-green-400">Data Standards</h4>
+                <h4 className="font-semibold text-green-400">Standards</h4>
                 <ul className="mt-2 list-disc list-inside space-y-1 text-gray-300">
                   <li>Exclude discontinued programs and those not accepting new students</li>
                   <li>Clearly label aggregate values (combined totals)</li>
@@ -73,7 +73,9 @@ const AboutPage: React.FC = () => {
                 </div>
               </div>
             </div>
+          </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Section title="Contact & Feedback" icon={<ExternalLink />}>
               <p>Feedback is actively encouraged to help improve this tool. If you spot an error, have a feature request, or just want to share your thoughts, please reach out.</p>
               <div className="mt-4">
@@ -82,15 +84,15 @@ const AboutPage: React.FC = () => {
                 </a>
               </div>
             </Section>
-          </div>
 
-          <Section title="Official Resources" icon={<ExternalLink />}>
-            <div className="flex flex-wrap gap-4">
-              <a href="https://www.winona.edu/academics/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">WSU Academics</a>
-              <a href="https://www.winona.edu/advising/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">Advising Services</a>
-              <a href="https://www.winona.edu/admissions/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">Admissions</a>
-            </div>
-          </Section>
+            <Section title="Official Resources" icon={<ExternalLink />}>
+              <div className="flex flex-wrap gap-4">
+                <a href="https://www.winona.edu/academics/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">WSU Academics</a>
+                <a href="https://www.winona.edu/advising/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">Advising Services</a>
+                <a href="https://www.winona.edu/admissions/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">Admissions</a>
+              </div>
+            </Section>
+          </div>
 
         </div>
       </div>
