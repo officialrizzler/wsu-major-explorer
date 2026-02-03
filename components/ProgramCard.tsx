@@ -13,7 +13,7 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ program }) => {
     const { addToCompare, removeFromCompare, isComparing } = useCompare();
     const isAddedToCompare = isComparing(program.program_id);
 
-    const handleCompareToggle = (e: React.MouseEvent) => {
+    const handleCompareToggle = (e: React.PointerEvent) => {
         e.stopPropagation();
         e.preventDefault();
         if (isAddedToCompare) {
@@ -90,7 +90,7 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ program }) => {
                         </div>
                         <button
                             type="button"
-                            onClick={handleCompareToggle}
+                            onPointerUp={handleCompareToggle}
                             className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 touch-manipulation ${isAddedToCompare ? 'bg-primary-600 text-white mouse:hover:bg-red-500 mouse:hover:rotate-90' : 'bg-gray-700 text-gray-300 opacity-100 mouse:opacity-0 mouse:group-hover:opacity-100 mouse:hover:bg-primary-600 mouse:hover:text-white'}`}
                             aria-label={isAddedToCompare ? "Remove from Compare" : "Add to Compare"}
                             title={isAddedToCompare ? "Remove from Compare" : "Add to Compare"}
