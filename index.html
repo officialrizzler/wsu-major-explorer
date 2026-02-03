@@ -60,6 +60,19 @@
       }
     }
   </script>
+  <script>
+    if (typeof window !== 'undefined') {
+      document.addEventListener('touchstart', function (e) {
+        if (document.activeElement &&
+          document.activeElement !== e.target &&
+          document.activeElement !== document.body) {
+          if (!document.activeElement.contains(e.target)) {
+            document.activeElement.blur();
+          }
+        }
+      }, { passive: true });
+    }
+  </script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
