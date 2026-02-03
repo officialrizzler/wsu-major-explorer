@@ -14,7 +14,27 @@ import AboutPage from './pages/AboutPage';
 
 import ScrollToTop from './components/ScrollToTop';
 
+function useTapDebug() {
+    React.useEffect(() => {
+        const handler = (e: Event) => {
+            const t = e.target as HTMLElement | null;
+            if (!t) return;
+
+            // highlight the element briefly
+            const prev = t.style.outline;
+            t.style.outline = "3px solid red";
+            setTimeout(() => (t.style.outline = prev), 300);
+
+            console.log("TAP:", t.tagName, t.className);
+        };
+
+        window.addEventListener("pointerdown", handler, true);
+        return () => window.removeEventListener("pointerdown", handler, true);
+    }, []);
+}
+
 const App: React.FC = () => {
+    useTapDebug();
     return (
         <ThemeProvider>
             <DataProvider>
