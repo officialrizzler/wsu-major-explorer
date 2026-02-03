@@ -9,7 +9,7 @@ import { CareerOutcome } from '../types';
 const ProgramDetailPage: React.FC = () => {
     const { programId } = useParams<{ programId: string }>();
     const { getProgramById, departments } = useData();
-    const { addToCompare, isComparing } = useCompare();
+    const { addToCompare, removeFromCompare, isComparing } = useCompare();
 
     const program = getProgramById(programId);
 
@@ -20,10 +20,13 @@ const ProgramDetailPage: React.FC = () => {
     const isAddedToCompare = isComparing(program.program_id);
     const totalDepartments = departments.filter(d => d.total_enrollment_fall_2021 != null).length;
 
-
-    const handleAddToCompare = () => {
-        if (!addToCompare(program)) {
-            alert("You can compare a maximum of 4 programs.");
+    const handleCompareToggle = () => {
+        if (isAddedToCompare) {
+            removeFromCompare(program.program_id);
+        } else {
+            if (!addToCompare(program)) {
+                alert("You can compare a maximum of 4 programs.");
+            }
         }
     };
 
@@ -44,8 +47,12 @@ const ProgramDetailPage: React.FC = () => {
                         <a href={program.program_page_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 mouse:hover:bg-primary-500 transition font-body">
                             Official Catalog <ExternalLink size={18} />
                         </a>
-                        <button onClick={handleAddToCompare} disabled={isAddedToCompare} className="font-body inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-700 text-base font-medium rounded-md text-gray-200 bg-gray-800/50 mouse:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition">
-                            <Scale size={18} /> {isAddedToCompare ? 'Added to Compare' : 'Add to Compare'}
+                        <button
+                            onClick={handleCompareToggle}
+                            className={`font-body inline-flex items-center justify-center gap-2 px-6 py-3 border text-base font-medium rounded-md transition ${isAddedToCompare ? 'border-primary-500 text-primary-400 bg-primary-500/10 mouse:hover:bg-primary-500/20' : 'border-gray-700 text-gray-200 bg-gray-800/50 mouse:hover:bg-gray-800'}`}
+                        >
+                            {isAddedToCompare ? <Minus size={18} /> : <Scale size={18} />}
+                            {isAddedToCompare ? 'Remove from Compare' : 'Add to Compare'}
                         </button>
                     </div>
                 </div>

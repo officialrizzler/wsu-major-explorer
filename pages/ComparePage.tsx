@@ -144,23 +144,24 @@ const ComparePage: React.FC = () => {
                     <p className="mt-3 max-w-2xl mx-auto text-gray-400 font-body">A side-by-side look at your selected programs.</p>
                 </div>
 
-                <div className="flex justify-end gap-3 mb-6">
-                    <button
-                        onClick={handleShare}
-                        className="font-body flex items-center gap-2 px-4 py-2 bg-gray-900 border border-gray-800 text-sm font-semibold rounded-md text-white mouse:hover:bg-gray-800 transition-all active:scale-95"
-                    >
-                        <Share2 size={16} /> Share Comparison
-                    </button>
-                </div>
+
 
                 <div className="rounded-xl border border-gray-800 bg-gray-950/50 backdrop-blur-lg">
-                    {compareList.length < 4 && (
-                        <div className="p-4 border-b border-gray-800 flex justify-start items-center sticky top-16 z-50 bg-gray-950/90 backdrop-blur-lg">
-                            <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-4 py-2 border border-primary-700 text-sm font-semibold rounded-md text-primary-300 mouse:hover:bg-primary-900/50">
-                                <Plus size={16} /> Add Program
-                            </button>
+                    <div className="p-4 border-b border-gray-800 flex justify-between items-center sticky top-16 z-50 bg-gray-950/90 backdrop-blur-lg px-2 sm:px-4">
+                        <div className="flex gap-2">
+                            {compareList.length < 4 && (
+                                <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border border-primary-700 text-xs sm:text-sm font-semibold rounded-md text-primary-300 mouse:hover:bg-primary-900/50">
+                                    <Plus size={16} /> Add Program
+                                </button>
+                            )}
                         </div>
-                    )}
+                        <button
+                            onClick={handleShare}
+                            className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-900 border border-gray-800 text-xs sm:text-sm font-semibold rounded-md text-white mouse:hover:bg-gray-800 transition-all active:scale-95"
+                        >
+                            <Share2 size={16} /> Share Comparison
+                        </button>
+                    </div>
 
                     <div className="overflow-x-auto pb-4">
                         <table className="w-full min-w-[600px] border-separate border-spacing-0 table-fixed">
