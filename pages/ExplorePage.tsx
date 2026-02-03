@@ -42,11 +42,10 @@ const FilterDropdown: React.FC<{
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                onMouseDown={(e) => e.preventDefault()}
                 className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium mouse:hover:bg-gray-800 touch-manipulation select-none"
             >
-                <span className="font-body">{title} {selected.length > 0 && `(${selected.length})`}</span>
-                <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                <span className="font-body pointer-events-none">{title} {selected.length > 0 && `(${selected.length})`}</span>
+                <ChevronDown size={16} className={`pointer-events-none transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
             <div
                 className={`absolute top-full mt-2 w-64 bg-gray-900 border border-gray-800 rounded-md shadow-lg z-10 p-2 transition-all duration-200 ease-out origin-top ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
