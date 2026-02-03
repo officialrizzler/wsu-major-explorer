@@ -103,7 +103,7 @@ const ExplorePage: React.FC = () => {
 
     const filterOptions = useMemo(() => ({
         'Credential Level': getCredentialLevels(),
-        'College': getColleges().filter(c => c !== "Uncategorized" && c !== "Pre-Professional Pathways"),
+        'College': getColleges().filter(c => c !== "Uncategorized"),
         'Degree Type': ['All Bachelors Degrees', ...getDegreeTypes()],
         'Location': getLocations(),
     }), []);
