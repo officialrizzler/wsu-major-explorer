@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { GraduationCap, Menu, X, Hammer } from 'lucide-react';
 
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isConstructionTooltipOpen, setIsConstructionTooltipOpen] = useState(false);
 
@@ -23,14 +24,22 @@ const Header: React.FC = () => {
                 <div className="relative flex items-center justify-between h-16 transition-all duration-300">
                     {/* Left-aligned content */}
                     <div className="flex items-center transition-all duration-300 ease-in-out">
-                        <Link to="/" className="flex items-center gap-3 group relative z-20 touch-manipulation">
+                        <div
+                            role="link"
+                            tabIndex={0}
+                            onPointerUp={(e) => {
+                                e.preventDefault();
+                                navigate('/');
+                            }}
+                            className="flex items-center gap-3 group relative z-20 touch-manipulation cursor-pointer"
+                        >
                             <div className="p-2 rounded-lg border border-gray-800 bg-gray-900/50 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-primary-500/10 group-hover:shadow-[0_0_15px_-3px_rgba(99,102,241,0.3)]">
                                 <GraduationCap className="text-primary-500 transition-transform duration-300 group-hover:scale-110" size={24} />
                             </div>
                             <span className="text-white text-lg font-semibold tracking-tight transition-all duration-300 hidden lg:block">
                                 WSU Major Explorer
                             </span>
-                        </Link>
+                        </div>
                     </div>
 
                     {/* Centered navigation for medium screens and up */}
