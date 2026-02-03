@@ -75,24 +75,15 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Section title="Contact & Feedback" icon={<ExternalLink />}>
-              <p>Feedback is actively encouraged to help improve this tool. If you spot an error, have a feature request, or just want to share your thoughts, please reach out.</p>
-              <div className="mt-4">
-                <a href="https://forms.gle/pVYDG87KTHPRW3u87" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition border border-gray-700 font-medium font-body">
-                  <ExternalLink size={18} /> Open Feedback Form
-                </a>
-              </div>
-            </Section>
 
-            <Section title="Official Resources" icon={<ExternalLink />}>
-              <div className="flex flex-wrap gap-4">
-                <a href="https://www.winona.edu/academics/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">WSU Academics</a>
-                <a href="https://www.winona.edu/advising/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">Advising Services</a>
-                <a href="https://www.winona.edu/admissions/" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline font-medium">Admissions</a>
-              </div>
-            </Section>
-          </div>
+          <Section title="Contact & Feedback" icon={<ExternalLink />}>
+            <p>Feedback is actively encouraged to help improve this tool. If you spot an error, have a feature request, or just want to share your thoughts, please reach out.</p>
+            <div className="mt-4">
+              <a href="https://forms.gle/pVYDG87KTHPRW3u87" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition border border-gray-700 font-medium font-body">
+                <ExternalLink size={18} /> Open Feedback Form
+              </a>
+            </div>
+          </Section>
 
         </div>
       </div>

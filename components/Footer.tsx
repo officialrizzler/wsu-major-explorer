@@ -22,6 +22,7 @@ const Footer: React.FC = () => {
                             <li><a href="https://www.winona.edu/academics/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-400">WSU Academics</a></li>
                             <li><a href="https://www.winona.edu/advising/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-400">Advising Services</a></li>
                             <li><a href="https://www.winona.edu/admissions/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-400">Admissions</a></li>
+                            <li><a href="https://www.winona.edu/studentservices/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary-400">Student Services</a></li>
                         </ul>
                     </div>
                     <div className="text-center sm:text-left">
