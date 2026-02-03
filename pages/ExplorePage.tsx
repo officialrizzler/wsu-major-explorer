@@ -43,6 +43,7 @@ const FilterDropdown: React.FC<{
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
+                onMouseDown={(e) => e.preventDefault()}
                 className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium mouse:hover:bg-gray-800"
             >
                 <span className="font-body">{title} {selected.length > 0 && `(${selected.length})`}</span>
