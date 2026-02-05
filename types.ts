@@ -24,6 +24,8 @@ export interface Program {
     not_for_you?: string[];
     related_job_titles?: string[];
     recommended_minors?: { name: string; id: string }[];
+    catalog_year?: string;
+    academic_year?: string;
 
     // Joined data
     department?: Department;

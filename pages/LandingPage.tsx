@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, MessageSquare, Scale, ArrowRight } from 'lucide-react';
@@ -59,7 +60,7 @@ const FeatureBlock: React.FC<{
                 <h3 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h3>
                 <p className="mt-4 text-lg text-gray-400 font-body">{description}</p>
                 <div className="mt-8">
-                    <Link to={linkTo} className="font-body inline-flex items-center gap-2 text-lg font-semibold text-primary-400 mouse:hover:text-primary-300 transition-colors">
+                    <Link to={linkTo} className="font-body inline-flex items-center gap-2 text-lg font-semibold text-primary-400 hover:text-primary-300 transition-colors">
                         {linkText} <ArrowRight size={20} />
                     </Link>
                 </div>
@@ -89,6 +90,10 @@ const LandingPage: React.FC = () => {
         return () => clearInterval(interval);
     }, [promptBubbles]);
 
+    useEffect(() => {
+        document.title = 'WSU Major Explorer | Winona State University';
+    }, []);
+
     const textShadowStyle = { textShadow: '0 2px 10px rgba(0,0,0,0.5)' };
     const totalPrograms = programs.length || '200+';
 
@@ -99,7 +104,7 @@ const LandingPage: React.FC = () => {
                 <div className="min-h-[calc(80vh)] flex items-center justify-center spotlight relative z-10">
                     <div className="text-center px-6 lg:px-8">
                         <div className="mx-auto max-w-4xl">
-                            <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl lg:text-8xl" style={textShadowStyle}>
+                            <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl lg:text-8xl animate-fade-in-up" style={textShadowStyle}>
                                 Major Decisions, Made Simpler.
                             </h1>
                             <div className="mt-8 text-lg text-white" style={textShadowStyle}>
@@ -111,7 +116,7 @@ const LandingPage: React.FC = () => {
                                         >
                                             <Link
                                                 to={`/explore?interest=${interestMappings[prompt].id}`}
-                                                className="font-body cursor-pointer inline-block whitespace-nowrap rounded-full bg-gray-800/50 px-4 py-1.5 font-semibold text-white ring-1 ring-inset ring-gray-700 mouse:hover:bg-gray-800 mouse:hover:text-white"
+                                                className="font-body cursor-pointer inline-block whitespace-nowrap rounded-full bg-gray-800/50 px-4 py-1.5 font-semibold text-white ring-1 ring-inset ring-gray-700 hover:bg-gray-800 hover:text-white"
                                             >
                                                 I want to {prompt}
                                             </Link>
@@ -125,13 +130,13 @@ const LandingPage: React.FC = () => {
                             <div className="mt-10 flex items-center justify-center gap-x-6">
                                 <Link
                                     to="/explore"
-                                    className="font-body flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm mouse:hover:bg-primary-500 transition-transform transform mouse:hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                                    className="font-body flex items-center gap-2 rounded-md bg-primary-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 transition-transform transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
                                 >
                                     <Search size={16} /> Explore Programs
                                 </Link>
                                 <Link
                                     to="/advisor"
-                                    className="font-body flex items-center gap-2 rounded-md bg-gray-800 px-5 py-3 text-sm font-semibold leading-6 text-white mouse:hover:bg-gray-700 transition-transform transform mouse:hover:scale-105"
+                                    className="font-body flex items-center gap-2 rounded-md bg-gray-800 px-5 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-700 transition-transform transform hover:scale-105"
                                 >
                                     <MessageSquare size={16} /> Ask the Advisor
                                 </Link>
@@ -144,7 +149,7 @@ const LandingPage: React.FC = () => {
             <div className="bg-gray-950 py-24 sm:py-32">
                 <div className="container mx-auto px-4 space-y-24 lg:space-y-32">
                     <div className="text-center">
-                        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">Different tools for different questions.</h2>
+                        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-white">Different tools for different questions.</h2>
                     </div>
 
                     <FeatureBlock

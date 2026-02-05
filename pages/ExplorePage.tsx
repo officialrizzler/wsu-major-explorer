@@ -47,7 +47,7 @@ const FilterDropdown: React.FC<{
                     e.preventDefault();
                     setIsOpen(!isOpen);
                 }}
-                className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium mouse:hover:bg-gray-800 touch-manipulation select-none"
+                className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium hover:bg-gray-800 touch-manipulation select-none"
             >
                 <span className="font-body pointer-events-none">{title} {selected.length > 0 && `(${selected.length})`}</span>
                 <ChevronDown size={16} className={`pointer-events-none transition-transform ${isOpen ? 'rotate-180' : ''}`} />
@@ -55,7 +55,7 @@ const FilterDropdown: React.FC<{
             <div
                 className={`absolute top-full mt-2 w-64 bg-gray-900 border border-gray-800 rounded-md shadow-lg z-10 p-2 transition-all duration-200 ease-out origin-top ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
             >
-                <div className="max-h-60 overflow-y-auto">
+                <div className="max-h-60 overflow-y-auto custom-scrollbar">
                     {options.map(option => (
                         <label
                             key={option}
@@ -63,7 +63,7 @@ const FilterDropdown: React.FC<{
                                 e.preventDefault();
                                 handleOptionChange(option);
                             }}
-                            className="flex items-center gap-2 p-2 rounded-md mouse:hover:bg-gray-800 cursor-pointer text-sm font-body touch-manipulation"
+                            className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-800 cursor-pointer text-sm font-body touch-manipulation"
                         >
                             <input
                                 type="checkbox"
@@ -101,6 +101,21 @@ const ExplorePage: React.FC = () => {
     const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
     const interestId = searchParams.get('interest');
 
+    // SEO Updates
+    useEffect(() => {
+        let title = 'Explore Programs | WSU Major Explorer';
+        if (searchTerm) {
+            title = `Search: "${searchTerm}" | WSU Major Explorer`;
+        } else if (interestId) {
+            const interestEntry = Object.entries(interestMappings).find(([_, value]) => value.id === interestId);
+            if (interestEntry) {
+                const interestName = interestEntry[0].charAt(0).toUpperCase() + interestEntry[0].slice(1);
+                title = `${interestName} Programs | WSU Major Explorer`;
+            }
+        }
+        document.title = title;
+    }, [searchTerm, interestId]);
+
     const filterOptions = useMemo(() => ({
         'Credential Level': getCredentialLevels(),
         'College': getColleges().filter(c => c !== "Uncategorized"),
@@ -137,12 +152,7 @@ const ExplorePage: React.FC = () => {
             const interestKeywords = Object.values(interestMappings).find(i => i.id === interestId)?.keywords;
             if (interestKeywords) {
                 basePrograms = basePrograms.filter(p => {
-                    // Combine name and short description, but exclude the "overview" which is too broad
-                    // and often contains filler words.
                     const programText = `${p.program_name} ${p.short_description}`.toLowerCase();
-
-                    // Use word boundary to avoid matching "art" in "department" or "science" in "Bachelor of Science"
-                    // while still allowing matches for the whole keyword.
                     return interestKeywords.some(kw => {
                         const regex = new RegExp(`\\b${kw}\\b`, 'i');
                         return regex.test(programText);
@@ -188,7 +198,7 @@ const ExplorePage: React.FC = () => {
         <DynamicBackground className="bg-gray-950 min-h-full">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="text-center mb-8 relative z-10">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Explore Programs</h1>
+                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white animate-fade-in-up">Explore Programs</h1>
                     <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-400 font-body">Search, filter, and discover the perfect academic path for you.</p>
                 </div>
 
@@ -201,7 +211,7 @@ const ExplorePage: React.FC = () => {
                                 placeholder="Search by major, minor, or department..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-12 pr-4 py-3 bg-gray-900 rounded-lg border border-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition font-body"
+                                className="w-full pl-12 pr-4 py-3 bg-gray-900 rounded-lg border border-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition font-body text-white"
                             />
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4">
@@ -215,7 +225,7 @@ const ExplorePage: React.FC = () => {
                                 />
                             ))}
                             {activeFilterCount > 0 && (
-                                <button onClick={clearFilters} className="px-4 py-2 text-sm font-semibold text-red-500 mouse:hover:text-red-400 flex-shrink-0 font-body">Clear Filters ({activeFilterCount})</button>
+                                <button onClick={clearFilters} className="px-4 py-2 text-sm font-semibold text-red-500 hover:text-red-400 flex-shrink-0 font-body transition-colors">Clear Filters ({activeFilterCount})</button>
                             )}
                         </div>
                     </div>
@@ -226,7 +236,7 @@ const ExplorePage: React.FC = () => {
                         Showing {processedPrograms.length} of {programs.length} programs.
                     </p>
                     {loading ? (
-                        <p className="font-body">Loading programs...</p>
+                        <p className="font-body text-white">Loading programs...</p>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {processedPrograms.map((program, index) => (
@@ -238,7 +248,7 @@ const ExplorePage: React.FC = () => {
                     )}
                     {processedPrograms.length === 0 && !loading && (
                         <div className="text-center py-16">
-                            <h3 className="text-xl font-semibold">No Programs Found</h3>
+                            <h3 className="text-xl font-semibold text-white">No Programs Found</h3>
                             <p className="text-gray-500 mt-2 font-body">Try adjusting your search or filters.</p>
                         </div>
                     )}

@@ -1,82 +1,175 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CourseGroup, Course, CourseText } from '../types';
-import { ChevronDown, ChevronRight, BookOpen, AlertCircle, CheckCircle } from 'lucide-react';
+import { ChevronDown, ChevronRight, BookOpen, AlertCircle, Calendar } from 'lucide-react';
 
 interface CourseRequirementWidgetProps {
     courseStructure: CourseGroup[];
 }
 
+const cleanText = (text: string) => {
+    if (!text) return '';
+    // Remove common WSU catalog symbols
+    let cleaned = text.replace(/[△*^†‡§#◆◇♦◎]/g, '').trim();
+
+    // Remove (X credits), (Select X credits), (Choose X-Y credits) at the end
+    // Regex explanation:
+    // \s*         : Optional whitespace
+    // \(          : Opening paren
+    // (?:[^)]*?)  : Optional non-greedy text (e.g. "Select ", "Total ")
+    // \d+(?:-\d+)? : The number (e.g. "3" or "3-4")
+    // \s*credits? : " credits" or " credit"
+    // \)          : Closing paren
+    cleaned = cleaned.replace(/\s*\((?:[^)]*?\s+)?\d+(?:-\d+)?\s*credits?\)\s*$/i, '').trim();
+
+    // Remove " - " if it's left hanging at the start (common if symbol was at start)
+    cleaned = cleaned.replace(/^- /, '').trim();
+
+    // Normalize "Major Requirements" etc to consistent naming if it's a top level group
+    if (cleaned.toLowerCase() === 'major requirements') return 'Program Requirements';
+
+    // Hide data timeline notes from the main list as we'll show them in the header
+    if (cleaned.toLowerCase().includes('data may be outdated') || /20\d{2}-20\d{2} data/i.test(cleaned)) {
+        return '';
+    }
+
+    return cleaned;
+};
+
+const extractCredits = (name: string) => {
+    // Matches "(3 credits)", "(Select 3 credits)", "(Total 12 credits)" and extracts the number
+    const match = name.match(/\((?:[^)]*?\s+)?(\d+(?:-\d+)?)\s*credits?\)/i);
+    return match ? match[1] : null;
+};
+
+
 const CourseItem: React.FC<{ item: Course | CourseText }> = ({ item }) => {
     if (item.type === 'text') {
-        return <div className="py-2 px-3 text-gray-600 dark:text-gray-400 italic text-sm border-l-2 border-gray-300 dark:border-gray-600 ml-2">{item.content}</div>;
+        const cleanedContent = cleanText(item.content);
+        if (!cleanedContent) return null;
+        return <div className="py-1 px-2 text-gray-500 italic text-[11px] border-l border-gray-700 ml-1 mb-1">{cleanedContent}</div>;
+    }
+
+    let cleanedTitle = cleanText(item.course_title);
+    let courseId = item.course_id;
+
+    // Aggressive split logic if ID is missing or Title contains ID
+    if (!courseId || cleanedTitle.includes(courseId)) {
+        // Regex to find ID at start: ENG 404, MIS362, etc.
+        // Followed by separator: - : – or space
+        const match = cleanedTitle.match(/^([A-Z]{2,4}\s*\d{3}[A-Z]*)\s*[-:–]?\s*(.*)$/);
+        if (match) {
+            courseId = match[1];
+            cleanedTitle = match[2];
+        } else if (cleanedTitle.includes(' - ')) {
+            const parts = cleanedTitle.split(' - ');
+            if (parts[0].match(/[A-Z]+\s+\d+/)) {
+                courseId = parts[0].trim();
+                cleanedTitle = parts.slice(1).join(' - ').trim();
+            }
+        }
     }
 
     return (
-        <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:shadow-sm transition-shadow">
-            <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
-                    <BookOpen size={16} />
-                </div>
-                <div>
-                    <div className="font-medium text-gray-900 dark:text-white">{item.course_id}</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">{item.course_title}</div>
-                </div>
+        <div className="flex items-start gap-2 p-1.5 bg-gray-900/20 border border-gray-800/60 transition-colors hover:bg-gray-800/40">
+            <div className="mt-1.5 w-1 h-1 rounded-full bg-gray-600 shrink-0 opacity-50"></div>
+            <div className="min-w-0 flex-grow">
+                {courseId && <div className="font-bold text-gray-300 text-xs leading-tight">{courseId}</div>}
+                <div className="text-[11px] text-gray-400 leading-tight">{cleanedTitle}</div>
             </div>
-            <div className="text-xs font-semibold bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">
-                {item.credits}
-            </div>
+            {item.credits && (
+                <div className="self-center text-[10px] font-bold text-white px-2 py-1 border border-white/20 uppercase tracking-wider shrink-0">
+                    {item.credits.replace(/[a-z]/gi, '').trim()} CR
+                </div>
+            )}
         </div>
     );
 };
 
-const GroupSection: React.FC<{ group: CourseGroup; defaultOpen?: boolean }> = ({ group, defaultOpen = false }) => {
-    const [isOpen, setIsOpen] = useState(defaultOpen);
 
-    const isChoice = group.display_type === 'choice_credits' || group.display_type === 'choice_count';
+// Helper to determine depth style
+const getHeaderStyle = (depth: number) => {
+    switch (depth) {
+        case 0: return "text-sm font-black text-white mb-2 mt-6 first:mt-0 border-b border-gray-800 pb-1 uppercase tracking-widest";
+        case 1: return "text-xs font-bold text-gray-300 mb-1 mt-3 uppercase tracking-wider";
+        default: return "text-[10px] font-bold text-gray-500 mb-1 mt-2 uppercase";
+    }
+};
+
+const RecursiveSection: React.FC<{ group: CourseGroup; depth: number }> = ({ group, depth }) => {
+    // Clean the name but keep it faithful to the catalog
+    const cleanedName = cleanText(group.group_name);
+
+    // Extract credits for display if present
+    const creditsFromHeader = extractCredits(group.group_name);
+    let displayCredits = group.credits_required || creditsFromHeader;
+
+    // Auto-detect choice: purely linguistic OR based on credit math
+    let isChoice = group.display_type?.includes('choice') ||
+        group.group_name.toLowerCase().includes('choose') ||
+        group.group_name.toLowerCase().includes('select') ||
+        group.group_name.toLowerCase().includes('option');
+
+    // If not explicit, check implicit math: Sum of item credits > Required Credits
+    if (!isChoice && displayCredits) {
+        let totalMaxCredits = 0;
+        group.items.forEach(i => {
+            if (i.type === 'course' && i.credits) {
+                // Parse "3" or "3-4". Take max.
+                const match = i.credits.match(/(\d+)/g);
+                if (match) {
+                    const vals = match.map(Number);
+                    totalMaxCredits += Math.max(...vals);
+                }
+            }
+        });
+
+        // If we have significantly more credits available than required (e.g. 12 avail, 3 required), it's a choice list
+        // Use a small buffer (item count > 1) to avoid 3 vs 3.
+        const reqCr = parseInt(displayCredits.toString().replace(/\D/g, ''));
+        if (!isNaN(reqCr) && totalMaxCredits > reqCr && group.items.filter(i => i.type === 'course').length > 1) {
+            isChoice = true;
+        }
+    }
+
 
     return (
-        <div className="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden mb-4">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            >
-                <div className="flex items-center gap-3">
-                    {isOpen ? <ChevronDown size={20} className="text-gray-400" /> : <ChevronRight size={20} className="text-gray-400" />}
-                    <h3 className="font-semibold text-gray-900 dark:text-white">{group.group_name}</h3>
-                </div>
-                <div className="flex items-center gap-2">
-                    {group.credits_required && (
-                        <span className={`text-xs px-2.5 py-1 rounded-full border ${isChoice ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800' : 'bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800'}`}>
-                            {isChoice ? `Choose ${group.credits_required} Credits` : `${group.credits_required} Credits Required`}
+        <div className={`flex flex-col ${depth > 0 ? 'ml-3 pl-3 border-l border-gray-800/30' : ''}`}>
+            {cleanedName && (
+                <div className={`flex items-end justify-between ${getHeaderStyle(depth)}`}>
+                    <span className="flex-grow mr-2">{cleanedName}</span>
+                    {displayCredits && (
+                        <span className="shrink-0 text-[10px] font-bold px-2 py-1 border bg-amber-900/10 text-amber-500/80 border-amber-900/20">
+                            {isChoice ? `CHOOSE ${displayCredits} CR` : `${displayCredits} CR`}
                         </span>
                     )}
                 </div>
-            </button>
+            )}
 
-            {isOpen && (
-                <div className="p-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 space-y-3">
-                    {group.notes && group.notes.length > 0 && (
-                        <div className="mb-4 bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 p-3 rounded-lg text-sm flex gap-2">
-                            <AlertCircle size={16} className="shrink-0 mt-0.5" />
-                            <div>
-                                {group.notes.map((note, idx) => (
-                                    <p key={idx}>{note}</p>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+            {/* Notes */}
+            {group.notes && group.notes.length > 0 && (
+                <div className="mb-2 space-y-1">
+                    {group.notes.map((note, idx) => (
+                        <p key={idx} className="text-[10px] text-blue-400/70 italic pl-1">{note}</p>
+                    ))}
+                </div>
+            )}
 
-                    <div className="space-y-2">
-                        {group.items.map((item, idx) => (
-                            <CourseItem key={idx} item={item} />
-                        ))}
-                    </div>
+            {/* Items */}
+            <div className="space-y-1 mb-2">
+                {group.items.map((item, idx) => (
+                    <React.Fragment key={idx}>
+                        {/* Optional logical separation for choice lists if needed, but keeping it simple per request */}
+                        <CourseItem item={item} />
+                    </React.Fragment>
+                ))}
+            </div>
 
-                    {group.subgroups?.map((sub, idx) => (
-                        <div key={idx} className="ml-4 mt-4 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
-                            <GroupSection group={sub} />
-                        </div>
+            {/* Subgroups */}
+            {group.subgroups && group.subgroups.length > 0 && (
+                <div className="space-y-2">
+                    {group.subgroups.map((sub, idx) => (
+                        <RecursiveSection key={idx} group={sub} depth={depth + 1} />
                     ))}
                 </div>
             )}
@@ -85,25 +178,63 @@ const GroupSection: React.FC<{ group: CourseGroup; defaultOpen?: boolean }> = ({
 };
 
 const CourseRequirementWidget: React.FC<CourseRequirementWidgetProps> = ({ courseStructure }) => {
+    const [isOpen, setIsOpen] = useState(true);
+
+    const catalogTimeline = useMemo(() => {
+        const extract = (structure: CourseGroup[]): string | null => {
+            for (const group of structure) {
+                for (const item of group.items) {
+                    if (item.type === 'text') {
+                        const match = item.content.match(/(20\d{2}-20\d{2}|\d{2}-\d{2})/);
+                        if (match) return match[1];
+                    }
+                }
+                if (group.subgroups) {
+                    const result = extract(group.subgroups);
+                    if (result) return result;
+                }
+            }
+            return null;
+        };
+        const found = extract(courseStructure);
+        if (found) {
+            const parts = found.split('-');
+            const start = parts[0].length === 2 ? `20${parts[0]}` : parts[0];
+            const end = parts[1].length === 2 ? `20${parts[1]}` : parts[1];
+            return `${start}-${end}`;
+        }
+        return "2024-2025";
+    }, [courseStructure]);
+
     if (!courseStructure || courseStructure.length === 0) return null;
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                    <BookOpen className="text-purple-600" />
-                    Major Requirements
-                </h2>
-                <div className="text-sm text-gray-500">
-                    Auto-generated from 2025-2026 Catalog
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-full flex items-center justify-between pb-2 border-b border-gray-800 hover:bg-gray-900/50 transition-colors group rounded px-2 -mx-2"
+            >
+                <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 text-gray-400">
+                        <Calendar size={14} />
+                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">Academic Year</span>
+                    </div>
+                    <span className={`text-[10px] font-black px-2 py-0.5 rounded-md border ${catalogTimeline.includes('2025-2026') ? 'bg-purple-900/30 text-purple-400 border-purple-800' : 'bg-blue-900/10 text-blue-400/80 border-blue-900/30'}`}>
+                        {catalogTimeline}
+                    </span>
                 </div>
-            </div>
+                <div className="text-gray-500 group-hover:text-gray-300 transition-colors">
+                    {isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                </div>
+            </button>
 
-            <div className="space-y-1">
-                {courseStructure.map((group, idx) => (
-                    <GroupSection key={idx} group={group} defaultOpen={false} />
-                ))}
-            </div>
+            {isOpen && (
+                <div className="animate-fade-in space-y-6">
+                    {courseStructure.map((group, idx) => (
+                        <RecursiveSection key={idx} group={group} depth={0} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

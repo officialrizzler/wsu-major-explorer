@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { useCompare } from '../contexts/CompareContext';
-import { Link, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { Program } from '../types';
-import { MessageCircle, Plus, Search, X, Share2, Check } from 'lucide-react';
+import { MessageCircle, Plus, X, Share2, Check } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import DynamicBackground from '../components/DynamicBackground';
+import AddProgramModal from '../components/AddProgramModal';
 
 const collegeColorHexMap: Record<string, string> = {
     'College of Business': '#06b6d4', // cyan-500
@@ -93,11 +95,11 @@ const ComparePage: React.FC = () => {
         { label: "Department Enrollment & Rank", getValue: (p: Program) => p.department?.total_enrollment_fall_2021 ? `${p.department.total_enrollment_fall_2021} (Rank ${p.department.rank} of ${totalDepartments})` : 'N/A', isNumeric: false },
         { label: "Degree Type", getValue: (p: Program) => p.expanded_degree_type, isNumeric: false },
         { label: "Credential Level", getValue: (p: Program) => p.credential_level, isNumeric: false },
-        { label: "Program Credits", getValue: (p: Program) => p.program_credits, higherIsBetter: false, isNumeric: false },
+        { label: "Program Credits (25-26)", getValue: (p: Program) => p.program_credits, higherIsBetter: false, isNumeric: false },
         { label: "Total Credits", getValue: (p: Program) => p.total_credits, higherIsBetter: false, isNumeric: true },
         { label: "Enrollment (Fall 2021)", getValue: (p: Program) => p.enrollment_fall_2021, higherIsBetter: true, isNumeric: true },
         { label: "Graduates (FY 2021)", getValue: (p: Program) => p.graduates_total, higherIsBetter: true, isNumeric: true },
-        { label: "Median Salary (MN)", getValue: (p: Program) => p.career_outcomes && p.career_outcomes.length > 0 ? p.career_outcomes[0].median_salary_mn : null, higherIsBetter: true, isCurrency: true, isNumeric: true },
+        { label: "Median Salary (MN 24-25)", getValue: (p: Program) => p.career_outcomes && p.career_outcomes.length > 0 ? p.career_outcomes[0].median_salary_mn : null, higherIsBetter: true, isCurrency: true, isNumeric: true },
     ];
 
     const getBestValue = (metric: any) => {
@@ -117,9 +119,9 @@ const ComparePage: React.FC = () => {
         <DynamicBackground className="flex-grow flex flex-col">
             <div className="flex-grow flex items-center justify-center py-40">
                 <div className="text-center container mx-auto px-4 relative z-10">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white">Compare Programs</h1>
+                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white animate-fade-in-up">Compare Programs</h1>
                     <p className="mt-4 text-gray-300 font-body">You haven't selected any programs to compare yet.</p>
-                    <button onClick={() => setAddModalOpen(true)} className="mt-6 inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-md mouse:hover:bg-primary-700 font-semibold transition font-body">
+                    <button onClick={() => setAddModalOpen(true)} className="mt-6 inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 font-semibold transition font-body">
                         <Plus size={18} /> Add Programs to Compare
                     </button>
                 </div>
@@ -136,7 +138,7 @@ const ComparePage: React.FC = () => {
                             Shared Comparison
                         </div>
                     )}
-                    <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight">
+                    <h1 className="text-4xl md:text-5xl font-semibold text-white tracking-tight animate-fade-in-up">
                         {compareList.length > 1
                             ? compareList.map(p => p.program_name).join(' vs ')
                             : 'Program Comparison'}
@@ -144,20 +146,18 @@ const ComparePage: React.FC = () => {
                     <p className="mt-3 max-w-2xl mx-auto text-gray-400 font-body">A side-by-side look at your selected programs.</p>
                 </div>
 
-
-
                 <div className="rounded-xl border border-gray-800 bg-gray-950/50 backdrop-blur-lg">
                     <div className="p-4 border-b border-gray-800 flex justify-between items-center sticky top-16 z-50 bg-gray-950/90 backdrop-blur-lg px-2 sm:px-4">
                         <div className="flex gap-2">
                             {compareList.length < 4 && (
-                                <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border border-primary-700 text-xs sm:text-sm font-semibold rounded-md text-primary-300 mouse:hover:bg-primary-900/50">
+                                <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border border-primary-700 text-xs sm:text-sm font-semibold rounded-md text-primary-300 hover:bg-primary-900/50">
                                     <Plus size={16} /> Add Program
                                 </button>
                             )}
                         </div>
                         <button
                             onClick={handleShare}
-                            className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-900 border border-gray-800 text-xs sm:text-sm font-semibold rounded-md text-white mouse:hover:bg-gray-800 transition-all active:scale-95"
+                            className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-gray-900 border border-gray-800 text-xs sm:text-sm font-semibold rounded-md text-white hover:bg-gray-800 transition-all active:scale-95"
                         >
                             <Share2 size={16} /> Share Comparison
                         </button>
@@ -187,7 +187,7 @@ const ComparePage: React.FC = () => {
                                                 </p>
                                                 <button
                                                     onClick={() => removeFromCompare(p.program_id)}
-                                                    className="absolute top-2 right-2 text-gray-400 mouse:hover:text-red-500"
+                                                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
                                                     aria-label={`Remove ${p.program_name}`}
                                                 >
                                                     <X size={16} />
@@ -203,7 +203,7 @@ const ComparePage: React.FC = () => {
 
                                     return (
                                         <tr key={metric.label} className="group">
-                                            <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-200 font-body bg-gray-950 z-20 border-b border-gray-800 border-r border-gray-800/50 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.5)] transition-colors mouse:group-hover:bg-gray-800">
+                                            <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-200 font-body bg-gray-950 z-20 border-b border-gray-800 border-r border-gray-800/50 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.5)] transition-colors hover:bg-gray-800">
                                                 <span className="text-xs sm:text-sm">{metric.label}</span>
                                             </td>
                                             {compareList.map(p => {
@@ -216,7 +216,7 @@ const ComparePage: React.FC = () => {
                                                 const alignClass = metric.isNumeric ? 'text-center' : 'text-left';
 
                                                 return (
-                                                    <td key={p.program_id} className={`p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 ${alignClass} ${isBest ? 'text-green-400 font-bold' : 'text-gray-100'} transition-colors mouse:group-hover:bg-gray-800/80`}>
+                                                    <td key={p.program_id} className={`p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 ${alignClass} ${isBest ? 'text-green-400 font-bold' : 'text-gray-100'} transition-colors hover:bg-gray-800/80`}>
                                                         {displayValue}
                                                     </td>
                                                 )
@@ -233,7 +233,7 @@ const ComparePage: React.FC = () => {
                     <div className="mt-8 text-center">
                         <button
                             onClick={handleStillCantDecide}
-                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 mouse:hover:bg-primary-500 transition"
+                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-500 transition"
                         >
                             <MessageCircle size={20} />
                             Still can't decide? Ask Advisor
@@ -259,87 +259,6 @@ const ComparePage: React.FC = () => {
                 </div>
             </div>
         </>
-    );
-};
-
-const AddProgramModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-    const { programs } = useData();
-    const { addToCompare, isComparing, compareList } = useCompare();
-    const [searchTerm, setSearchTerm] = useState("");
-    const [isAnimating, setIsAnimating] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => setIsAnimating(true), 10);
-        return () => clearTimeout(timer);
-    }, []);
-
-    const handleClose = () => {
-        setIsAnimating(false);
-        setTimeout(onClose, 300);
-    };
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                handleClose();
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
-
-    const filteredPrograms = programs.filter(p => p.program_name.toLowerCase().includes(searchTerm.toLowerCase()) && !isComparing(p.program_id));
-
-    const handleAdd = (program: Program) => {
-        if (!addToCompare(program)) {
-            alert("You can compare a maximum of 4 programs.");
-        }
-    }
-
-    return (
-        <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ease-out ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
-            style={{ backgroundColor: 'rgba(10, 10, 10, 0.7)' }}
-            onClick={handleClose}
-        >
-            <div
-                onClick={e => e.stopPropagation()}
-                className={`bg-gray-900 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] flex flex-col border border-gray-800 transition-all duration-300 ease-out ${isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-            >
-                <div className="p-4 border-b border-gray-800 flex justify-between items-center flex-shrink-0">
-                    <h3 className="text-lg font-semibold">Add Program to Comparison ({compareList.length}/4)</h3>
-                    <button onClick={handleClose}><X size={20} /></button>
-                </div>
-                <div className="p-4 flex-shrink-0">
-                    <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                        <input
-                            type="text"
-                            placeholder="Search programs..."
-                            value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
-                            className="font-body w-full pl-10 pr-4 py-2 bg-gray-800 rounded-md border border-gray-700"
-                        />
-                    </div>
-                </div>
-                <div className="px-4 pb-2 flex-grow overflow-y-auto">
-                    <ul className="space-y-1">
-                        {filteredPrograms.map(p => (
-                            <li key={p.program_id} className="flex justify-between items-start py-3 px-2 rounded-md mouse:hover:bg-gray-800">
-                                <div className="flex-1 min-w-0 mr-4 text-left">
-                                    <p className="font-body truncate font-medium text-white">{p.program_name}</p>
-                                    <p className="font-body text-xs text-gray-400">{p.department?.college_name}</p>
-                                </div>
-                                <button onClick={() => handleAdd(p)} className="flex-shrink-0 text-primary-500 mouse:hover:text-primary-400 text-sm font-semibold pt-0.5">Add</button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div className="p-4 border-t border-gray-800 flex-shrink-0">
-                    <button onClick={handleClose} className="w-full px-4 py-2 bg-primary-600 text-white rounded-md mouse:hover:bg-primary-700 font-body">Done</button>
-                </div>
-            </div>
-        </div>
     );
 };
 

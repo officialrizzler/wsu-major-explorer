@@ -44,10 +44,12 @@ export const departments: Department[] = [
 ];
 
 // Import scraped data
-import courseRequirements from './course_requirements.json';
+// Import optimized data
+import courseRequirements from './course_requirements_optimized.json';
+import coursesDBRaw from './courses_db.json';
 
 const programsList: Program[] = [
-    { program_id: 'accounting-bs', program_name: 'Accounting', degree_type: 'BS', credential_level: 'Undergraduate', department_id: 'accounting_dept', program_credits: '71-72', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/accounting/', short_description: 'Master the principles of financial reporting, auditing, and taxation to drive key business decisions.', overview: 'This program prepares you for a career in public, corporate, or governmental accounting through a rigorous curriculum focused on financial analysis and ethical practices. Graduates are equipped for professional certifications like the CPA.', you_might_like: ['Working with numbers and data', 'Analyzing financial trends', 'Organized and detail-oriented'], not_for_you: ['Prefer purely creative freedom', 'Dislike strict regulations/rules', 'Avoid complex calculations'] },
+    { program_id: 'accounting-bs', program_name: 'Accounting', degree_type: 'BS', credential_level: 'Undergraduate', department_id: 'accounting_dept', program_credits: '71-72', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/accounting/', short_description: 'Master the principles of financial reporting, auditing, and taxation to drive key business decisions.', overview: 'This program prepares you for a career in public, corporate, or governmental accounting through a rigorous curriculum focused on financial analysis and ethical practices. Graduates are equipped for professional certifications like the CPA.', you_might_like: ['Working with numbers and data', 'Analyzing financial trends', 'Organized and detail-oriented'], not_for_you: ['Prefer purely creative freedom', 'Dislike strict regulations/rules', 'Avoid complex calculations'], related_job_titles: ['Certified Public Accountant', 'Tax Consultant', 'Financial Auditor', 'Forensic Accountant'] },
     { program_id: 'accounting-minor', program_name: 'Accounting Minor', degree_type: 'Minor', credential_level: 'Undergraduate', department_id: 'accounting_dept', program_credits: '37', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/accounting-minor/', short_description: 'Gain a foundational understanding of accounting principles to complement any business or non-business major.', overview: 'This minor provides essential knowledge in financial and managerial accounting, giving you a competitive edge by developing your financial literacy. It is a valuable addition for students looking to understand the financial implications of decisions in any field.', you_might_like: ['Working with numbers and data', 'Analyzing financial trends', 'Organized and detail-oriented'], not_for_you: ['Prefer purely creative freedom', 'Dislike strict regulations/rules', 'Avoid complex calculations'] },
     // ... (keep all other programs as is, but this file is huge so I should use multireplace if I can't replace all)
     // WAIT. Replacing 800 lines is risky/expensive. 
@@ -365,12 +367,46 @@ const programsList: Program[] = [
     { program_id: 'pre-veterinary', program_name: 'Pre-Veterinary', degree_type: 'Course Sequence', credential_level: 'Non-degree', department_id: 'pre_professional_programs_dept', program_credits: 'Varies', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/pre-veterinary/', short_description: 'Prepare for admission to veterinary school by completing the required science courses and gaining animal experience.', overview: 'This advising track ensures you meet the rigorous academic prerequisites for Doctor of Veterinary Medicine (DVM) programs. Your pre-health advisor will also guide you in gaining the extensive animal and veterinary experience necessary for a strong application.', you_might_like: ['Learning new concepts', 'Critical thinking', 'Professional development'], not_for_you: ['Prefer routine repetitive tasks', 'Avoid intellectual challenges'] }
 ];
 
+const coursesDB = coursesDBRaw as Record<string, { title: string, credits: string, description?: string }>;
+
+const hydrateItems = (items: any[]): any[] => {
+    return items.map(item => {
+        if (item.type === 'course' && item.course_id && coursesDB[item.course_id]) {
+            const details = coursesDB[item.course_id];
+            return {
+                ...item,
+                course_title: details.title,
+                credits: details.credits,
+                description: details.description
+            };
+        }
+        return item;
+    });
+};
+
+const hydrateStructure = (groups: any[]): any[] => {
+    return groups.map(group => {
+        const newGroup = { ...group };
+        if (newGroup.items) {
+            newGroup.items = hydrateItems(newGroup.items);
+        }
+        if (newGroup.subgroups) {
+            newGroup.subgroups = hydrateStructure(newGroup.subgroups);
+        }
+        return newGroup;
+    });
+};
+
 export const programsRaw: Program[] = programsList.map(p => {
     // @ts-ignore
-    const structure = courseRequirements[p.program_id];
+    const structureRaw = courseRequirements[p.program_id];
+    const structure = structureRaw ? hydrateStructure(structureRaw) : undefined;
+
     return {
         ...p,
-        course_structure: structure ? structure : undefined
+        course_structure: structure,
+        catalog_year: '25-26',
+        academic_year: '24-25'
     };
 });
 
@@ -786,6 +822,13 @@ export const clubs: Club[] = [
 
 export const dataSources: DataSource[] = [
     {
+        source_id: 'WSU_COURSE_CATALOG_2024_2025',
+        source_name: 'WSU Course Catalog',
+        source_year: '2024-2025',
+        source_notes: 'The official academic catalog containing degree requirements, course descriptions, and program structures. This is the primary source for the "Course Requirements" and "Program Overview" sections.',
+        source_url: 'https://catalog.winona.edu/'
+    },
+    {
         source_id: 'WSU_IPAR_ENROLLMENT_2021',
         source_name: 'WSU IPAR Enrollment Data',
         source_year: 'Fall 2020-2021',
@@ -800,9 +843,9 @@ export const dataSources: DataSource[] = [
         source_url: 'https://www.winona.edu/about/leadership/institutional-data/'
     },
     {
-        source_id: 'MN_DEED_OES_2023',
+        source_id: 'MN_DEED_OES_2024',
         source_name: 'Minnesota DEED Labor Market Data',
-        source_year: '2023',
+        source_year: '2024-2025',
         source_notes: 'Career and wage data from the Minnesota Department of Employment and Economic Development (DEED) Occupational Employment & Statistics (OES) program. Career outcomes are mapped to the most relevant Standard Occupational Classification (SOC) code. Note: This data is for the state of Minnesota, reflects median wages (not starting salaries), and the growth rate is a 10-year projection. This is not a guarantee of employment or salary.',
         source_url: 'https://apps.deed.state.mn.us/lmi/oes/'
     }
