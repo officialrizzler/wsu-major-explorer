@@ -76,10 +76,8 @@ const ComparePage: React.FC = () => {
         if (compareList[2]) params.set('p3', compareList[2].program_id);
         if (compareList[3]) params.set('p4', compareList[3].program_id);
 
-        // Correctly handle HashRouter URLs: origin + pathname + #/compare?params
-        const baseUrl = window.location.href.split('#')[0];
-        const routedPath = location.pathname;
-        const url = `${baseUrl}#${routedPath}?${params.toString()}`;
+        // With BrowserRouter, we use window.location.origin + pathname + search
+        const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
         navigator.clipboard.writeText(url).then(() => {
             setShowCopyToast(true);
