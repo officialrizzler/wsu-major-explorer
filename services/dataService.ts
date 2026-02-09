@@ -16,7 +16,7 @@ const getRankedDepartments = (): Department[] => {
 
     const withRank = sortedByEnrollment.map((dept, index) => ({ ...dept, rank: index + 1 }));
 
-    // Create a map to add ranks back to the original, alphabetically sorted list
+    
     const rankMap = new Map(withRank.map(d => [d.department_id, d.rank]));
     const finalDepartments = [...departments]
         .map(d => ({ ...d, rank: rankMap.get(d.department_id) }))
@@ -54,7 +54,7 @@ const joinData = (): Program[] => {
         const graduates = graduatesMap.get(p.program_id);
         const outcomes = outcomesByProgram.get(p.program_id) || [];
 
-        // Find most relevant clubs
+        
         const collegeClubs = department ? clubsByCollege.get(department.college_name) || [] : [];
         const programNameWords = p.program_name.toLowerCase().split(/[\s,/-]+/).filter(w => w.length > 2);
         const stopWords = ['club', 'association', 'society', 'winona', 'state', 'wsu', 'the', 'and', 'for', 'international', 'student', 'professional'];

@@ -1,4 +1,4 @@
-
+import { systemInstruction } from "./private/ai_config.js";
 import { enforceAiLimits } from "./utils/rateLimit.js";
 import cors from "cors";
 import express from "express";
@@ -27,8 +27,8 @@ const openai = new OpenAI({
 });
 
 app.post("/api/chat", async (req, res) => {
-const ok = await enforceAiLimits(req, res);
-if (!ok) return;
+  const ok = await enforceAiLimits(req, res);
+  if (!ok) return;
   try {
     const { chatHistory, userQuery } = req.body || {};
 
@@ -36,10 +36,7 @@ if (!ok) return;
       return res.status(400).json({ error: "Invalid request body" });
     }
 
-    const systemInstruction =
-      `You are "Warrior Bot," a friendly AI assistant for the Winona State University (WSU) Major Explorer. ` +
-      `Help students explore majors. Always recommend speaking with an official WSU academic advisor for personalized guidance. ` +
-      `Use plain text only; do not use Markdown.`;
+
 
     const trimmedHistory = chatHistory.slice(-12).map((msg) => {
       const text = msg?.parts?.[0]?.text ?? "";
@@ -64,11 +61,11 @@ if (!ok) return;
   }
 });
 
-// Serve Vite build output
+
 app.use(express.static(path.join(__dirname, "dist")));
 
-// SPA fallback (must be last route)
-// Express v5 needs a regex instead of "*"
+
+
 app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });

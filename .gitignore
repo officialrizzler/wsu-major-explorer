@@ -28,3 +28,11 @@ dist-ssr
 2.xlsx
 data_source/
 data/generated/
+scripts/
+*.xlsx
+*.csv
+*.pdf
+private/
+public/robots.txt
+public/sitemap.xml
+google*.html

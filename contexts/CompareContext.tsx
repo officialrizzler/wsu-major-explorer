@@ -42,7 +42,7 @@ export const CompareProvider: React.FC<{ children: ReactNode }> = ({ children })
         if (compareList.length < MAX_COMPARE && !compareList.find(p => p.program_id === program.program_id)) {
             const newList = [...compareList, program];
             setCompareList(newList);
-            // setIsTrayVisible(true); // Removed auto-open behavior
+            
             return true;
         }
         return false;

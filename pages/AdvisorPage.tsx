@@ -53,7 +53,7 @@ const AdvisorPage: React.FC = () => {
         setInput('');
         setIsLoading(true);
 
-        // Scroll to the user's new message, but don't force scroll for AI response
+        
         setTimeout(() => scrollToBottom('smooth'), 100);
 
         const chatHistoryForApi = [...messages, userMessage].slice(-8).map(msg => ({
@@ -86,21 +86,21 @@ const AdvisorPage: React.FC = () => {
         <div className={`relative flex flex-col h-[100dvh] min-h-0 overflow-hidden ${compareList.length > 0 ? 'pb-20 sm:pb-0' : ''}`}>
             <DynamicBackground className="absolute inset-0" />
             <div className="relative z-10 w-full max-w-4xl mx-auto flex-1 min-h-0 flex flex-col p-4 sm:py-12 sm:px-8">
-                <div className="w-full flex-1 min-h-0 flex flex-col bg-gray-950/80 backdrop-blur-xl sm:rounded-xl border sm:border border-white/10 overflow-hidden shadow-2xl relative">
+                <div className="w-full flex-1 min-h-0 flex flex-col bg-white/90 backdrop-blur-xl sm:rounded-xl border sm:border border-gray-200 overflow-hidden shadow-sm relative">
                     <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 min-h-0 p-4 sm:p-6 space-y-6 overflow-y-auto scroll-shadows">
                         {messages.map((msg, index) => (
                             <div key={index} className={`flex gap-3 message-bubble-animation ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                 {msg.role === 'model' && (
-                                    <div className="w-10 h-10 rounded-full bg-primary-600 flex-shrink-0 flex items-center justify-center">
-                                        <Bot className="text-white" size={24} />
+                                    <div className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center">
+                                        <Bot className="text-gray-700" size={24} />
                                     </div>
                                 )}
-                                <div className={`p-3 rounded-2xl ${msg.role === 'user' ? 'bg-primary-600 text-white rounded-br-none max-w-lg' : 'bg-gray-800 text-white rounded-bl-none max-w-xl'}`}>
+                                <div className={`p-4 rounded-2xl shadow-sm ${msg.role === 'user' ? 'bg-primary-600 text-white rounded-br-none max-w-lg' : 'bg-gray-100 text-gray-900 rounded-bl-none max-w-xl border border-gray-200'}`}>
                                     <p className="text-sm leading-relaxed whitespace-pre-wrap font-body">{msg.text}</p>
                                 </div>
                                 {msg.role === 'user' && (
-                                    <div className="w-10 h-10 rounded-full bg-gray-700 flex-shrink-0 flex items-center justify-center">
-                                        <User className="text-gray-300" size={24} />
+                                    <div className="w-10 h-10 rounded-full bg-primary-100 flex-shrink-0 flex items-center justify-center">
+                                        <User className="text-primary-600" size={24} />
                                     </div>
                                 )}
                             </div>
@@ -111,14 +111,14 @@ const AdvisorPage: React.FC = () => {
                     {isLoading && (
                         <div className="flex-shrink-0 px-4 sm:px-6 pt-4">
                             <div className="flex gap-3 justify-start">
-                                <div className="w-10 h-10 rounded-full bg-primary-600 flex-shrink-0 flex items-center justify-center">
-                                    <Bot className="text-white" size={24} />
+                                <div className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center">
+                                    <Bot className="text-gray-700" size={24} />
                                 </div>
-                                <div className="max-w-lg p-3 rounded-2xl bg-gray-800 text-white rounded-bl-none">
+                                <div className="max-w-lg p-4 rounded-2xl bg-gray-100 text-gray-900 rounded-bl-none border border-gray-200">
                                     <div className="flex items-center gap-2">
-                                        <span className="h-2 w-2 bg-primary-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                                        <span className="h-2 w-2 bg-primary-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                                        <span className="h-2 w-2 bg-primary-400 rounded-full animate-bounce"></span>
+                                        <span className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                                        <span className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                                        <span className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></span>
                                     </div>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@ const AdvisorPage: React.FC = () => {
                         </button>
                     )}
 
-                    <div className="flex-shrink-0 p-4 bg-black/30 border-t border-white/10">
+                    <div className="flex-shrink-0 p-4 bg-gray-50 border-t border-gray-200">
                         <div className="relative flex items-center gap-3">
                             <div className="flex-1 relative">
                                 <input
@@ -145,14 +145,14 @@ const AdvisorPage: React.FC = () => {
                                     onChange={e => setInput(e.target.value)}
                                     onKeyPress={e => e.key === 'Enter' && handleSend()}
                                     placeholder="Ask about majors, careers, or college life..."
-                                    className="font-body w-full px-4 py-2 pr-12 bg-gray-800 rounded-full border border-gray-700 focus:ring-2 focus:ring-primary-500 focus:outline-none transition"
+                                    className="font-body w-full px-4 py-3 pr-12 bg-white rounded-full border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:outline-none transition text-gray-900 placeholder-gray-500 shadow-sm"
                                     disabled={isLoading}
                                 />
                                 <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-mono ${input.length >= 900 ? 'text-rose-500' : 'text-gray-500'}`}>
                                     {input.length}/1000
                                 </span>
                             </div>
-                            <button onClick={() => handleSend()} disabled={isLoading || !input.trim()} className="w-10 h-10 flex-shrink-0 rounded-full bg-primary-600 text-white flex items-center justify-center hover:bg-primary-700 disabled:bg-gray-700 disabled:cursor-not-allowed transition">
+                            <button onClick={() => handleSend()} disabled={isLoading || !input.trim()} className="w-11 h-11 flex-shrink-0 rounded-full bg-primary-600 text-white flex items-center justify-center hover:bg-primary-700 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed transition shadow-sm hover:shadow-md">
                                 <Send size={20} />
                             </button>
                         </div>

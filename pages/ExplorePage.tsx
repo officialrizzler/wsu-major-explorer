@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useData } from '../contexts/DataContext';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Search, ChevronDown } from 'lucide-react';
+import { Search, ChevronDown, ArrowUp } from 'lucide-react';
 import { getColleges, getDegreeTypes, getLocations, getCredentialLevels } from '../services/dataService';
 import ProgramCard from '../components/ProgramCard';
 import { interestMappings } from '../data/wsuData';
@@ -47,13 +47,13 @@ const FilterDropdown: React.FC<{
                     e.preventDefault();
                     setIsOpen(!isOpen);
                 }}
-                className="flex items-center justify-between w-full px-4 py-2 bg-gray-900 border border-gray-800 rounded-md text-sm font-medium hover:bg-gray-800 touch-manipulation select-none"
+                className={`flex items-center justify-between w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 border ${isOpen || selected.length > 0 ? 'bg-primary-50 border-primary-100 text-primary-900' : 'bg-gray-50 border-transparent text-gray-700 hover:bg-gray-100'} touch-manipulation select-none`}
             >
-                <span className="font-body pointer-events-none">{title} {selected.length > 0 && `(${selected.length})`}</span>
-                <ChevronDown size={16} className={`pointer-events-none transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                <span className="font-body pointer-events-none truncate max-w-[140px]">{title} {selected.length > 0 && `(${selected.length})`}</span>
+                <ChevronDown size={14} className={`ml-2 flex-shrink-0 pointer-events-none transition-transform ${isOpen ? 'rotate-180 text-primary-500' : 'text-gray-400'}`} />
             </button>
             <div
-                className={`absolute top-full mt-2 w-64 bg-gray-900 border border-gray-800 rounded-md shadow-lg z-10 p-2 transition-all duration-200 ease-out origin-top ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
+                className={`absolute top-full mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-xl z-20 p-2 transition-all duration-200 ease-out origin-top ${isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
             >
                 <div className="max-h-60 overflow-y-auto custom-scrollbar">
                     {options.map(option => (
@@ -63,11 +63,11 @@ const FilterDropdown: React.FC<{
                                 e.preventDefault();
                                 handleOptionChange(option);
                             }}
-                            className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-800 cursor-pointer text-sm font-body touch-manipulation"
+                            className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm font-body touch-manipulation text-gray-700"
                         >
                             <input
                                 type="checkbox"
-                                className="h-4 w-4 rounded border-gray-700 text-primary-600 focus:ring-primary-500 bg-gray-800 pointer-events-none"
+                                className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500 bg-gray-50 pointer-events-none"
                                 checked={selected.includes(option)}
                                 readOnly
                             />
@@ -101,7 +101,7 @@ const ExplorePage: React.FC = () => {
     const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
     const interestId = searchParams.get('interest');
 
-    // SEO Updates
+    
     useEffect(() => {
         let title = 'Explore Programs | WSU Major Explorer';
         if (searchTerm) {
@@ -195,48 +195,73 @@ const ExplorePage: React.FC = () => {
     const activeFilterCount = Object.values(filters).flat().length + (interestId ? 1 : 0);
 
     return (
-        <DynamicBackground className="bg-gray-950 min-h-full">
+        <DynamicBackground className="bg-[#f5f5f7] min-h-full">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="text-center mb-8 relative z-10">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white animate-fade-in-up">Explore Programs</h1>
-                    <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-400 font-body">Search, filter, and discover the perfect academic path for you.</p>
+                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900 animate-fade-in-up">Explore Programs</h1>
+                    <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 font-body">Search, filter, and discover the perfect academic path for you.</p>
                 </div>
 
-                <div className={`sticky top-16 z-30 transition-all duration-300 ${isScrolled ? 'py-4' : ''}`}>
-                    <div className={`space-y-4 ${!isScrolled ? 'py-4' : ''}`}>
-                        <div className="relative">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <div className={`sticky top-16 z-30 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-6'}`}>
+                    <div className="bg-white/80 backdrop-blur-xl border border-white/40 shadow-lg shadow-gray-200/50 rounded-2xl p-2 pl-4 flex flex-col md:flex-row items-center gap-2 ring-1 ring-black/5">
+
+                        {}
+                        <div className="relative flex-grow w-full md:w-auto flex items-center">
+                            <Search className="text-gray-500 flex-shrink-0" size={20} />
                             <input
                                 type="text"
                                 placeholder="Search by major, minor, or department..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-12 pr-4 py-3 bg-gray-900 rounded-lg border border-gray-800 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition font-body text-white"
+                                className="w-full pl-3 pr-4 py-2 bg-transparent border-none focus:ring-0 outline-none font-body text-gray-900 placeholder-gray-500 text-base"
                             />
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-4">
+
+                        {}
+                        <div className="hidden md:block w-px h-8 bg-gray-200 mx-1"></div>
+
+                        {}
+                        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
                             {Object.entries(filterOptions).map(([title, options]) => (
-                                <FilterDropdown
-                                    key={title}
-                                    title={title}
-                                    options={options}
-                                    selected={filters[title] || []}
-                                    onChange={(option) => handleFilterChange(title, option)}
-                                />
+                                <div key={title} className="w-full sm:w-auto min-w-[140px]">
+                                    <FilterDropdown
+                                        title={title}
+                                        options={options}
+                                        selected={filters[title] || []}
+                                        onChange={(option) => handleFilterChange(title, option)}
+                                    />
+                                </div>
                             ))}
+
                             {activeFilterCount > 0 && (
-                                <button onClick={clearFilters} className="px-4 py-2 text-sm font-semibold text-red-500 hover:text-red-400 flex-shrink-0 font-body transition-colors">Clear Filters ({activeFilterCount})</button>
+                                <button
+                                    onClick={clearFilters}
+                                    className="px-3 py-2 text-sm font-semibold text-rose-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors whitespace-nowrap"
+                                >
+                                    Clear ({activeFilterCount})
+                                </button>
                             )}
                         </div>
                     </div>
                 </div>
 
+                {}
+                <div className={`fixed top-24 right-6 z-40 transition-all duration-500 ease-in-out ${isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12 pointer-events-none'}`}>
+                    <button
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className="p-3 bg-primary-600 text-white rounded-full shadow-lg shadow-primary-600/30 border border-primary-500 ring-1 ring-primary-600/20 hover:bg-primary-700 transition-all flex items-center justify-center group"
+                        title="Back to Top"
+                    >
+                        <ArrowUp size={24} className="group-hover:-translate-y-1 transition-transform duration-300" />
+                    </button>
+                </div>
+
                 <main className="pt-8 relative z-10">
-                    <p className="text-sm text-gray-400 mb-4 font-body">
+                    <p className="text-sm text-gray-600 mb-4 font-body">
                         Showing {processedPrograms.length} of {programs.length} programs.
                     </p>
                     {loading ? (
-                        <p className="font-body text-white">Loading programs...</p>
+                        <p className="font-body text-gray-600">Loading programs...</p>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {processedPrograms.map((program, index) => (
@@ -248,8 +273,8 @@ const ExplorePage: React.FC = () => {
                     )}
                     {processedPrograms.length === 0 && !loading && (
                         <div className="text-center py-16">
-                            <h3 className="text-xl font-semibold text-white">No Programs Found</h3>
-                            <p className="text-gray-500 mt-2 font-body">Try adjusting your search or filters.</p>
+                            <h3 className="text-xl font-semibold text-gray-900">No Programs Found</h3>
+                            <p className="text-gray-600 mt-2 font-body">Try adjusting your search or filters.</p>
                         </div>
                     )}
                 </main>

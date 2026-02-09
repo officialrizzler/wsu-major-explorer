@@ -43,25 +43,25 @@ export const departments: Department[] = [
     { department_id: 'pre_professional_programs_dept', department_name: 'Other - Pre-Professional Programs', college_name: 'Pre-Professional Pathways', total_enrollment_fall_2021: null },
 ];
 
-// Import scraped data
-// Import optimized data
+
+
 import courseRequirements from './course_requirements_optimized.json';
 import coursesDBRaw from './courses_db.json';
 
 const programsList: Program[] = [
     { program_id: 'accounting-bs', program_name: 'Accounting', degree_type: 'BS', credential_level: 'Undergraduate', department_id: 'accounting_dept', program_credits: '71-72', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/accounting/', short_description: 'Master the principles of financial reporting, auditing, and taxation to drive key business decisions.', overview: 'This program prepares you for a career in public, corporate, or governmental accounting through a rigorous curriculum focused on financial analysis and ethical practices. Graduates are equipped for professional certifications like the CPA.', you_might_like: ['Working with numbers and data', 'Analyzing financial trends', 'Organized and detail-oriented'], not_for_you: ['Prefer purely creative freedom', 'Dislike strict regulations/rules', 'Avoid complex calculations'], related_job_titles: ['Certified Public Accountant', 'Tax Consultant', 'Financial Auditor', 'Forensic Accountant'] },
     { program_id: 'accounting-minor', program_name: 'Accounting Minor', degree_type: 'Minor', credential_level: 'Undergraduate', department_id: 'accounting_dept', program_credits: '37', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/accounting-minor/', short_description: 'Gain a foundational understanding of accounting principles to complement any business or non-business major.', overview: 'This minor provides essential knowledge in financial and managerial accounting, giving you a competitive edge by developing your financial literacy. It is a valuable addition for students looking to understand the financial implications of decisions in any field.', you_might_like: ['Working with numbers and data', 'Analyzing financial trends', 'Organized and detail-oriented'], not_for_you: ['Prefer purely creative freedom', 'Dislike strict regulations/rules', 'Avoid complex calculations'] },
-    // ... (keep all other programs as is, but this file is huge so I should use multireplace if I can't replace all)
-    // WAIT. Replacing 800 lines is risky/expensive. 
-    // I will use a different strategy:
-    // 1. Rename the existing `export const programsRaw` to `const basePrograms`.
-    // 2. Add the import.
-    // 3. Add `export const programsRaw = basePrograms.map(...)` at the end.
+    
+    
+    
+    
+    
+    
 
-    // Actually, I can just use `replace_file_content` to change the start and end of the array definition.
-    // But the user's file has `export const programsRaw: Program[] = [ ... ]`.
-    // I can change that line to `const basePrograms: Program[] = [`
-    // And then append the mapping logic at the end of the file.
+    
+    
+    
+    
 
     { program_id: 'business-administration', program_name: 'Business Administration', degree_type: 'BS', credential_level: 'Undergraduate', department_id: 'business_administration_dept', program_credits: '66', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/business-administration/', short_description: 'Develop a broad understanding of core business functions including management, finance, and marketing.', overview: 'This versatile program provides a comprehensive foundation in all aspects of business operations, preparing you for leadership roles in diverse industries. You will learn to analyze business problems, develop strategic solutions, and manage organizational resources effectively.', you_might_like: ['Leading teams and projects', 'Strategic planning', 'Problem-solving'], not_for_you: ['Prefer following instructions only', 'Avoid conflict resolution', "Dislike responsibility for others' work"] },
     { program_id: 'business-administration-minor', program_name: 'Business Administration Minor', degree_type: 'Minor', credential_level: 'Undergraduate', department_id: 'business_administration_dept', program_credits: '43', total_credits: '120', location: 'Winona', program_page_url: 'https://www.winona.edu/academics/programs/business-administration-minor/', short_description: 'Acquire essential business knowledge to supplement your major and enhance your career prospects.', overview: 'This minor offers a solid grounding in key business areas, providing a valuable credential that signals business acumen to employers. It is designed for non-business majors who want to understand the fundamentals of management, marketing, and finance.', you_might_like: ['Leading teams and projects', 'Strategic planning', 'Problem-solving'], not_for_you: ['Prefer following instructions only', 'Avoid conflict resolution', "Dislike responsibility for others' work"] },
@@ -398,7 +398,7 @@ const hydrateStructure = (groups: any[]): any[] => {
 };
 
 export const programsRaw: Program[] = programsList.map(p => {
-    // @ts-ignore
+    
     const structureRaw = courseRequirements[p.program_id];
     const structure = structureRaw ? hydrateStructure(structureRaw) : undefined;
 

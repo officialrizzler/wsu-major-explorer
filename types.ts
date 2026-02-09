@@ -19,7 +19,7 @@ export interface Program {
     program_page_url: string;
     description?: string;
     short_description?: string;
-    overview?: string; // Statically stored AI-generated overview
+    overview?: string; 
     you_might_like?: string[];
     not_for_you?: string[];
     related_job_titles?: string[];
@@ -27,7 +27,7 @@ export interface Program {
     catalog_year?: string;
     academic_year?: string;
 
-    // Joined data
+    
     department?: Department;
     expanded_degree_type?: string;
     enrollment_fall_2021?: number | null;
@@ -40,33 +40,33 @@ export interface Program {
 }
 
 export interface Course {
-    course_id: string; // e.g. "CS 101"
-    course_title: string; // e.g. "Exploring Creative Computing"
-    credits: string; // e.g. "3"
+    course_id: string; 
+    course_title: string; 
+    credits: string; 
     description?: string;
 }
 
 
 export interface CourseGroup {
-    group_name: string; // e.g. "Core Requirements", "Electives"
+    group_name: string; 
     credits_required?: string;
-    // Logic for this group
+    
     display_type?: 'list' | 'choice_credits' | 'choice_count';
-    items: (Course | CourseText)[]; // Changed from just courses to allow text items (e.g. "OR")
+    items: (Course | CourseText)[]; 
     subgroups?: CourseGroup[];
     notes?: string[];
 }
 
 export interface CourseText {
     type: 'text';
-    content: string; // e.g. "OR", "Choose one of the following:"
+    content: string; 
 }
 
 export interface Course {
     type: 'course';
-    course_id: string; // e.g. "CS 101"
-    course_title: string; // e.g. "Exploring Creative Computing"
-    credits: string; // e.g. "3"
+    course_id: string; 
+    course_title: string; 
+    credits: string; 
     description?: string;
 }
 

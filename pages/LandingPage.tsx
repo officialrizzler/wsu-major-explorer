@@ -34,10 +34,10 @@ const useAnimateOnScroll = (ref: React.RefObject<HTMLElement>) => {
 };
 
 const FeatureStatCard: React.FC<{ value: string, label: string, gradient: string }> = ({ value, label, gradient }) => (
-    <div className={`relative rounded-xl p-8 flex-grow flex items-center justify-center ${gradient}`}>
+    <div className={`relative rounded-xl p-8 flex-grow flex items-center justify-center ${gradient} shadow-lg shadow-gray-200`}>
         <div className="text-center">
-            <p className="text-7xl lg:text-8xl font-bold text-white" style={{ textShadow: '0 4px 15px rgba(0,0,0,0.3)' }}>{value}</p>
-            <p className="text-lg text-gray-200 mt-2 font-body" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>{label}</p>
+            <p className="text-7xl lg:text-8xl font-bold text-white drop-shadow-md">{value}</p>
+            <p className="text-lg text-white/90 mt-2 font-body drop-shadow-sm">{label}</p>
         </div>
     </div>
 );
@@ -58,10 +58,10 @@ const FeatureBlock: React.FC<{
     return (
         <div ref={sectionRef} className="scroll-animate grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className={`flex flex-col justify-center ${textOrder} order-2 lg:order-none`}>
-                <h3 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{title}</h3>
-                <p className="mt-4 text-lg text-gray-400 font-body">{description}</p>
+                <h3 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{title}</h3>
+                <p className="mt-4 text-lg text-gray-500 font-body">{description}</p>
                 <div className="mt-8">
-                    <Link to={linkTo} className="font-body inline-flex items-center gap-2 text-lg font-semibold text-primary-400 hover:text-primary-300 transition-colors">
+                    <Link to={linkTo} className="font-body inline-flex items-center gap-2 text-lg font-semibold text-primary-600 hover:text-primary-500 transition-colors">
                         {linkText} <ArrowRight size={20} />
                     </Link>
                 </div>
@@ -93,7 +93,7 @@ const LandingPage: React.FC = () => {
 
 
 
-    const textShadowStyle = { textShadow: '0 2px 10px rgba(0,0,0,0.5)' };
+    const textShadowStyle = {};
     const totalPrograms = programs.length || '200+';
 
 
@@ -108,10 +108,10 @@ const LandingPage: React.FC = () => {
                 <div className="min-h-[calc(80vh)] flex items-center justify-center spotlight relative z-10">
                     <div className="text-center px-6 lg:px-8">
                         <div className="mx-auto max-w-4xl">
-                            <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl lg:text-8xl animate-fade-in-up" style={textShadowStyle}>
+                            <h1 className="text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl lg:text-8xl animate-fade-in-up">
                                 Major Decisions, Made Simpler.
                             </h1>
-                            <div className="mt-8 text-lg text-white" style={textShadowStyle}>
+                            <div className="mt-8 text-lg text-gray-900">
                                 <div className="relative h-10 w-80 mx-auto">
                                     {promptBubbles.map((prompt, index) => (
                                         <div
@@ -120,7 +120,7 @@ const LandingPage: React.FC = () => {
                                         >
                                             <Link
                                                 to={`/explore?interest=${interestMappings[prompt].id}`}
-                                                className="font-body cursor-pointer inline-block whitespace-nowrap rounded-full bg-gray-800/50 px-4 py-1.5 font-semibold text-white ring-1 ring-inset ring-gray-700 hover:bg-gray-800 hover:text-white"
+                                                className="font-body cursor-pointer inline-block whitespace-nowrap rounded-full bg-white/80 px-4 py-1.5 font-semibold text-gray-900 ring-1 ring-inset ring-gray-200 hover:bg-white hover:text-primary-600 shadow-sm hover:shadow-md transition-all"
                                             >
                                                 I want to {prompt}
                                             </Link>
@@ -128,7 +128,7 @@ const LandingPage: React.FC = () => {
                                     ))}
                                 </div>
                             </div>
-                            <p className="mt-8 text-lg leading-8 text-white font-body max-w-2xl mx-auto" style={textShadowStyle}>
+                            <p className="mt-8 text-lg leading-8 text-gray-600 font-body max-w-2xl mx-auto">
                                 All the information students search for — brought together to support one clear path.
                             </p>
                             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -140,7 +140,7 @@ const LandingPage: React.FC = () => {
                                 </Link>
                                 <Link
                                     to="/advisor"
-                                    className="font-body flex items-center gap-2 rounded-md bg-gray-800 px-5 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-700 transition-transform transform hover:scale-105"
+                                    className="font-body flex items-center gap-2 rounded-md bg-white border border-gray-200 px-5 py-3 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-transform transform hover:scale-105 shadow-sm"
                                 >
                                     <MessageSquare size={16} /> Ask the Advisor
                                 </Link>
@@ -150,10 +150,10 @@ const LandingPage: React.FC = () => {
                 </div>
             </DynamicBackground>
 
-            <div className="bg-gray-950 py-24 sm:py-32">
+            <div className="bg-white py-24 sm:py-32">
                 <div className="container mx-auto px-4 space-y-24 lg:space-y-32">
                     <div className="text-center">
-                        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-white">Different tools for different questions.</h2>
+                        <h2 className="text-4xl font-bold tracking-tight sm:text-5xl text-gray-900">Different tools for different questions.</h2>
                     </div>
 
                     <FeatureBlock
@@ -162,7 +162,7 @@ const LandingPage: React.FC = () => {
                         description="See what’s available, how programs are structured, and where they lead. No more jumping between departments and pages."
                         linkTo="/explore"
                         linkText="Start Exploring"
-                        stat={<FeatureStatCard value={String(totalPrograms)} label="Programs & Pathways" gradient="bg-gradient-to-br from-cyan-500 to-blue-600" />}
+                        stat={<FeatureStatCard value={String(totalPrograms)} label="Programs & Pathways" gradient="bg-gradient-to-br from-cyan-600 to-blue-800" />}
                     />
 
                     <FeatureBlock

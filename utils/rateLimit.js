@@ -20,12 +20,12 @@ export async function enforceAiLimits(req, res) {
   const ip = getClientIp(req);
   const day = todayKey();
 
-  // ---- Tunables ----
-  const DAILY_LIMIT = 10;        // 10 requests/day per IP
-  const BURST_LIMIT = 20;        // 20 requests per window
-  const BURST_WINDOW_SEC = 600;  // 10 minutes
-  const MAX_CHARS = 6000;        // prompt cap (credits protection)
-  // -------------------
+  
+  const DAILY_LIMIT = 10;        
+  const BURST_LIMIT = 20;        
+  const BURST_WINDOW_SEC = 600;  
+  const MAX_CHARS = 6000;        
+  
 
   const msg = req.body?.message ?? req.body?.text ?? req.body?.userQuery ?? "";
   if (typeof msg === "string" && msg.length > MAX_CHARS) {
@@ -65,7 +65,7 @@ export async function enforceAiLimits(req, res) {
     return true;
   } catch (err) {
     console.error("[rateLimit] error:", err?.message || err);
-    // Fail CLOSED to protect credits (no AI call)
+    
 res.status(503).json({ error: "Rate limiter unavailable", detail: (err?.message || String(err)) });
     return false;
   }

@@ -1,13 +1,21 @@
 import React from 'react';
 
 const colorPalettes = [
-    ['rgba(79, 70, 229, 0.35)', 'rgba(22, 163, 74, 0.25)', 'rgba(244, 63, 94, 0.25)'], // Original
-    ['rgba(124, 58, 237, 0.35)', 'rgba(234, 179, 8, 0.25)', 'rgba(219, 39, 119, 0.25)'], // Purple, Amber, Pink
-    ['rgba(30, 64, 175, 0.35)', 'rgba(6, 182, 212, 0.3)', 'rgba(5, 150, 105, 0.3)'], // Blue, Cyan, Emerald
-    ['rgba(147, 51, 234, 0.3)', 'rgba(244, 63, 94, 0.3)', 'rgba(249, 115, 22, 0.25)'], // Fuchsia, Rose, Orange
+    ['rgba(126, 34, 206, 0.25)', 'rgba(30, 58, 138, 0.3)', 'rgba(239, 68, 68, 0.2)'], 
+    ['rgba(147, 51, 234, 0.25)', 'rgba(250, 204, 21, 0.25)', 'rgba(249, 115, 22, 0.2)'], 
+    ['rgba(67, 56, 202, 0.3)', 'rgba(12, 74, 110, 0.3)', 'rgba(236, 72, 153, 0.2)'], 
+    ['rgba(109, 40, 217, 0.25)', 'rgba(220, 38, 38, 0.2)', 'rgba(251, 146, 60, 0.25)'], 
 ];
 
-const blobColors = ['bg-primary-600', 'bg-emerald-500', 'bg-rose-500', 'bg-indigo-500', 'bg-amber-500', 'bg-cyan-500'];
+const blobColors = [
+    'bg-purple-600',
+    'bg-blue-800',
+    'bg-yellow-400',
+    'bg-orange-500',
+    'bg-red-500',
+    'bg-violet-600',
+    'bg-cyan-700'
+];
 
 const shuffleArray = <T,>(array: T[]): T[] => {
     const newArray = [...array];
@@ -19,7 +27,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 };
 
 const generateRandomStyles = () => {
-    // Randomize Aurora
+    
     const [color1, color2, color3] = shuffleArray(colorPalettes[Math.floor(Math.random() * colorPalettes.length)]);
     const auroraStyles = {
         '--pos1': `${Math.random() * 100}% ${Math.random() * 100}%`,
@@ -30,29 +38,29 @@ const generateRandomStyles = () => {
         '--color3': color3,
     } as React.CSSProperties;
 
-    // Randomize Blobs
+    
     const shuffledColors = shuffleArray(blobColors);
     const blobs = [
         {
-            position: { top: `${Math.random() * 40 - 20}%`, left: `${Math.random() * 40 - 20}%` },
+            position: { top: `${Math.random() * 20 - 10}%`, left: `${Math.random() * 20 - 10}%` },
             size: `${Math.floor(Math.random() * 200 + 400)}px`,
             color: shuffledColors[0],
-            duration: `${Math.floor(Math.random() * 5 + 8)}s`,
-            delay: '0s',
+            duration: `${Math.floor(Math.random() * 5 + 15)}s`,
+            delay: '2s',
         },
         {
-            position: { bottom: `${Math.random() * 40 - 20}%`, right: `${Math.random() * 40 - 20}%` },
+            position: { bottom: `${Math.random() * 20 - 10}%`, right: `${Math.random() * 20 - 10}%` },
             size: `${Math.floor(Math.random() * 200 + 300)}px`,
             color: shuffledColors[1],
-            duration: `${Math.floor(Math.random() * 5 + 9)}s`,
-            delay: `${Math.random() * 3}s`,
+            duration: `${Math.floor(Math.random() * 5 + 18)}s`,
+            delay: `${Math.random() * 5 + 3}s`,
         },
         {
-            position: { top: `${Math.random() * 60 + 20}%`, right: `${Math.random() * 60 - 10}%` },
+            position: { top: `${Math.random() * 40 + 60}%`, right: `${Math.random() * 30 - 15}%` },
             size: `${Math.floor(Math.random() * 150 + 250)}px`,
             color: shuffledColors[2],
-            duration: `${Math.floor(Math.random() * 5 + 7)}s`,
-            delay: `${Math.random() * 3 + 2}s`,
+            duration: `${Math.floor(Math.random() * 5 + 20)}s`,
+            delay: `${Math.random() * 5 + 5}s`,
         },
     ];
 

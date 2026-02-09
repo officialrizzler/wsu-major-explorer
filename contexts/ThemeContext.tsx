@@ -1,11 +1,11 @@
 
 import React, { createContext, useEffect, useContext } from 'react';
 
-type Theme = 'dark';
+type Theme = 'light';
 
 interface ThemeContextType {
     theme: Theme;
-    toggleTheme: () => void; // Kept for API compatibility, but is now a no-op
+    toggleTheme: () => void; 
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -13,16 +13,16 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     useEffect(() => {
         const root = window.document.documentElement;
-        // Ensure dark mode is always applied and light mode is removed
-        root.classList.add('dark');
-        root.classList.remove('light');
-        // Clean up any old theme settings from local storage
+        
+        root.classList.remove('dark');
+        root.classList.add('light');
+        
         localStorage.removeItem('theme');
     }, []);
 
     const value = {
-        theme: 'dark' as Theme,
-        toggleTheme: () => {}, // No-op function does nothing when called
+        theme: 'light' as Theme,
+        toggleTheme: () => { }, 
     };
 
     return (

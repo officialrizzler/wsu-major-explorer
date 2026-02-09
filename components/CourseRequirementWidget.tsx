@@ -9,26 +9,26 @@ interface CourseRequirementWidgetProps {
 
 const cleanText = (text: string) => {
     if (!text) return '';
-    // Remove common WSU catalog symbols
+    
     let cleaned = text.replace(/[△*^†‡§#◆◇♦◎]/g, '').trim();
 
-    // Remove (X credits), (Select X credits), (Choose X-Y credits) at the end
-    // Regex explanation:
-    // \s*         : Optional whitespace
-    // \(          : Opening paren
-    // (?:[^)]*?)  : Optional non-greedy text (e.g. "Select ", "Total ")
-    // \d+(?:-\d+)? : The number (e.g. "3" or "3-4")
-    // \s*credits? : " credits" or " credit"
-    // \)          : Closing paren
+    
+    
+    
+    
+    
+    
+    
+    
     cleaned = cleaned.replace(/\s*\((?:[^)]*?\s+)?\d+(?:-\d+)?\s*credits?\)\s*$/i, '').trim();
 
-    // Remove " - " if it's left hanging at the start (common if symbol was at start)
+    
     cleaned = cleaned.replace(/^- /, '').trim();
 
-    // Normalize "Major Requirements" etc to consistent naming if it's a top level group
+    
     if (cleaned.toLowerCase() === 'major requirements') return 'Program Requirements';
 
-    // Hide data timeline notes from the main list as we'll show them in the header
+    
     if (cleaned.toLowerCase().includes('data may be outdated') || /20\d{2}-20\d{2} data/i.test(cleaned)) {
         return '';
     }
@@ -37,7 +37,7 @@ const cleanText = (text: string) => {
 };
 
 const extractCredits = (name: string) => {
-    // Matches "(3 credits)", "(Select 3 credits)", "(Total 12 credits)" and extracts the number
+    
     const match = name.match(/\((?:[^)]*?\s+)?(\d+(?:-\d+)?)\s*credits?\)/i);
     return match ? match[1] : null;
 };
@@ -47,16 +47,16 @@ const CourseItem: React.FC<{ item: Course | CourseText }> = ({ item }) => {
     if (item.type === 'text') {
         const cleanedContent = cleanText(item.content);
         if (!cleanedContent) return null;
-        return <div className="py-1 px-2 text-gray-500 italic text-[11px] border-l border-gray-700 ml-1 mb-1">{cleanedContent}</div>;
+        return <div className="py-1 px-2 text-gray-500 italic text-[11px] border-l border-gray-300 ml-1 mb-1">{cleanedContent}</div>;
     }
 
     let cleanedTitle = cleanText(item.course_title);
     let courseId = item.course_id;
 
-    // Aggressive split logic if ID is missing or Title contains ID
+    
     if (!courseId || cleanedTitle.includes(courseId)) {
-        // Regex to find ID at start: ENG 404, MIS362, etc.
-        // Followed by separator: - : – or space
+        
+        
         const match = cleanedTitle.match(/^([A-Z]{2,4}\s*\d{3}[A-Z]*)\s*[-:–]?\s*(.*)$/);
         if (match) {
             courseId = match[1];
@@ -71,13 +71,13 @@ const CourseItem: React.FC<{ item: Course | CourseText }> = ({ item }) => {
     }
 
     return (
-        <div className="flex items-start gap-2 p-1.5 bg-gray-900/40 border border-gray-800 transition-colors hover:bg-gray-800/60">
+        <div className="flex items-start gap-2 p-1.5 bg-white/60 border border-gray-200 transition-colors hover:bg-gray-50 shadow-sm rounded-md">
             <div className="min-w-0 flex-grow">
-                {courseId && <div className="font-bold text-gray-100 text-xs leading-tight">{courseId}</div>}
-                <div className="text-[11px] text-gray-300 leading-tight mt-0.5">{cleanedTitle}</div>
+                {courseId && <div className="font-bold text-gray-900 text-xs leading-tight">{courseId}</div>}
+                <div className="text-[11px] text-gray-600 leading-tight mt-0.5">{cleanedTitle}</div>
             </div>
             {item.credits && (
-                <div className="self-center text-[10px] font-bold text-white px-2 py-1 border border-white/30 uppercase tracking-wider shrink-0 bg-gray-800 rounded-sm min-w-[45px] text-center shadow-sm">
+                <div className="self-center text-[10px] font-bold text-gray-700 px-2 py-1 border border-gray-200 uppercase tracking-wider shrink-0 bg-gray-100 rounded-sm min-w-[45px] text-center shadow-sm">
                     {item.credits.replace(/[a-z]/gi, '').trim()} CR
                 </div>
             )}
@@ -86,20 +86,20 @@ const CourseItem: React.FC<{ item: Course | CourseText }> = ({ item }) => {
 };
 
 
-// Helper to determine depth style
+
 const getHeaderStyle = (depth: number) => {
     switch (depth) {
-        case 0: return "text-sm font-black text-white mb-2 mt-6 first:mt-0 border-b border-gray-800 pb-1 uppercase tracking-widest";
-        case 1: return "text-xs font-bold text-gray-300 mb-1 mt-3 uppercase tracking-wider";
+        case 0: return "text-sm font-black text-gray-900 mb-2 mt-6 first:mt-0 border-b border-gray-200 pb-1 uppercase tracking-widest";
+        case 1: return "text-xs font-bold text-gray-700 mb-1 mt-3 uppercase tracking-wider";
         default: return "text-[10px] font-bold text-gray-500 mb-1 mt-2 uppercase";
     }
 };
 
 const RecursiveSection: React.FC<{ group: CourseGroup; depth: number }> = ({ group, depth }) => {
-    // Clean the name but keep it faithful to the catalog
+    
     const cleanedName = cleanText(group.group_name);
 
-    // Extract credits for display if present
+    
     const creditsFromHeader = extractCredits(group.group_name);
     let displayCredits = group.credits_required || creditsFromHeader;
 
@@ -109,23 +109,23 @@ const RecursiveSection: React.FC<{ group: CourseGroup; depth: number }> = ({ gro
                 <div className={`flex items-center justify-between pr-1.5 ${getHeaderStyle(depth)}`}>
                     <span className="flex-grow mr-2">{cleanedName}</span>
                     {displayCredits && (
-                        <span className="shrink-0 text-[10px] font-bold px-2 py-1 border bg-amber-500/10 text-amber-400 border-amber-500/30 rounded-sm">
+                        <span className="shrink-0 text-[10px] font-bold px-2 py-1 border bg-amber-50 text-amber-700 border-amber-200 rounded-sm">
                             {depth > 0 ? `CHOOSE ${displayCredits} CR` : `${displayCredits} CR`}
                         </span>
                     )}
                 </div>
             )}
 
-            {/* Notes */}
+            {}
             {group.notes && group.notes.length > 0 && (
                 <div className="mb-2 space-y-1">
                     {group.notes.map((note, idx) => (
-                        <p key={idx} className="text-[10px] text-blue-400/70 italic pl-1">{note}</p>
+                        <p key={idx} className="text-[10px] text-blue-600 italic pl-1">{note}</p>
                     ))}
                 </div>
             )}
 
-            {/* Items */}
+            {}
             <div className="space-y-1 mb-2">
                 {group.items.map((item, idx) => (
                     <React.Fragment key={idx}>
@@ -134,7 +134,7 @@ const RecursiveSection: React.FC<{ group: CourseGroup; depth: number }> = ({ gro
                 ))}
             </div>
 
-            {/* Subgroups */}
+            {}
             {group.subgroups && group.subgroups.length > 0 && (
                 <div className="space-y-2">
                     {group.subgroups.map((sub, idx) => (
@@ -157,8 +157,8 @@ const CourseRequirementWidget: React.FC<CourseRequirementWidgetProps> = ({ cours
                             const year1 = parseInt(match[1]);
                             const year2 = match[2].length === 2 ? parseInt(`20${match[2]}`) : parseInt(match[2]);
 
-                            // Only accept if years are consecutive (academic year pattern)
-                            // e.g., 2024-2025 is valid, but 2022-2032 is not
+                            
+                            
                             if (year2 === year1 + 1) {
                                 return `${year1}-${year2}`;
                             }
@@ -179,12 +179,12 @@ const CourseRequirementWidget: React.FC<CourseRequirementWidgetProps> = ({ cours
 
     return (
         <div className="space-y-6">
-            <div className="flex items-center justify-between pb-3 border-b border-gray-800/60 px-1">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-200 px-1">
                 <div className="flex items-center gap-2">
-                    <Calendar size={14} className="text-gray-500" />
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Academic Year</span>
+                    <BookOpen size={14} className="text-gray-400" />
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Academic Year</span>
                 </div>
-                <span className={`text-[8px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-tighter ${catalogTimeline.includes('2025-2026') ? 'bg-purple-950/40 text-purple-400/80 border-purple-900/40' : 'bg-blue-950/40 text-blue-400/80 border-blue-900/40'}`}>
+                <span className={`text-[8px] font-bold px-2 py-0.5 rounded-full border uppercase tracking-tighter ${catalogTimeline.includes('2025-2026') ? 'bg-purple-50 text-purple-700 border-purple-200' : 'bg-blue-50 text-blue-700 border-blue-200'}`}>
                     {catalogTimeline} WSU Catalog
                 </span>
             </div>
