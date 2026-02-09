@@ -48,9 +48,9 @@ const AboutPage: React.FC = () => {
         </div>
       </DynamicBackground>
 
-      <div className="container mx-auto px-4 py-16 relative z-20"> {}
+      <div className="container mx-auto px-4 py-16 relative z-20"> { }
 
-        {}
+        { }
         <div ref={dataSourceRef} className="mb-24 scroll-animate">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted Data Sources</h2>
@@ -89,10 +89,10 @@ const AboutPage: React.FC = () => {
         </div>
 
         <div className="space-y-24">
-          {}
+          { }
 
-          {}
-          {}
+          { }
+          { }
           <div className="space-y-12">
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Methodology</h2>
@@ -123,7 +123,7 @@ const AboutPage: React.FC = () => {
                 colorClass="text-rose-600"
               />
 
-              {}
+              { }
               <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm border-t-4 border-t-amber-400 hover:shadow-md transition-shadow">
                 <div className="flex gap-4">
                   <div className="p-3 bg-amber-50 rounded-lg text-amber-600 h-fit">
@@ -144,7 +144,7 @@ const AboutPage: React.FC = () => {
                 </div>
               </div>
 
-              {}
+              { }
               <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm border-t-4 border-t-blue-400 hover:shadow-md transition-shadow">
                 <div className="flex gap-4">
                   <div className="p-3 bg-blue-50 rounded-lg text-blue-600 h-fit">
@@ -155,18 +155,13 @@ const AboutPage: React.FC = () => {
                     <div className="text-gray-600 font-body text-sm leading-relaxed">
                       WSU Major Explorer was built as an independent project to explore data visualization in higher education. I earn no money from this project, and it is not officially affiliated with WSU administration. However, complete transparency is essential, so this tool is built strictly with official, verifiable data.
                     </div>
-                    <div className="mt-4 pt-4 border-t border-gray-100">
-                      <a href="https://github.com/officialrizzler/wsu-major-explorer" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs font-bold text-gray-500 hover:text-gray-900 transition-colors uppercase tracking-wider">
-                        <Github size={14} /> View Source Code
-                      </a>
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {}
+          { }
           <div className="relative rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-xl">
             <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-primary-100/50 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-purple-100/50 rounded-full blur-3xl"></div>

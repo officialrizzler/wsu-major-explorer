@@ -115,7 +115,7 @@ async function scrapeDepartmentFaculty(departmentId, url) {
             }
         });
 
-        console.log(`     Found ${faculty.length} professors`);
+        // console.log(`     Found ${faculty.length} professors`);
         return faculty;
 
     } catch (error) {
@@ -157,9 +157,9 @@ async function scrapeTopProfessors() {
             totalScraped++;
             if (rmpData) {
                 totalWithRatings++;
-                console.log(`     ⭐ ${prof.name}: ${rmpData.avg_rating}/5.0`);
+                // console.log(`     ⭐ ${prof.name}: ${rmpData.avg_rating}/5.0`);
             } else {
-                console.log(`     ❌ ${prof.name}: Not on RMP`);
+                // console.log(`     ❌ ${prof.name}: Not on RMP`);
             }
         }
 
@@ -179,7 +179,7 @@ async function scrapeTopProfessors() {
         // Select top 3
         professorsByDepartment[deptId] = facultyWithRatings.slice(0, 3);
 
-        console.log(`     ✅ Selected top 3 for ${deptId}\n`);
+        // console.log(`     ✅ Selected top 3 for ${deptId}\n`);
         await delay(500); // Reduced from 2000ms
     }
 

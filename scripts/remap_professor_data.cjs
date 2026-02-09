@@ -81,7 +81,7 @@ for (const [oldId, newId] of Object.entries(DEPT_ID_MAPPING)) {
 const outputPath = path.join(__dirname, '..', 'data', 'professors_data.json');
 fs.writeFileSync(outputPath, JSON.stringify(remappedData, null, 2));
 
-console.log(`✅ Remapped professor data!`);
-console.log(`   Original: ${Object.keys(profData).length} departments`);
-console.log(`   Remapped to match wsuData: ${Object.keys(remappedData).length} departments`);
-console.log(`   Saved to: ${outputPath}`);
+// console.log(`✅ Remapped professor data!`);
+// console.log(`   Original: ${Object.keys(profData).length} departments`);
+// console.log(`   Remapped to match wsuData: ${Object.keys(remappedData).length} departments`);
+// console.log(`   Saved to: ${outputPath}`);

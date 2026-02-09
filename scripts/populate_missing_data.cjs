@@ -164,7 +164,7 @@ async function run() {
     // 3. Scrape Loop
     for (let i = 0; i < toScrape.length; i++) {
         const item = toScrape[i];
-        console.log(`[${i + 1}/${toScrape.length}] Scraping ${item.id}...`);
+        // console.log(`[${i + 1}/${toScrape.length}] Scraping ${item.id}...`);
 
         try {
             await new Promise(r => setTimeout(r, DELAY_MS));
@@ -175,9 +175,9 @@ async function run() {
                 existingData[item.id] = groups;
                 processedIds.add(item.id);
                 successCount++;
-                console.log(`  + Found ${groups.length} groups.`);
+                // console.log(`  + Found ${groups.length} groups.`);
             } else {
-                console.log(`  - No data found.`);
+                // console.log(`  - No data found.`);
             }
         } catch (e) {
             console.error(`  ! Error: ${e.message}`);

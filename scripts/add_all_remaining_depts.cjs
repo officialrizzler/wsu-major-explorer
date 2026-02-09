@@ -1,11 +1,11 @@
-// Add all remaining departments with faculty from web search results
+
 
 const fs = require('fs');
 const path = require('path');
 
 const current = require('../data/professors_data.json');
 
-// All remaining departments with faculty from web searches
+
 const remainingDepts = {
     'chemistry_dept': [
         { name: 'Sara M. Hein', title: 'Department Chair, Professor' },
@@ -57,7 +57,7 @@ const remainingDepts = {
         { name: 'James Kirk', title: 'Faculty' },
         { name: 'Amy Andersen', title: 'Faculty' },
     ],
-    // Adding these without full data but at least 2 professors each
+
     'theatre_and_dance_dept': [
         { name: 'Vivian Fusillo', title: 'Department Chair' },
         { name: 'Jacqulyn Rische', title: 'Professor' },
@@ -107,12 +107,12 @@ const merged = { ...current, ...remainingDepts };
 const outputPath = path.join(__dirname, '..', 'data', 'professors_data.json');
 fs.writeFileSync(outputPath, JSON.stringify(merged, null, 2));
 
-console.log('✅ Added ALL remaining departments!');
-console.log(`   Total departments now: ${Object.keys(merged).length}`);
-console.log(`\n   Added 20 more departments:`);
-console.log('   - Chemistry, English, Math & Stats');
-console.log('   - History & Legal Studies, Business Admin');
-console.log('   - Social Work, Physics, Mass Communication');
-console.log('   - Education departments (4)');
-console.log('   - And 11 more!');
-console.log(`\n   All 39 academic departments now have AT LEAST 2 professors!`);
+// console.log('✅ Added ALL remaining departments!');
+// console.log(`   Total departments now: ${Object.keys(merged).length}`);
+// console.log(`\n   Added 20 more departments:`);
+// console.log('   - Chemistry, English, Math & Stats');
+// console.log('   - History & Legal Studies, Business Admin');
+// console.log('   - Social Work, Physics, Mass Communication');
+// console.log('   - Education departments (4)');
+// console.log('   - And 11 more!');
+// console.log(`\n   All 39 academic departments now have AT LEAST 2 professors!`);
