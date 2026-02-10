@@ -1,6 +1,9 @@
 import { Redis } from "@upstash/redis";
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-export const redis = Redis.fromEnv();
+export const redis = (REDIS_URL && REDIS_TOKEN) ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN }) : null;
+if (!redis) console.warn("Rate limiting disabled: Redis environment variables are missing.");
 
 function getClientIp(req) {
   const xff = req.headers["x-forwarded-for"];
@@ -32,6 +35,8 @@ export async function enforceAiLimits(req, res) {
     res.status(413).json({ error: "Prompt too long", maxChars: MAX_CHARS });
     return false;
   }
+
+  if (!redis) return true;
 
   try {
     const dailyKey = `ai:quota:${ip}:${day}`;

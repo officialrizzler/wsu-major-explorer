@@ -1,5 +1,5 @@
 import { systemInstruction } from "./private/ai_config.js";
-import { enforceAiLimits } from "./utils/rateLimit.js";
+import { enforceAiLimits, redis } from "./utils/rateLimit.js";
 import cors from "cors";
 import express from "express";
 import OpenAI from "openai";
@@ -40,8 +40,10 @@ app.post("/api/chat", async (req, res) => {
     // --- Backend Cache (Redis) ---
     const cacheKey = `ai:cache:${Buffer.from(userQuery).toString('base64').slice(0, 32)}`;
     try {
-      const cached = await (await import("./utils/rateLimit.js")).redis.get(cacheKey);
-      if (cached) return res.json({ text: cached });
+      if (redis) {
+        const cached = await redis.get(cacheKey);
+        if (cached) return res.json({ text: cached });
+      }
     } catch (e) { }
 
     // --- Hybrid Search / Local Context ---
@@ -80,7 +82,9 @@ app.post("/api/chat", async (req, res) => {
 
     // Store in cache for 1 hour
     try {
-      await (await import("./utils/rateLimit.js")).redis.set(cacheKey, responseText, { ex: 3600 });
+      if (redis) {
+        await redis.set(cacheKey, responseText, { ex: 3600 });
+      }
     } catch (e) { }
 
     return res.json({ text: responseText });
