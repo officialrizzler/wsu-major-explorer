@@ -2,6 +2,12 @@
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "wsu-major-explorer.vercel.app"
+        }
+      ],
       "destination": "https://explorewinona.vercel.app/$1",
       "permanent": true
     }
