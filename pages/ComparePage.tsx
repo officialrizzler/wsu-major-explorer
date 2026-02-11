@@ -9,12 +9,12 @@ import DynamicBackground from '../components/DynamicBackground';
 import AddProgramModal from '../components/AddProgramModal';
 
 const collegeColorHexMap: Record<string, string> = {
-    'College of Business': '#06b6d4', 
-    'College of Education': '#f59e0b', 
-    'College of Liberal Arts': '#6366f1', 
-    'College of Nursing and Health Sciences': '#f43f5e', 
-    'College of Science and Engineering': '#10b981', 
-    'Pre-Professional Pathways': '#64748b', 
+    'College of Business': '#06b6d4',
+    'College of Education': '#f59e0b',
+    'College of Liberal Arts': '#6366f1',
+    'College of Nursing and Health Sciences': '#f43f5e',
+    'College of Science and Engineering': '#10b981',
+    'Pre-Professional Pathways': '#64748b',
 };
 
 const ComparePage: React.FC = () => {
@@ -27,7 +27,7 @@ const ComparePage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    
+
     useEffect(() => {
         if (loading) return;
 
@@ -44,7 +44,7 @@ const ComparePage: React.FC = () => {
                 .filter(Boolean) as Program[];
 
             if (matchedPrograms.length > 0) {
-                
+
                 const currentIds = compareList.map(p => p.program_id).join(',');
                 const newIds = matchedPrograms.map(p => p.program_id).join(',');
                 if (currentIds !== newIds) {
@@ -54,18 +54,18 @@ const ComparePage: React.FC = () => {
         }
     }, [loading, programs, searchParams, setCompareList, compareList]);
 
-    
+
     useEffect(() => {
         if (compareList.length > 0) {
             const names = compareList.map(p => p.program_name).join(' vs ');
-            document.title = `${names} | WSU Major Explorer`;
+            document.title = `${names} | Winona State Explorer`;
 
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
                 metaDesc.setAttribute('content', `Compare ${compareList.map(p => p.program_name).join(' and ')} majors by outcomes, coursework, and career paths.`);
             }
         } else {
-            document.title = 'Compare Programs | WSU Major Explorer';
+            document.title = 'Compare Programs | Winona State Explorer';
         }
     }, [compareList]);
 
@@ -76,7 +76,7 @@ const ComparePage: React.FC = () => {
         if (compareList[2]) params.set('p3', compareList[2].program_id);
         if (compareList[3]) params.set('p4', compareList[3].program_id);
 
-        
+
         const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
 
         navigator.clipboard.writeText(url).then(() => {
@@ -164,7 +164,7 @@ const ComparePage: React.FC = () => {
                     <div className="overflow-x-auto rounded-b-xl">
                         <table className="w-full min-w-[600px] border-separate border-spacing-0 table-fixed">
                             <tbody>
-                                {}
+                                { }
                                 <tr className="border-b border-gray-200 bg-gray-50/50">
                                     <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-900 font-body bg-white z-20 border-r border-b border-gray-200 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         <span className="text-sm sm:text-base">Programs</span>
@@ -195,7 +195,7 @@ const ComparePage: React.FC = () => {
                                     ))}
                                 </tr>
 
-                                {}
+                                { }
                                 {metrics.map((metric) => {
                                     const bestValue = getBestValue(metric);
 
@@ -247,7 +247,7 @@ const ComparePage: React.FC = () => {
             {compareList.length === 0 ? <EmptyState /> : <TableView />}
             {isAddModalOpen && <AddProgramModal onClose={() => setAddModalOpen(false)} />}
 
-            {}
+            { }
             <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-[60] transition-all duration-300 pointer-events-none ${showCopyToast ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                 <div className="bg-white border border-gray-200 text-gray-900 px-6 py-3 rounded-full shadow-2xl flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">

@@ -101,16 +101,16 @@ const ExplorePage: React.FC = () => {
     const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
     const interestId = searchParams.get('interest');
 
-    
+
     useEffect(() => {
-        let title = 'Explore Programs | WSU Major Explorer';
+        let title = 'Program Catalog | Winona State Explorer';
         if (searchTerm) {
-            title = `Search: "${searchTerm}" | WSU Major Explorer`;
+            title = `Search: "${searchTerm}" | Winona State Explorer`;
         } else if (interestId) {
             const interestEntry = Object.entries(interestMappings).find(([_, value]) => value.id === interestId);
             if (interestEntry) {
                 const interestName = interestEntry[0].charAt(0).toUpperCase() + interestEntry[0].slice(1);
-                title = `${interestName} Programs | WSU Major Explorer`;
+                title = `${interestName} Programs | Winona State Explorer`;
             }
         }
         document.title = title;
@@ -205,7 +205,7 @@ const ExplorePage: React.FC = () => {
                 <div className={`sticky top-16 z-30 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-6'}`}>
                     <div className="bg-white/80 backdrop-blur-xl border border-white/40 shadow-lg shadow-gray-200/50 rounded-2xl p-2 pl-4 flex flex-col md:flex-row items-center gap-2 ring-1 ring-black/5">
 
-                        {}
+                        { }
                         <div className="relative flex-grow w-full md:w-auto flex items-center">
                             <Search className="text-gray-500 flex-shrink-0" size={20} />
                             <input
@@ -217,10 +217,10 @@ const ExplorePage: React.FC = () => {
                             />
                         </div>
 
-                        {}
+                        { }
                         <div className="hidden md:block w-px h-8 bg-gray-200 mx-1"></div>
 
-                        {}
+                        { }
                         <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
                             {Object.entries(filterOptions).map(([title, options]) => (
                                 <div key={title} className="w-full sm:w-auto min-w-[140px]">
@@ -245,7 +245,7 @@ const ExplorePage: React.FC = () => {
                     </div>
                 </div>
 
-                {}
+                { }
                 <div className={`fixed top-24 right-6 z-40 transition-all duration-500 ease-in-out ${isScrolled ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12 pointer-events-none'}`}>
                     <button
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

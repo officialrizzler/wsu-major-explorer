@@ -94,7 +94,7 @@ const ProgramDetailPage: React.FC = () => {
 
     const program = getProgramById(programId);
 
-    
+
     const siteUrl = "https://wsu-major-explorer.vercel.app";
     const canonicalUrl = program ? `${siteUrl}/program/${program.program_id}` : siteUrl;
 
@@ -146,7 +146,7 @@ const ProgramDetailPage: React.FC = () => {
     return (
         <div className="bg-[#f5f5f7] min-h-screen">
             <Helmet>
-                <title>{`${program.program_name} | WSU Major Explorer`}</title>
+                <title>{`${program.program_name} | Winona State Explorer`}</title>
                 <meta name="description" content={program.overview ? program.overview.substring(0, 160) + '...' : `Explore the ${program.program_name} program at Winona State University.`} />
                 <link rel="canonical" href={canonicalUrl} />
                 <script type="application/ld+json">
@@ -231,7 +231,7 @@ const ProgramDetailPage: React.FC = () => {
                             </Widget>
                         )}
 
-                        {}
+                        { }
                         {program.course_structure && (
                             <Widget title="Program Requirements" icon={<BookOpen size={24} className="text-purple-600" />} defaultOpen={false}>
                                 <CourseRequirementWidget courseStructure={program.course_structure} />
@@ -300,7 +300,7 @@ const ProgramDetailPage: React.FC = () => {
                             </div>
                         )}
 
-                        {}
+                        { }
                         {program.department && (
                             <ProfessorWidget
                                 departmentId={program.department.department_id}

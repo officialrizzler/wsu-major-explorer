@@ -829,18 +829,11 @@ export const dataSources: DataSource[] = [
         source_url: 'https://catalog.winona.edu/'
     },
     {
-        source_id: 'WSU_IPAR_ENROLLMENT_2021',
-        source_name: 'WSU IPAR Enrollment Data',
-        source_year: 'Fall 2020-2021',
-        source_notes: 'Official enrollment counts for Fall 2021 from WSU’s Institutional Planning, Assessment, and Research (IPAR) office. This data represents a snapshot in time and is used to calculate a simplified enrollment trend. Not all programs, especially new ones, may have complete data.',
-        source_url: 'https://www.winona.edu/about/leadership/institutional-data/'
-    },
-    {
-        source_id: 'WSU_IPAR_GRADUATES_2021',
-        source_name: 'WSU IPAR Degrees Awarded',
-        source_year: 'FY 2021',
-        source_notes: 'Official degree completion data for Fiscal Year 2021 from WSU IPAR. This represents the total number of degrees awarded for a program in that year. Data is typically not available for minors or non-degree-granting programs.',
-        source_url: 'https://www.winona.edu/about/leadership/institutional-data/'
+        source_id: 'WINONA_EDU',
+        source_name: 'Winona.edu',
+        source_year: '2024-2025',
+        source_notes: 'Official Winona State University website. Institutional data including enrollment figures, degrees awarded (Fall 2022–Summer 2023), retention rate (76.8%), six-year graduation rate (60.9%), financial aid statistics, average institutional award, loan default rate, student-to-faculty ratio, class size distribution, Common Data Set, top employer pipelines, and student organizations.',
+        source_url: 'https://www.winona.edu/about/'
     },
     {
         source_id: 'MN_DEED_OES_2024',
@@ -855,5 +848,19 @@ export const dataSources: DataSource[] = [
         source_year: '2025',
         source_notes: 'Student-submitted reviews and ratings for university faculty. This data provides peer-to-peer perspective on instructional quality and course experience. All RMP data is aggregated from public profiles and represents subjective student opinions.',
         source_url: 'https://www.ratemyprofessors.com/school/1214'
+    },
+    {
+        source_id: 'WSU_BUDGET_FORUM_FY2026',
+        source_name: 'WSU Budget Forum Presentation',
+        source_year: 'FY2026 (Nov. 2025)',
+        source_notes: 'Official university budget presentation for FY2026 covering full-year equivalent enrollment, new freshman enrollment trends, tuition comparisons across the Minnesota State university system, and financial planning data.',
+        source_url: 'https://www.winona.edu/about/leadership/university-finances/annual-budget/'
+    },
+    {
+        source_id: 'NSSE_SNAPSHOT_2021',
+        source_name: 'NSSE Snapshot 2021',
+        source_year: '2021',
+        source_notes: 'National Survey of Student Engagement (NSSE) institutional snapshot for Winona State University. Covers student-reported measures of higher-order thinking, collaborative learning, effective writing, and overall engagement compared to peer institutions.',
+        source_url: 'https://www.winona.edu/assessment/nsse.asp'
     }
 ];

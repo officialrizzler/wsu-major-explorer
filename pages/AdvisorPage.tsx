@@ -16,7 +16,7 @@ const AdvisorPage: React.FC = () => {
     const { compareList } = useCompare();
 
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { role: 'model', text: "Hello! I am Warrior Bot, and I'm ready to help you explore academic programs at Winona State University.\n\nYou can ask me things like:\n- \"What majors does WSU have for biology?\"\n- \"Tell me about the Nursing program.\"\n- \"I like art and computers, what should I study?\"\n\nHow can I help you today?\n\nPlease remember to connect with an official WSU academic advisor for the most accurate and personalized guidance." }
+        { role: 'model', text: "Hello! I am your AI Advisor, and I'm ready to help you explore academic programs at Winona State University.\n\nYou can ask me things like:\n- \"What majors does WSU have for biology?\"\n- \"Tell me about the Nursing program.\"\n- \"I like art and computers, what should I study?\"\n\nHow can I help you today?\n\nPlease remember to connect with an official WSU academic advisor for the most accurate and personalized guidance." }
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +53,7 @@ const AdvisorPage: React.FC = () => {
         setInput('');
         setIsLoading(true);
 
-        
+
         setTimeout(() => scrollToBottom('smooth'), 100);
 
         const chatHistoryForApi = [...messages, userMessage].slice(-8).map(msg => ({
