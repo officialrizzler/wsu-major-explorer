@@ -67,6 +67,6 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
 
     } catch (error) {
         console.error("Error in getAdvisorResponse:", error);
-        return "I'm sorry, I encountered a connection error. Please check your network and try again. If the problem persists, please contact a WSU advisor directly.";
+        return "I'm sorry, I encountered a connection error. Please check your network and try again. If the problem persists, please try again later.";
     }
 };

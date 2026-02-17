@@ -113,7 +113,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `Your goal is to help students explore academic programs at WSU. ` +
       `Provide helpful, encouraging advice about choosing majors and careers. ` +
       `When program details are provided below, use them to give accurate information about credits and requirements. ` +
-      `Always remind users to speak with an official WSU academic advisor for personalized guidance. ` +
+      `Occasionally (not every message) remind users that they should consult with an official WSU academic advisor for personalized guidance. ` +
       `Return PLAIN TEXT ONLY. NO MARKDOWN. NO BOLDING.` +
       contextSnippet;
 
