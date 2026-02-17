@@ -68,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(429).json({ error: "Daily message limit exceeded. Please try again tomorrow." });
     }
 
-    const { chatHistory, userQuery, programContext } = req.body;
+    const { chatHistory, userQuery, programContext, professorContext } = req.body;
 
     if (!userQuery || typeof userQuery !== "string" || !Array.isArray(chatHistory)) {
       return res.status(400).json({ error: "Invalid request body" });
@@ -100,6 +100,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ).join("\n");
     }
 
+    // Build professor context snippet from frontend-provided professors
+    if (professorContext && Array.isArray(professorContext) && professorContext.length > 0) {
+      contextSnippet += "\n\nRelevant WSU Professors:\n" +
+        professorContext.slice(0, 5).map((prof: any) =>
+          `- ${prof.name} (${prof.title}): RateMyProfessor rating ${prof.avg_rating}/5 based on ${prof.num_ratings} reviews, ${prof.would_take_again_percent}% would take again. Teaches: ${prof.courses_taught?.join(', ') || 'N/A'}`
+        ).join("\n");
+    }
+
     const trimmedHistory = chatHistory
       .slice(-MAX_HISTORY_MESSAGES)
       .map((msg: any) => {
@@ -113,6 +121,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `Your goal is to help students explore academic programs at WSU. ` +
       `Provide helpful, encouraging advice about choosing majors and careers. ` +
       `When program details are provided below, use them to give accurate information about credits and requirements. ` +
+      `When professor information is provided below, use it to help students compare professors and make informed decisions about course selection. ` +
       `Occasionally (not every message) remind users that they should consult with an official WSU academic advisor for personalized guidance. ` +
       `Return PLAIN TEXT ONLY. NO MARKDOWN. NO BOLDING.` +
       contextSnippet;

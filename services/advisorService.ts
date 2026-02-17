@@ -1,5 +1,6 @@
 
 import { programsRaw, interestMappings } from '../data/wsuData';
+import professorsData from '../data/professors_data.json';
 
 const COMMON_QUERIES_CACHE = new Map<string, string>([
     ['hello', "Hi there! I'm Warrior Bot. How can I help you explore WSU majors today?"],
@@ -10,6 +11,8 @@ const COMMON_QUERIES_CACHE = new Map<string, string>([
     ['thank you', "You're welcome! Let me know if you have more questions."],
 ]);
 
+// Flatten the professors data for easier searching
+const allProfessors = Object.values(professorsData).flat();
 
 export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; parts: { text: string }[] }[], userQuery: string): Promise<string> => {
 
@@ -29,6 +32,15 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
         return nameMatch || keywordMatch || degreeTypeMatch;
     }).slice(0, 5); // Limit to 5 most relevant programs
 
+    // Search for relevant professors based on the user's query
+    const matchedProfessors = allProfessors.filter((prof: any) => {
+        const nameMatch = prof.name.toLowerCase().includes(lowerQuery);
+        const courseMatch = prof.courses_taught?.some((course: string) =>
+            lowerQuery.includes(course.toLowerCase())
+        );
+        return nameMatch || courseMatch;
+    }).slice(0, 5); // Limit to 5 most relevant professors
+
     try {
         const response = await fetch("/api/chat", {
             method: 'POST',
@@ -44,6 +56,14 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
                     program_credits: p.program_credits,
                     short_description: p.short_description,
                     total_credits: p.total_credits,
+                })),
+                professorContext: matchedProfessors.map((prof: any) => ({
+                    name: prof.name,
+                    title: prof.title,
+                    avg_rating: prof.avg_rating,
+                    num_ratings: prof.num_ratings,
+                    would_take_again_percent: prof.would_take_again_percent,
+                    courses_taught: prof.courses_taught?.slice(0, 10), // Limit courses for token usage
                 }))
             }),
         });
