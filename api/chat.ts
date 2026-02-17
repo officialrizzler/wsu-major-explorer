@@ -68,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(429).json({ error: "Daily message limit exceeded. Please try again tomorrow." });
     }
 
-    const { chatHistory, userQuery } = req.body;
+    const { chatHistory, userQuery, programContext } = req.body;
 
     if (!userQuery || typeof userQuery !== "string" || !Array.isArray(chatHistory)) {
       return res.status(400).json({ error: "Invalid request body" });
@@ -91,6 +91,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(413).json({ error: `Message too long.` });
     }
 
+    // Build context snippet from frontend-provided programs
+    let contextSnippet = "";
+    if (programContext && Array.isArray(programContext) && programContext.length > 0) {
+      contextSnippet = "\n\nRelevant WSU Programs:\n" +
+        programContext.slice(0, 5).map((p: any) =>
+          `- ${p.program_name} (${p.degree_type}): ${p.program_credits || 'varies'} credits. ${p.short_description || ''}`
+        ).join("\n");
+    }
+
     const trimmedHistory = chatHistory
       .slice(-MAX_HISTORY_MESSAGES)
       .map((msg: any) => {
@@ -103,8 +112,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `You are "Warrior Bot," a friendly AI assistant for Winona State University. ` +
       `Your goal is to help students explore academic programs at WSU. ` +
       `Provide helpful, encouraging advice about choosing majors and careers. ` +
+      `When program details are provided below, use them to give accurate information about credits and requirements. ` +
       `Always remind users to speak with an official WSU academic advisor for personalized guidance. ` +
-      `Return PLAIN TEXT ONLY. NO MARKDOWN. NO BOLDING.`;
+      `Return PLAIN TEXT ONLY. NO MARKDOWN. NO BOLDING.` +
+      contextSnippet;
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",

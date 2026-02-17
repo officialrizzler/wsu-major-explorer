@@ -1,4 +1,6 @@
 
+import { programsRaw, interestMappings } from '../data/wsuData';
+
 const COMMON_QUERIES_CACHE = new Map<string, string>([
     ['hello', "Hi there! I'm Warrior Bot. How can I help you explore WSU majors today?"],
     ['hi', "Hi there! I'm Warrior Bot. How can I help you explore WSU majors today?"],
@@ -16,13 +18,34 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
         return COMMON_QUERIES_CACHE.get(normalizedQuery)!;
     }
 
+    // Search for relevant programs based on the user's query
+    const lowerQuery = userQuery.toLowerCase();
+    const matchedPrograms = programsRaw.filter(p => {
+        const nameMatch = p.program_name.toLowerCase().includes(lowerQuery);
+        const keywordMatch = Object.values(interestMappings).some(interest =>
+            interest.keywords.some(kw => lowerQuery.includes(kw))
+        );
+        const degreeTypeMatch = lowerQuery.includes(p.degree_type.toLowerCase());
+        return nameMatch || keywordMatch || degreeTypeMatch;
+    }).slice(0, 5); // Limit to 5 most relevant programs
+
     try {
         const response = await fetch("/api/chat", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ chatHistory, userQuery }),
+            body: JSON.stringify({
+                chatHistory,
+                userQuery,
+                programContext: matchedPrograms.map(p => ({
+                    program_name: p.program_name,
+                    degree_type: p.degree_type,
+                    program_credits: p.program_credits,
+                    short_description: p.short_description,
+                    total_credits: p.total_credits,
+                }))
+            }),
         });
 
         if (response.status === 429) {
