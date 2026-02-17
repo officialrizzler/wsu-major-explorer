@@ -82,12 +82,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(400).json({ error: "Invalid request body" });
     }
 
-    // Check Cache first
+    // Smart cache: Normalize queries to catch common variations
+    const normalizeQuery = (query: string): string => {
+      return query
+        .toLowerCase()
+        .replace(/[^\w\s]/g, '') // Remove punctuation
+        .replace(/\s+/g, ' ')     // Normalize spaces
+        .trim()
+        .replace(/winona state university|wsu|winona state/gi, 'wsu') // Normalize school name
+        .replace(/how much does|what does|whats the cost|what is the cost/gi, 'cost')
+        .replace(/tuition|fees|price/gi, 'cost');
+    };
+
+    // Check cache with normalized query
     if (redis) {
       try {
-        const cacheKey = `chat_cache:${Buffer.from(userQuery).toString('base64').slice(0, 32)}`;
+        const normalizedQuery = normalizeQuery(userQuery);
+        const cacheKey = `chat_cache:${Buffer.from(normalizedQuery).toString('base64').slice(0, 40)}`;
         const cached = await redis.get<string>(cacheKey);
         if (cached) {
+          console.log(`Cache hit for: ${normalizedQuery}`);
           return res.status(200).json({ text: cached });
         }
       } catch (e) {
@@ -245,11 +259,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       responseText = "I'm sorry, I couldn't process that.";
     }
 
-    // Simple cache for identical queries (1 hour TTL)
-    if (redis) {
+    // Smart cache storage with longer TTL for common patterns
+    if (redis && responseText) {
       try {
-        const cacheKey = `chat_cache:${Buffer.from(userQuery).toString('base64').slice(0, 32)}`;
-        await redis.set(cacheKey, responseText, { ex: 3600 });
+        const normalizedQuery = normalizeQuery(userQuery);
+        const cacheKey = `chat_cache:${Buffer.from(normalizedQuery).toString('base64').slice(0, 40)}`;
+
+        // Longer cache for common question patterns (24 hours vs 1 hour)
+        const isCommonQuestion = /cost|tuition|fees|admission|deadline|program|major|housing|financial aid/i.test(normalizedQuery);
+        const ttl = isCommonQuestion ? 60 * 60 * 24 : 60 * 60; // 24h for common, 1h for specific
+
+        await redis.set(cacheKey, responseText, { ex: ttl });
+        console.log(`Cached response for: ${normalizedQuery} (TTL: ${ttl}s)`);
       } catch (e) {
         console.error("Cache set error:", e);
       }
