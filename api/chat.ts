@@ -12,9 +12,9 @@ const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
 const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
 const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 1000);
-const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 300);
-const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 5);
-const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1500);
+const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 200); // Reduced from 300
+const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 3); // Reduced from 5
+const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1000); // Reduced from 1500
 
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
 
@@ -148,16 +148,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
     const systemInstruction =
-      `You are "Warrior Bot," a friendly AI assistant for Winona State University. ` +
-      `Your goal is to help students explore academic programs at WSU. ` +
-      `Below you'll find WSU statistics, program details, and professor information that may be relevant to the user's question. ` +
-      `PRIORITY RULE: Always prioritize the specific WSU data provided below over your general knowledge. If WSU-specific information is available, use it exclusively. Only fall back to general knowledge if no relevant WSU data is provided. ` +
-      `If asked about information not in the WSU data provided (like tuition costs, admission deadlines, campus events, etc.), use the web_search function to find current, accurate information from official WSU sources. ` +
-      `Use your intelligence to determine which information is actually relevant - not everything provided will apply to every question. ` +
-      `When answering about programs, use the specific details provided (credits, descriptions). ` +
-      `When answering about professors, ONLY mention those listed below - if none are listed or relevant, say so honestly. Never make up professor names or information. ` +
-      `Occasionally (not every message) remind users that they should consult with an official WSU academic advisor for personalized guidance. ` +
-      `Return PLAIN TEXT ONLY. NO MARKDOWN. NO BOLDING.` +
+      `You are Warrior Bot, WSU's AI advisor. Help students explore programs using the data below. ` +
+      `PRIORITY: Use WSU data provided over your general knowledge. For info not in the data (tuition, deadlines), use web_search. ` +
+      `Programs data: Use exact credits/details. Professor data: ONLY mention listed professors - admit when you lack info. ` +
+      `Occasionally suggest consulting a WSU advisor. Plain text only, no markdown.` +
       contextSnippet;
 
     const tools = [

@@ -28,7 +28,7 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
         const searchText = `${p.program_name} ${p.degree_type} ${p.short_description || ''}`.toLowerCase();
         return programSearchTerms.some(term => searchText.includes(term)) ||
             p.program_name.toLowerCase().includes(lowerQuery);
-    }).slice(0, 10); // Increased from 5 to 10 for better context
+    }).slice(0, 5); // Reduced from 10 to 5 to save tokens
 
     // Dynamic professor search - broader approach
     // Extract potential keywords from the query for smarter matching
@@ -38,7 +38,7 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
         const profText = `${prof.name} ${prof.title} ${prof.courses_taught?.join(' ') || ''}`.toLowerCase();
         // Match if query contains professor name or if query keywords overlap with their courses
         return keywords.some(kw => profText.includes(kw));
-    }).slice(0, 15); // Send up to 15 professors for better coverage
+    }).slice(0, 5); // Reduced from 15 to 5 to save tokens
 
     // Generate WSU statistics for general queries
     const wsuStats = {
@@ -63,7 +63,7 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
                     program_name: p.program_name,
                     degree_type: p.degree_type,
                     program_credits: p.program_credits,
-                    short_description: p.short_description,
+                    short_description: p.short_description?.slice(0, 100) || '', // Trim to 100 chars
                     total_credits: p.total_credits,
                 })),
                 professorContext: matchedProfessors.map((prof: any) => ({
@@ -72,7 +72,7 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
                     avg_rating: prof.avg_rating,
                     num_ratings: prof.num_ratings,
                     would_take_again_percent: prof.would_take_again_percent,
-                    courses_taught: prof.courses_taught,
+                    courses_taught: prof.courses_taught?.slice(0, 5).join(', ') || 'N/A', // String instead of array, max 5 courses
                 }))
             }),
         });
