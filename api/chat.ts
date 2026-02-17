@@ -7,6 +7,7 @@ import { Redis } from "@upstash/redis";
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
 const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
 const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
@@ -32,6 +33,13 @@ function getClientIp(req: NextApiRequest) {
   return first || req.socket.remoteAddress || "unknown";
 }
 
+/**
+ * Rate limiter: 15 requests per day per IP address
+ * - Uses Redis for persistent storage (survives server restarts)
+ * - IP-based tracking (cannot be bypassed by clearing browser data)
+ * - Resets daily at midnight UTC
+ * - Returns false if limit exceeded, true if request is allowed
+ */
 async function applyRateLimiter(req: NextApiRequest): Promise<boolean> {
   if (!redis) return true;
   const ip = getClientIp(req);
@@ -181,19 +189,56 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const args = JSON.parse(searchCall.function.arguments);
         const searchQuery = args.query;
 
-        try {
-          // Use Google search via HTTP (simple, no API key needed for basic results)
-          const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+        if (TAVILY_API_KEY) {
+          try {
+            // Call Tavily Search API
+            const tavilyResponse = await fetch("https://api.tavily.com/search", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                api_key: TAVILY_API_KEY,
+                query: searchQuery,
+                search_depth: "basic",
+                include_answer: true,
+                max_results: 3
+              })
+            });
 
-          // For now, inform the user we attempted to search but need an API
-          responseText = `I tried to search for current information about "${searchQuery}" but I need a search API to be configured. ` +
-            `For the most current information about tuition, costs, and deadlines, I recommend visiting the official Winona State University website at winona.edu or contacting the admissions office directly.`;
+            if (tavilyResponse.ok) {
+              const searchResults = await tavilyResponse.json();
 
-          // TODO: Implement actual search API (Google Custom Search, Brave Search, or SerpAPI)
-          // For now, provide a helpful fallback response
-        } catch (error) {
-          console.error("Web search error:", error);
-          responseText = "I wasn't able to search for that information right now. For current details about tuition and costs, please visit winona.edu or contact WSU admissions.";
+              // Format search results for the AI
+              const searchContext = searchResults.answer ||
+                (searchResults.results?.slice(0, 3).map((r: any) => `${r.title}: ${r.content}`).join("\n\n") ||
+                  "No results found.");
+
+              // Make a second API call with the search results
+              const followUp = await openai.chat.completions.create({
+                model: "gpt-4o-mini",
+                messages: [
+                  { role: "system", content: systemInstruction },
+                  ...trimmedHistory,
+                  { role: "user", content: userQuery },
+                  { role: "assistant", content: null, tool_calls: [searchCall] },
+                  { role: "tool", content: searchContext, tool_call_id: searchCall.id }
+                ],
+                max_tokens: MAX_OUTPUT_TOKENS,
+                temperature: 0.7
+              });
+
+              responseText = followUp.choices[0]?.message?.content || "I found some information but couldn't process it properly.";
+            } else {
+              responseText = "I tried to search for that information but encountered an error. For current details about tuition and costs, please visit winona.edu.";
+            }
+          } catch (error) {
+            console.error("Tavily search error:", error);
+            responseText = "I wasn't able to search for that information right now. For current details, please visit the official Winona State website at winona.edu.";
+          }
+        } else {
+          // No Tavily API key configured
+          responseText = `For current information about ${searchQuery.toLowerCase()}, I recommend visiting the official Winona State University website at winona.edu or contacting the admissions office directly.`;
         }
       }
     } else if (!responseText) {
