@@ -17,17 +17,15 @@ const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 300);
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 5);
 const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1500);
 
-if (!OPENAI_API_KEY) {
-  throw new Error("OpenAI API key (OPENAI_API_KEY) not found on the server.");
-}
-
-const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
 
 let redis: Redis | null = null;
-if (UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN) {
-  redis = new Redis({ url: UPSTASH_REDIS_REST_URL, token: UPSTASH_REDIS_REST_TOKEN });
-} else {
-  console.warn("Upstash Redis environment variables not set. Rate limiting and caching will be limited.");
+try {
+  if (UPSTASH_REDIS_REST_URL && UPSTASH_REDIS_REST_TOKEN) {
+    redis = new Redis({ url: UPSTASH_REDIS_REST_URL, token: UPSTASH_REDIS_REST_TOKEN });
+  }
+} catch (e) {
+  console.error("Failed to initialize Redis:", e);
 }
 
 function getClientIp(req: NextApiRequest) {
@@ -48,6 +46,13 @@ async function applyRateLimiter(req: NextApiRequest): Promise<boolean> {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (!openai) {
+    console.error("OPENAI_API_KEY is missing from environment variables.");
+    return res.status(500).json({
+      error: "The AI Advisor is not configured correctly on the server. Please ensure OPENAI_API_KEY is set in the Vercel project settings."
+    });
+  }
+
   if (AI_ENABLED !== "true") {
     return res.status(503).json({ error: "The AI Advisor is temporarily disabled." });
   }

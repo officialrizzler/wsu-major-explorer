@@ -12,9 +12,10 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: ".env.local" });
 
-if (!process.env.OPENAI_API_KEY) {
-  console.error("OPENAI_API_KEY is missing. Check .env.local (project root) and restart server.");
-  process.exit(1);
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+if (!OPENAI_API_KEY) {
+  console.warn("⚠️ OPENAI_API_KEY is missing. AI Advisor will return error responses until set.");
 }
 
 const app = express();
@@ -22,11 +23,14 @@ const app = express();
 app.use(cors({ origin: true, credentials: false }));
 app.use(express.json());
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const openai = OPENAI_API_KEY ? new OpenAI({
+  apiKey: OPENAI_API_KEY,
+}) : null;
 
 app.post("/api/chat", async (req, res) => {
+  if (!openai) {
+    return res.status(500).json({ error: "AI Advisor not configured. Please set OPENAI_API_KEY environment variable." });
+  }
   const ok = await enforceAiLimits(req, res);
   if (!ok) return;
 

@@ -95,7 +95,7 @@ const ProgramDetailPage: React.FC = () => {
     const program = getProgramById(programId);
 
 
-    const siteUrl = "https://wsu-major-explorer.vercel.app";
+    const siteUrl = "https://explorewsu.vercel.app";
     const canonicalUrl = program ? `${siteUrl}/program/${program.program_id}` : siteUrl;
 
     const jsonLd = program ? {
