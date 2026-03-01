@@ -862,5 +862,12 @@ export const dataSources: DataSource[] = [
         source_year: '2021',
         source_notes: 'National Survey of Student Engagement (NSSE) institutional snapshot for Winona State University. Covers student-reported measures of higher-order thinking, collaborative learning, effective writing, and overall engagement compared to peer institutions.',
         source_url: 'https://www.winona.edu/assessment/nsse.asp'
+    },
+    {
+        source_id: 'IPEDS_DF_REPORT_2024',
+        source_name: 'IPEDS Data Feedback Report 2024',
+        source_year: '2024',
+        source_notes: 'Comprehensive annual data reported by the National Center for Education Statistics (NCES). This report provides standardized metrics for tuition, fees, average grant/scholarship aid, and on-campus housing costs, used to calculate the official average net price for undergraduate students.',
+        source_url: 'https://nces.ed.gov/ipeds/dfr/2024/ReportHTML.aspx?unitId=175272'
     }
 ];

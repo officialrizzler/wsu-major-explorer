@@ -87,12 +87,13 @@ const DATA = {
         topEmployers: ['Mayo Clinic', 'Fastenal', 'IBM', '3M', 'Target', 'Medtronic'],
     },
     cost: {
-        tuition: 10468,
-        avgInstitutionalAward: 5231,
+        tuition: 10498,
+        avgInstitutionalAward: 5696,
+        housingAndFood: 9924,
         aidFirstYear: 97,
         aidAllUndergrad: 81,
         loanDefaultRate: 1.1,
-        netPrice: 13712,
+        netPrice: 14726,
     },
     belonging: {
         retention: 76.8,
@@ -575,7 +576,7 @@ const CostVisual = () => (
                     </div>
                 </div>
                 <span className="font-black text-lg text-gray-800 tabular-nums">
-                    (varies)
+                    $<Counter to={DATA.cost.housingAndFood} />
                 </span>
             </motion.div>
 
@@ -638,7 +639,7 @@ const CostVisual = () => (
                         Average Net Price
                     </div>
                     <div className="text-4xl md:text-5xl font-black tracking-tight tabular-nums">
-                        $<Counter from={DATA.cost.tuition + DATA.cost.avgInstitutionalAward} to={DATA.cost.netPrice} duration={2.5} />
+                        $<Counter from={DATA.cost.tuition + DATA.cost.housingAndFood} to={DATA.cost.netPrice} duration={2.5} />
                     </div>
                     <div className="text-xs mt-2 opacity-60 font-medium">
                         Tuition + fees + room & board minus grants/aid
@@ -847,7 +848,7 @@ const WhyWinona = () => {
                     Most first-year students receive financial aid, and many graduates complete
                     with manageable debt — so you can plan with real numbers instead of guessing.
                 </p>
-                <SourceLine>WSU Budget Forum FY2026 · WSU Common Data Set 2022–2023</SourceLine>
+                <SourceLine>IPEDS Data Feedback Report 2024 · Winona State University</SourceLine>
             </NarrativeSection>
 
 
