@@ -61,9 +61,10 @@ import { Link } from 'react-router-dom';
 // ─────────────────────────────────────────────────────────
 const DATA = {
     scale: {
-        total: 5637,
-        graduates: 566,
-        freshmanClass: 1357,
+        total: 6482, // 5,754 undergrad + 728 grad
+        undergraduate: 5754,
+        graduates: 728,
+        freshmanClass: 1357, // Kept for now unless specified
         programs: 200,
     },
     support: {
@@ -257,9 +258,9 @@ const ScaleVisual = () => (
 
             <div className="space-y-3">
                 {[
+                    { icon: Users, label: 'Undergraduate students', value: DATA.scale.undergraduate, color: 'bg-blue-50 text-blue-600' },
                     { icon: GraduationCap, label: 'Graduate students', value: DATA.scale.graduates, color: 'bg-primary-50 text-primary-600' },
-                    { icon: BookOpen, label: 'Programs offered', value: DATA.scale.programs, suffix: '+', color: 'bg-blue-50 text-blue-600' },
-                    { icon: Users, label: 'New freshmen', value: DATA.scale.freshmanClass, color: 'bg-green-50 text-green-600' },
+                    { icon: BookOpen, label: 'Programs offered', value: DATA.scale.programs, suffix: '+', color: 'bg-green-50 text-green-600' },
                 ].map(({ icon: Ic, label, value, suffix, color }) => (
                     <div key={label} className="flex items-center justify-between p-4 bg-gray-50/80 rounded-2xl">
                         <div className="flex items-center gap-3">
@@ -762,15 +763,16 @@ const WhyWinona = () => {
                     Big enough to explore.
                 </h3>
                 <p className="text-lg text-gray-600 leading-relaxed font-medium mb-4">
-                    With <span className="text-primary-600 font-bold">5,637</span> students and{' '}
+                    With <span className="text-primary-600 font-bold">6,482</span> total students and{' '}
                     <span className="text-primary-600 font-bold">200+</span> programs across five colleges,
                     Winona State offers real breadth without the feeling of a mega-campus.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed font-medium">
-                    Explore different interests, meet people across disciplines, and still be part of
-                    a community where faces become familiar.
+                    Our community of <span className="font-bold text-gray-800">5,754</span> undergraduates and{' '}
+                    <span className="font-bold text-gray-800">728</span> graduate students provides a diverse academic environment
+                    where faces become familiar over time.
                 </p>
-                <SourceLine>WSU Budget Forum FY2026 · Full-Year Equivalent Enrollment</SourceLine>
+                <SourceLine>National Center for Education Statistics (IPEDS) · 2023–2024</SourceLine>
             </NarrativeSection>
 
 
