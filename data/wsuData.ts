@@ -864,10 +864,10 @@ export const dataSources: DataSource[] = [
         source_url: 'https://www.winona.edu/assessment/nsse.asp'
     },
     {
-        source_id: 'IPEDS_DF_REPORT_2024',
-        source_name: 'IPEDS Data Feedback Report 2024',
-        source_year: '2024',
-        source_notes: 'Comprehensive annual data reported by the National Center for Education Statistics (NCES). This report provides standardized metrics for tuition, fees, average grant/scholarship aid, and on-campus housing costs, used to calculate the official average net price for undergraduate students.',
-        source_url: 'https://nces.ed.gov/ipeds/dfr/2024/ReportHTML.aspx?unitId=175272'
+        source_id: 'IPEDS_COLLEGE_NAVIGATOR_2024',
+        source_name: 'National Center for Education Statistics (IPEDS)',
+        source_year: '2023-2024',
+        source_notes: 'Detailed institutional expense data from the College Navigator, including in-state tuition, fees, books, supplies, and on-campus living expenses. This source provides the basis for the estimated total cost of $23,962 and the average net price of $18,289.',
+        source_url: 'https://nces.ed.gov/collegenavigator/?q=winona+state+university&s=all&id=175272#expenses'
     }
 ];

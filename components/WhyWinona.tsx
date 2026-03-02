@@ -88,12 +88,15 @@ const DATA = {
     },
     cost: {
         tuition: 10498,
-        avgInstitutionalAward: 5696,
+        booksAndSupplies: 900,
         housingAndFood: 9924,
-        aidFirstYear: 97,
+        personalOther: 2640,
+        totalExpenses: 23962,
+        avgInstitutionalAward: 5673, // Derived: 23962 - 18289
+        netPrice: 18289,
+        aidFirstYear: 97, // Kept historical/institutional stat
         aidAllUndergrad: 81,
         loanDefaultRate: 1.1,
-        netPrice: 14726,
     },
     belonging: {
         retention: 76.8,
@@ -560,24 +563,33 @@ const CostVisual = () => (
                 </motion.div>
             </div>
 
-            {/* Step 2: Room & Board */}
+            {/* Step 2: Books & Housing & Food */}
             <motion.div
                 initial={{ x: 20, opacity: 0 }}
                 whileInView={{ x: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 flex justify-between items-center"
+                className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-2"
             >
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gray-100 rounded-xl"><Building2 size={16} className="text-gray-400" /></div>
-                    <div>
-                        <span className="font-bold text-gray-700 text-sm">Room & Board</span>
-                        <div className="text-xs text-gray-400">On-campus average</div>
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-gray-50 rounded-xl"><Building2 size={16} className="text-gray-400" /></div>
+                        <div>
+                            <span className="font-bold text-gray-700 text-sm">On-Campus Living</span>
+                            <div className="text-[10px] text-gray-400">Housing & Food Avg.</div>
+                        </div>
                     </div>
+                    <span className="font-black text-base text-gray-800 tabular-nums">
+                        $<Counter to={DATA.cost.housingAndFood} />
+                    </span>
                 </div>
-                <span className="font-black text-lg text-gray-800 tabular-nums">
-                    $<Counter to={DATA.cost.housingAndFood} />
-                </span>
+                <div className="h-px bg-gray-50" />
+                <div className="flex justify-between items-center px-1">
+                    <span className="text-xs text-gray-500 font-medium">Books, Supplies & Personal</span>
+                    <span className="font-bold text-sm text-gray-600 tabular-nums">
+                        $<Counter to={DATA.cost.booksAndSupplies + DATA.cost.personalOther} />
+                    </span>
+                </div>
             </motion.div>
 
             {/* Minus */}
@@ -639,10 +651,10 @@ const CostVisual = () => (
                         Average Net Price
                     </div>
                     <div className="text-4xl md:text-5xl font-black tracking-tight tabular-nums">
-                        $<Counter from={DATA.cost.tuition + DATA.cost.housingAndFood} to={DATA.cost.netPrice} duration={2.5} />
+                        $<Counter from={DATA.cost.totalExpenses} to={DATA.cost.netPrice} duration={2.5} />
                     </div>
                     <div className="text-xs mt-2 opacity-60 font-medium">
-                        Tuition + fees + room & board minus grants/aid
+                        Total expenses ($23,962) minus avg. grants/scholarship aid
                     </div>
                 </div>
                 <DollarSign size={120} className="absolute -bottom-4 -right-4 text-white/[0.06] rotate-12" />
@@ -848,7 +860,7 @@ const WhyWinona = () => {
                     Most first-year students receive financial aid, and many graduates complete
                     with manageable debt — so you can plan with real numbers instead of guessing.
                 </p>
-                <SourceLine>IPEDS Data Feedback Report 2024 · Winona State University</SourceLine>
+                <SourceLine>IPEDS / National Center for Education Statistics (2023–2024)</SourceLine>
             </NarrativeSection>
 
 
