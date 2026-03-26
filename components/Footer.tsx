@@ -17,25 +17,27 @@ const Footer: React.FC = () => {
                         </p>
                     </div>
                     <div className="col-span-1 text-left">
-                        <h3 className="font-semibold text-gray-900 tracking-wider uppercase">Official Links</h3>
+                        <h3 className="font-semibold text-gray-900 tracking-wider uppercase">Navigation</h3>
                         <ul className="mt-4 space-y-2 text-sm font-body">
-                            <li><a href="https://www.winona.edu/academics/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600">WSU Academics</a></li>
-                            <li><a href="https://www.winona.edu/advising/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600">Advising Services</a></li>
-                            <li><a href="https://www.winona.edu/admissions/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600">Admissions</a></li>
-                            <li><a href="https://www.winona.edu/studentservices/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600">Student Services</a></li>
+                            <li><Link to="/explore" className="text-gray-500 hover:text-primary-600 transition-colors">Explore Programs</Link></li>
+                            <li><Link to="/compare" className="text-gray-500 hover:text-primary-600 transition-colors">Compare Tool</Link></li>
+                            <li><Link to="/advisor" className="text-gray-500 hover:text-primary-600 transition-colors">AI Advisor</Link></li>
+                            <li><Link to="/about" className="text-gray-500 hover:text-primary-600 transition-colors">About the Data</Link></li>
                         </ul>
                     </div>
                     <div className="col-span-1 text-left">
-                        <h3 className="font-semibold text-gray-900 tracking-wider uppercase">Data Sources</h3>
+                        <h3 className="font-semibold text-gray-900 tracking-wider uppercase">Official Links</h3>
                         <ul className="mt-4 space-y-2 text-sm font-body">
-                            <li><a href="https://www.winona.edu/about/leadership/institutional-data/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600">WSU IPAR</a></li>
-                            <li><a href="https://apps.deed.state.mn.us/lmi/oes/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600">Minnesota DEED</a></li>
+                            <li><a href="https://www.winona.edu/academics/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600 transition-colors">WSU Academics</a></li>
+                            <li><a href="https://www.winona.edu/advising/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600 transition-colors">Advising Services</a></li>
+                            <li><a href="https://www.winona.edu/admissions/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600 transition-colors">Admissions</a></li>
+                            <li><a href="https://www.winona.edu/studentservices/" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-primary-600 transition-colors">Student Services</a></li>
                         </ul>
                     </div>
                     <div className="col-span-2 lg:col-span-1 text-left">
-                        <h3 className="font-semibold text-gray-900 tracking-wider uppercase">Disclaimer</h3>
-                        <p className="mt-4 text-sm text-gray-500 font-body">
-                            This tool is for informational purposes only. Always confirm program details with an official WSU academic advisor.
+                        <h3 className="font-semibold text-gray-900 tracking-wider uppercase flex items-center gap-2">Disclaimer</h3>
+                        <p className="mt-4 text-sm text-gray-500 font-body leading-relaxed">
+                            This tool is for informational purposes only. Always confirm program details, tuitions, and availability with an official WSU academic advisor before making decisions.
                         </p>
                     </div>
                 </div>
