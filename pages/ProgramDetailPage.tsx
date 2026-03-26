@@ -238,26 +238,26 @@ const ProgramDetailPage: React.FC = () => {
                             </Widget>
                         )}
 
-                        <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
-                            {program.career_outcomes && program.career_outcomes.length > 0 ? (
-                                <div className="space-y-6">
-                                    {program.career_outcomes.map(outcome => (
-                                        <CareerOutlookCard key={outcome.occupation_code} outcome={outcome} />
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-gray-500 font-body text-sm italic">Specific career outcome data is not available for this program.</p>
-                            )}
+                        {((program.career_outcomes && program.career_outcomes.length > 0) || (program.related_job_titles && program.related_job_titles.length > 0)) && (
+                            <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
+                                {program.career_outcomes && program.career_outcomes.length > 0 && (
+                                    <div className="space-y-6">
+                                        {program.career_outcomes.map(outcome => (
+                                            <CareerOutlookCard key={outcome.occupation_code} outcome={outcome} />
+                                        ))}
+                                    </div>
+                                )}
 
-                            {program.career_outcomes && program.related_job_titles && program.related_job_titles.length > 0 && (
-                                <div className="mt-6 pt-4 border-t border-gray-100">
-                                    <h3 className="text-xs font-bold mb-2 text-gray-900 uppercase tracking-wider">Other Common Roles</h3>
-                                    <p className="text-sm text-gray-500 font-body">
-                                        {program.related_job_titles.slice(0, 4).join(', ')}
-                                    </p>
-                                </div>
-                            )}
-                        </Widget>
+                                {program.related_job_titles && program.related_job_titles.length > 0 && (
+                                    <div className={`${(program.career_outcomes && program.career_outcomes.length > 0) ? 'mt-6 pt-4 border-t border-gray-100' : ''}`}>
+                                        <h3 className="text-xs font-bold mb-2 text-gray-900 uppercase tracking-wider">Other Common Roles</h3>
+                                        <p className="text-sm text-gray-500 font-body">
+                                            {program.related_job_titles.slice(0, 4).join(', ')}
+                                        </p>
+                                    </div>
+                                )}
+                            </Widget>
+                        )}
 
                         <Widget title="Explore Job Opportunities" icon={<Building size={24} className="text-amber-400" />}>
                             <p className="text-sm text-gray-500 mb-6 font-body">Find jobs related to this major in the Winona area and beyond</p>

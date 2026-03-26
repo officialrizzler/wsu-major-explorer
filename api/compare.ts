@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const systemInstruction = `You are a Winona State University academic advisor. Your task is to provide a concise, objective comparison between the following academic programs requested by a student. 
-Use Markdown to structure the response nicely. Use **bold** for key terms and bullet points for readability. DO NOT output a lengthy introduction or conclusion—just dive straight into the comparison. Mention what type of student/career goals fit best for each, and quickly highlight their main differences.`;
+Write your response in smooth, conversational paragraphs rather than relying heavily on fragmented bullet points. Use **bold** for key terms to make your comparative analysis highly scannable. DO NOT output a lengthy introduction or conclusion—just dive straight into the comparison. Explore their main differences in focus, methodology, and what type of student or specific career goals fit best for each. Keep it flowing naturally and cohesively.`;
 
     const userQuery = `Please compare these following Winona State programs:
 ${programs.map((p: any) => `- ${p.program_name} (${p.degree_type}): ${p.short_description || "No description provided."} Credits: ${p.program_credits || "Varies"}`).join("\n")}

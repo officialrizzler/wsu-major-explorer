@@ -270,7 +270,7 @@ const ComparePage: React.FC = () => {
                 )}
 
                 {(aiComparison || aiError) && (
-                    <div className="mt-8 mx-auto max-w-4xl bg-white rounded-xl shadow-lg border border-indigo-100 overflow-hidden animate-fade-in-up">
+                    <div className="mt-8 w-full bg-white rounded-xl shadow-lg border border-indigo-100 overflow-hidden animate-fade-in-up">
                         <div className="bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-4 flex items-center gap-3">
                             <Bot className="text-white" size={24} />
                             <h3 className="text-white font-semibold text-lg">AI Comparison Insights</h3>
