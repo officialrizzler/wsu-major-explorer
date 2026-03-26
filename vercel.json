@@ -1,15 +1,2 @@
 {
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "wsu-major-explorer.vercel.app"
-        }
-      ],
-      "destination": "https://explorewsu.vercel.app/$1",
-      "statusCode": 301
-    }
-  ]
 }
