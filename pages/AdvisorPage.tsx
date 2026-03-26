@@ -4,6 +4,7 @@ import { getAdvisorResponse } from '../services/advisorService';
 import { Send, Bot, User, ChevronDown } from 'lucide-react';
 import { useCompare } from '../contexts/CompareContext';
 import DynamicBackground from '../components/DynamicBackground';
+import ReactMarkdown from 'react-markdown';
 
 interface ChatMessage {
     role: 'user' | 'model';
@@ -99,7 +100,20 @@ const AdvisorPage: React.FC = () => {
                                     </div>
                                 )}
                                 <div className={`p-4 rounded-2xl shadow-sm ${msg.role === 'user' ? 'bg-primary-600 text-white rounded-br-none max-w-lg' : 'bg-gray-100 text-gray-900 rounded-bl-none max-w-xl border border-gray-200'}`}>
-                                    <p className="text-sm leading-relaxed whitespace-pre-wrap font-body">{msg.text}</p>
+                                    <div className="text-sm leading-relaxed font-body">
+                                        <ReactMarkdown
+                                            components={{
+                                                a: ({node, ...props}) => <a {...props} className={`underline hover:opacity-80 font-medium ${msg.role === 'user' ? 'text-white' : 'text-primary-700'}`} target="_blank" rel="noopener noreferrer" />,
+                                                p: ({node, ...props}) => <p {...props} className="mb-3 last:mb-0 whitespace-pre-wrap" />,
+                                                ul: ({node, ...props}) => <ul {...props} className="list-disc pl-5 mb-3 space-y-1" />,
+                                                ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-5 mb-3 space-y-1" />,
+                                                li: ({node, ...props}) => <li {...props} />,
+                                                strong: ({node, ...props}) => <strong {...props} className="font-semibold" />
+                                            }}
+                                        >
+                                            {msg.text}
+                                        </ReactMarkdown>
+                                    </div>
                                 </div>
                                 {msg.role === 'user' && (
                                     <div className="w-10 h-10 rounded-full bg-primary-100 flex-shrink-0 flex items-center justify-center">
