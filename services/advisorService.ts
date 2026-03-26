@@ -142,3 +142,33 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
         return "I'm sorry, I encountered a connection error. Please check your network and try again. If the problem persists, please try again later.";
     }
 };
+
+export const getCompareInsights = async (programs: any[]): Promise<string> => {
+    try {
+        const response = await fetch("/api/compare", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                programs: programs.map(p => ({
+                    program_name: p.program_name,
+                    degree_type: p.degree_type,
+                    program_credits: p.program_credits,
+                    short_description: p.short_description || ''
+                })) 
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `Server responded with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data.text || "I'm sorry, I couldn't get a proper Comparison. Please try again.";
+    } catch (error) {
+        console.error("Error in getCompareInsights:", error);
+        throw error;
+    }
+};

@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useCompare } from '../contexts/CompareContext';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { Program } from '../types';
-import { MessageCircle, Plus, X, Share2, Check } from 'lucide-react';
+import { MessageCircle, Plus, X, Share2, Check, Sparkles, Bot } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import DynamicBackground from '../components/DynamicBackground';
 import AddProgramModal from '../components/AddProgramModal';
+import ReactMarkdown from 'react-markdown';
+import { getCompareInsights } from '../services/advisorService';
 
 const collegeColorHexMap: Record<string, string> = {
     'College of Business': '#06b6d4',
@@ -24,6 +26,9 @@ const ComparePage: React.FC = () => {
     const [isAddModalOpen, setAddModalOpen] = useState(false);
     const [showCopyToast, setShowCopyToast] = useState(false);
     const [isSharedView, setIsSharedView] = useState(false);
+    const [aiComparison, setAiComparison] = useState<string | null>(null);
+    const [isGeneratingComparison, setIsGeneratingComparison] = useState(false);
+    const [aiError, setAiError] = useState<string | null>(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -67,6 +72,10 @@ const ComparePage: React.FC = () => {
         } else {
             document.title = 'Compare Programs | Winona State Explorer';
         }
+        
+        // Reset AI comparison when programs change
+        setAiComparison(null);
+        setAiError(null);
     }, [compareList]);
 
     const handleShare = () => {
@@ -112,6 +121,19 @@ const ComparePage: React.FC = () => {
         const prompt = `I'm trying to decide between these majors: ${programNames}. Can you help me understand the key differences and ask some questions to help me figure out which one is a better fit for me?`;
         navigate(`/advisor?prompt=${encodeURIComponent(prompt)}`);
     }
+
+    const handleGenerateAIComparison = async () => {
+        setIsGeneratingComparison(true);
+        setAiError(null);
+        try {
+            const insights = await getCompareInsights(compareList);
+            setAiComparison(insights);
+        } catch (error: any) {
+            setAiError(error.message || "Failed to generate comparison. Please try again.");
+        } finally {
+            setIsGeneratingComparison(false);
+        }
+    };
 
     const EmptyState = () => (
         <DynamicBackground className="flex-grow flex flex-col">
@@ -228,14 +250,56 @@ const ComparePage: React.FC = () => {
                 </div>
 
                 {compareList.length > 1 && (
-                    <div className="mt-8 text-center">
+                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button
+                            onClick={handleGenerateAIComparison}
+                            disabled={isGeneratingComparison}
+                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 transition shadow-lg shadow-indigo-500/20 disabled:opacity-70 w-full sm:w-auto justify-center"
+                        >
+                            {isGeneratingComparison ? <span className="animate-spin w-5 h-5 border-2 border-white/30 border-t-white rounded-full"></span> : <Sparkles size={20} />}
+                            {isGeneratingComparison ? "Generating Insights..." : "AI Comparison Summary"}
+                        </button>
                         <button
                             onClick={handleStillCantDecide}
-                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-500 transition shadow-lg shadow-primary-500/20"
+                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm w-full sm:w-auto justify-center"
                         >
                             <MessageCircle size={20} />
-                            Still can't decide? Ask Advisor
+                            Ask Advisor
                         </button>
+                    </div>
+                )}
+
+                {(aiComparison || aiError) && (
+                    <div className="mt-8 mx-auto max-w-4xl bg-white rounded-xl shadow-lg border border-indigo-100 overflow-hidden animate-fade-in-up">
+                        <div className="bg-gradient-to-r from-indigo-500 to-purple-500 px-6 py-4 flex items-center gap-3">
+                            <Bot className="text-white" size={24} />
+                            <h3 className="text-white font-semibold text-lg">AI Comparison Insights</h3>
+                        </div>
+                        <div className="p-6 md:p-8 bg-white text-gray-800">
+                            {aiError ? (
+                                <div className="text-red-500 bg-red-50 p-4 rounded-md border border-red-100">
+                                    <p>{aiError}</p>
+                                </div>
+                            ) : (
+                                <div className="text-sm md:text-base leading-relaxed font-body">
+                                    <ReactMarkdown
+                                        components={{
+                                            a: ({node, ...props}) => <a {...props} className="text-indigo-600 hover:text-indigo-800 underline font-medium" target="_blank" rel="noopener noreferrer" />,
+                                            p: ({node, ...props}) => <p {...props} className="mb-4 last:mb-0" />,
+                                            ul: ({node, ...props}) => <ul {...props} className="list-disc pl-5 mb-4 space-y-2" />,
+                                            ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-5 mb-4 space-y-2" />,
+                                            li: ({node, ...props}) => <li {...props} />,
+                                            strong: ({node, ...props}) => <strong {...props} className="font-semibold text-gray-900" />,
+                                            h1: ({node, ...props}) => <h1 {...props} className="text-2xl font-bold mb-4 mt-6 first:mt-0 text-gray-900" />,
+                                            h2: ({node, ...props}) => <h2 {...props} className="text-xl font-bold mb-3 mt-5 first:mt-0 text-gray-900" />,
+                                            h3: ({node, ...props}) => <h3 {...props} className="text-lg font-bold mb-2 mt-4 first:mt-0 text-gray-900" />,
+                                        }}
+                                    >
+                                        {aiComparison || ""}
+                                    </ReactMarkdown>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
