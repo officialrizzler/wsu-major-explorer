@@ -38,7 +38,7 @@ const Header: React.FC = () => {
                                 <GraduationCap className="text-primary-600" size={24} />
                             </div>
                             <span className="text-gray-900 text-lg font-semibold tracking-tight transition-all duration-300 hidden lg:block">
-                                Winona State Explorer
+                                WSU Explorer
                             </span>
                         </div>
                     </div>

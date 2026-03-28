@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
     return (
         <div className="w-full">
             <Helmet>
-                <title>Winona State Explorer | Winona State Degrees & Programs</title>
+                <title>WSU Explorer | Winona State Degrees & Programs</title>
                 <meta name="description" content="Explore details on 200+ Winona State University majors, minors, and degrees. Compare programs, view requirements, and find your perfect fit." />
                 <link rel="canonical" href="https://explorewsu.vercel.app/" />
             </Helmet>

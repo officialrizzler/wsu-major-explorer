@@ -103,14 +103,14 @@ const ExplorePage: React.FC = () => {
 
 
     useEffect(() => {
-        let title = 'Program Catalog | Winona State Explorer';
+        let title = 'Program Catalog | WSU Explorer';
         if (searchTerm) {
-            title = `Search: "${searchTerm}" | Winona State Explorer`;
+            title = `Search: "${searchTerm}" | WSU Explorer`;
         } else if (interestId) {
             const interestEntry = Object.entries(interestMappings).find(([_, value]) => value.id === interestId);
             if (interestEntry) {
                 const interestName = interestEntry[0].charAt(0).toUpperCase() + interestEntry[0].slice(1);
-                title = `${interestName} Programs | Winona State Explorer`;
+                title = `${interestName} Programs | WSU Explorer`;
             }
         }
         document.title = title;

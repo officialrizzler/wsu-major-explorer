@@ -63,14 +63,14 @@ const ComparePage: React.FC = () => {
     useEffect(() => {
         if (compareList.length > 0) {
             const names = compareList.map(p => p.program_name).join(' vs ');
-            document.title = `${names} | Winona State Explorer`;
+            document.title = `${names} | WSU Explorer`;
 
             const metaDesc = document.querySelector('meta[name="description"]');
             if (metaDesc) {
                 metaDesc.setAttribute('content', `Compare ${compareList.map(p => p.program_name).join(' and ')} majors by outcomes, coursework, and career paths.`);
             }
         } else {
-            document.title = 'Compare Programs | Winona State Explorer';
+            document.title = 'Compare Programs | WSU Explorer';
         }
         
         // Reset AI comparison when programs change

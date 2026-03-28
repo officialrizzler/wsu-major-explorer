@@ -146,7 +146,7 @@ const ProgramDetailPage: React.FC = () => {
     return (
         <div className="bg-[#f5f5f7] min-h-screen">
             <Helmet>
-                <title>{`${program.program_name} | Winona State Explorer`}</title>
+                <title>{`${program.program_name} | WSU Explorer`}</title>
                 <meta name="description" content={program.overview ? program.overview.substring(0, 160) + '...' : `Explore the ${program.program_name} program at Winona State University.`} />
                 <link rel="canonical" href={canonicalUrl} />
                 <script type="application/ld+json">
