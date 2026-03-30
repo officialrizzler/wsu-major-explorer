@@ -734,7 +734,7 @@ const WhyWinona = () => {
         <div className="relative bg-gray-50">
 
             {/* ─── HERO ─── */}
-            <div className="min-h-[70vh] flex items-center justify-center flex-col text-center p-6 bg-gradient-to-b from-white via-white to-gray-50">
+            <div className="min-h-[30vh] flex items-center justify-center flex-col text-center p-6 bg-gradient-to-b from-white via-white to-gray-50 pt-24 pb-12">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}

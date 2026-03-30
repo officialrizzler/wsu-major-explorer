@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, Sparkles } from 'lucide-react';
 import DynamicBackground from '../components/DynamicBackground';
 import WhyWinona from '../components/WhyWinona';
 
@@ -15,29 +15,49 @@ const LandingPage: React.FC = () => {
             </Helmet>
 
             {/* Hero Section */}
-            <DynamicBackground className="relative isolate">
-                <div className="min-h-[calc(65vh)] flex items-center justify-center spotlight relative z-10 px-6 py-20">
-                    <div className="text-center w-full max-w-6xl">
-                        <div className="mx-auto">
-                            <h1 className="text-6xl font-black tracking-tight text-gray-950 sm:text-7xl lg:text-8xl animate-fade-in-up leading-[1.1]">
+            <DynamicBackground className="relative isolate min-h-[calc(100vh-64px)] flex items-center justify-center px-4 py-8">
+                <div className="w-full max-w-7xl bg-white/90 backdrop-blur-xl rounded-[3rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] p-6 sm:p-12 text-center animate-fade-in-up border border-white/20 relative z-10">
+                    <div className="space-y-8">
+                        {/* WSU Badge */}
+                        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white border border-primary-100 shadow-sm">
+                            <span className="text-[10px] font-black tracking-[0.2em] text-primary-600 uppercase">
+                                Winona State Explorer
+                            </span>
+                        </div>
+
+                        <div className="space-y-4">
+                            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-gray-950 leading-[1.05]">
                                 Major Decisions,<br />
                                 Made Simpler.
                             </h1>
 
-                            <p className="mt-12 text-xl sm:text-2xl leading-relaxed text-gray-800 font-medium max-w-4xl mx-auto animate-fade-in" style={{ animationDelay: '200ms' }}>
-                                We did the research so you don't have to. Discover programs, compare side-by-side, and get AI powered insights to help you navigate your options with ease.
+                            <p className="max-w-3xl mx-auto text-base sm:text-lg text-gray-600 font-medium leading-relaxed">
+                                Discover programs, compare side-by-side, and get AI powered insights to help you navigate your options with ease.
                             </p>
-
-                            <div className="mt-12 flex items-center justify-center animate-fade-in" style={{ animationDelay: '400ms' }}>
-                                <Link
-                                    to="/explore"
-                                    className="font-body w-full sm:w-auto flex items-center justify-center gap-3 rounded-2xl bg-gray-900 px-12 py-5 text-xl font-bold text-white shadow-2xl hover:bg-gray-800 transition-all hover:scale-[1.05] active:scale-[0.98] ring-4 ring-gray-900/10"
-                                >
-                                    <Search size={24} strokeWidth={3} />
-                                    Start Exploring
-                                </Link>
-                            </div>
                         </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                            <Link
+                                to="/advisor"
+                                className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-indigo-700 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-indigo-200 hover:bg-indigo-800 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            >
+                                <Sparkles size={18} className="text-white/80" />
+                                Ask AI Advisor
+                            </Link>
+                            <Link
+                                to="/explore"
+                                className="w-full sm:w-auto flex items-center justify-center gap-2.5 rounded-2xl bg-white border border-gray-200 px-8 py-3.5 text-sm font-bold text-gray-900 shadow-sm hover:bg-gray-50 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            >
+                                <Search size={18} className="text-gray-400" />
+                                Start Exploring
+                            </Link>
+                        </div>
+
+                        {/* Footer text inside window */}
+                        <p className="text-xs text-gray-400 font-medium pt-2">
+                            Use the AI Advisor to ask questions about WSU, or start exploring over 200 academic programs.
+                        </p>
                     </div>
                 </div>
             </DynamicBackground>

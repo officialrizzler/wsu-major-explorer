@@ -103,12 +103,12 @@ const AdvisorPage: React.FC = () => {
                                     <div className="text-sm leading-relaxed font-body">
                                         <ReactMarkdown
                                             components={{
-                                                a: ({node, ...props}) => <a {...props} className={`underline hover:opacity-80 font-medium ${msg.role === 'user' ? 'text-white' : 'text-primary-700'}`} target="_blank" rel="noopener noreferrer" />,
-                                                p: ({node, ...props}) => <p {...props} className="mb-3 last:mb-0 whitespace-pre-wrap" />,
-                                                ul: ({node, ...props}) => <ul {...props} className="list-disc pl-5 mb-3 space-y-1" />,
-                                                ol: ({node, ...props}) => <ol {...props} className="list-decimal pl-5 mb-3 space-y-1" />,
-                                                li: ({node, ...props}) => <li {...props} />,
-                                                strong: ({node, ...props}) => <strong {...props} className="font-semibold" />
+                                                a: ({ node, ...props }) => <a {...props} className={`underline hover:opacity-80 font-medium ${msg.role === 'user' ? 'text-white' : 'text-primary-700'}`} target="_blank" rel="noopener noreferrer" />,
+                                                p: ({ node, ...props }) => <p {...props} className="mb-3 last:mb-0 whitespace-pre-wrap" />,
+                                                ul: ({ node, ...props }) => <ul {...props} className="list-disc pl-5 mb-3 space-y-1" />,
+                                                ol: ({ node, ...props }) => <ol {...props} className="list-decimal pl-5 mb-3 space-y-1" />,
+                                                li: ({ node, ...props }) => <li {...props} />,
+                                                strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />
                                             }}
                                         >
                                             {msg.text}

@@ -26,7 +26,7 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ program }) => {
     }
 
     const handleCardClick = (e: React.PointerEvent | React.MouseEvent) => {
-        
+
         if (e.type === 'click' && ((e as React.MouseEvent).ctrlKey || (e as React.MouseEvent).metaKey)) return;
 
         e.preventDefault();
@@ -52,7 +52,7 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ program }) => {
     };
 
     const locations = program.location.split(';').map(l => l.trim()).join(' & ');
-    
+
     const borderColorClass = collegeColorMap[program.department?.college_name || ''] || 'border-l-gray-500';
 
     return (
