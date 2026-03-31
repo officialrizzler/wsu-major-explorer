@@ -13,9 +13,19 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: ".env.local" });
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
+const IS_LOCAL = process.env.NODE_ENV !== "production";
 
 if (!OPENAI_API_KEY) {
   console.warn("⚠️ OPENAI_API_KEY is missing. AI Advisor will return error responses until set.");
+}
+if (!TAVILY_API_KEY) {
+  console.warn("⚠️ TAVILY_API_KEY is missing. Web search will be skipped.");
+} else {
+  console.log("✅ Tavily web search enabled.");
+}
+if (IS_LOCAL) {
+  console.log("🔓 Running locally — rate limiting bypassed.");
 }
 
 const app = express();
@@ -27,12 +37,66 @@ const openai = OPENAI_API_KEY ? new OpenAI({
   apiKey: OPENAI_API_KEY,
 }) : null;
 
+function buildWsuSearchQuery(query) {
+  if (/winona state|wsu|winona\.edu/i.test(query)) {
+    return query.trim();
+  }
+
+  return `Winona State University site:winona.edu ${query}`.trim();
+}
+
+function shouldUseWebSearch(query) {
+  return /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(query);
+}
+
+async function runTavilySearch(query) {
+  if (!TAVILY_API_KEY) return "";
+
+  const tavilyRes = await fetch("https://api.tavily.com/search", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      api_key: TAVILY_API_KEY,
+      query: buildWsuSearchQuery(query),
+      search_depth: "advanced",
+      max_results: 5,
+      include_answer: true,
+      include_domains: ["winona.edu"],
+    }),
+  });
+
+  if (!tavilyRes.ok) {
+    throw new Error(`Tavily responded with status ${tavilyRes.status}`);
+  }
+
+  const tavilyData = await tavilyRes.json();
+  const snippets = (tavilyData.results || [])
+    .slice(0, 5)
+    .map((result, index) => {
+      const title = result.title || `Result ${index + 1}`;
+      const url = result.url || "No URL provided";
+      const content = (result.content || "").trim();
+      return `${index + 1}. ${title}\nSource: ${url}\nSnippet: ${content}`;
+    })
+    .join("\n\n");
+
+  return [
+    "Web search results for context. Prefer official Winona State University pages and cite the source URL briefly when used.",
+    tavilyData.answer ? `Answer summary: ${tavilyData.answer}` : "",
+    snippets,
+  ].filter(Boolean).join("\n\n");
+}
+
 app.post("/api/chat", async (req, res) => {
   if (!openai) {
     return res.status(500).json({ error: "AI Advisor not configured. Please set OPENAI_API_KEY environment variable." });
   }
-  const ok = await enforceAiLimits(req, res);
-  if (!ok) return;
+
+  // Skip rate limiting in local dev
+  if (!IS_LOCAL) {
+    const ok = await enforceAiLimits(req, res);
+    if (!ok) return;
+  }
 
   try {
     const { chatHistory, userQuery } = req.body || {};
@@ -67,12 +131,26 @@ app.post("/api/chat", async (req, res) => {
       return { role, content: String(text).slice(0, 1000) };
     });
 
+    // --- Tavily Web Search ---
+    let tavilyContext = "";
+    if (TAVILY_API_KEY && shouldUseWebSearch(userQuery)) {
+      try {
+        tavilyContext = await runTavilySearch(userQuery);
+        if (tavilyContext) {
+          tavilyContext = `\n\n${tavilyContext}`;
+          console.log(`[Tavily] fetched context for: "${userQuery}"`);
+        }
+      } catch (e) {
+        console.warn("[Tavily] search failed:", e?.message || e);
+      }
+    }
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
           role: "system",
-          content: systemInstruction + extraContext +
+          content: systemInstruction + extraContext + tavilyContext +
             "\n\nRules: Concise plain text only. No markdown. Refer to WSU academic advisors."
         },
         ...trimmedHistory,

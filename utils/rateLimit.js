@@ -1,6 +1,16 @@
+import dotenv from "dotenv";
 import { Redis } from "@upstash/redis";
+
+dotenv.config({ path: ".env.local" });
+
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+const DAILY_LIMIT = 15;
+const BURST_LIMIT = 20;
+const BURST_WINDOW_SEC = 600;
+const MAX_CHARS = 6000;
+const DAILY_LIMIT_MESSAGE = "You've reached the 15-message daily limit for Warrior Bot. Please come back tomorrow, or contact Winona State directly if you need immediate help.";
 
 export const redis = (REDIS_URL && REDIS_TOKEN) ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN }) : null;
 if (!redis) console.warn("Rate limiting disabled: Redis environment variables are missing.");
@@ -23,13 +33,6 @@ export async function enforceAiLimits(req, res) {
   const ip = getClientIp(req);
   const day = todayKey();
 
-
-  const DAILY_LIMIT = 10;
-  const BURST_LIMIT = 20;
-  const BURST_WINDOW_SEC = 600;
-  const MAX_CHARS = 6000;
-
-
   const msg = req.body?.message ?? req.body?.text ?? req.body?.userQuery ?? "";
   if (typeof msg === "string" && msg.length > MAX_CHARS) {
     res.status(413).json({ error: "Prompt too long", maxChars: MAX_CHARS });
@@ -47,7 +50,7 @@ export async function enforceAiLimits(req, res) {
 
     if (dailyCount > DAILY_LIMIT) {
       res.status(429).json({
-        error: "Daily AI quota exceeded",
+        error: DAILY_LIMIT_MESSAGE,
         limit: DAILY_LIMIT,
         used: dailyCount,
       });

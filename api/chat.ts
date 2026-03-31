@@ -15,6 +15,7 @@ const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 1000);
 const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 200); // Reduced from 300
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 5); // Keep at 5 for better context
 const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1000); // Reduced from 1500
+const DAILY_LIMIT_MESSAGE = "You've reached the 15-message daily limit for Warrior Bot. Please come back tomorrow, or contact Winona State directly if you need immediate help.";
 
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
 
@@ -27,10 +28,95 @@ try {
   console.error("Failed to initialize Redis:", e);
 }
 
+type TavilyResult = {
+  title?: string;
+  url?: string;
+  content?: string;
+  score?: number;
+};
+
+type TavilySearchResponse = {
+  answer?: string;
+  results?: TavilyResult[];
+};
+
 function getClientIp(req: NextApiRequest) {
   const xf = req.headers["x-forwarded-for"];
   const first = (Array.isArray(xf) ? xf[0] : xf ?? "").split(",")[0].trim();
   return first || req.socket.remoteAddress || "unknown";
+}
+
+function buildWsuSearchQuery(query: string): string {
+  if (/winona state|wsu|winona\.edu/i.test(query)) {
+    return query.trim();
+  }
+
+  return `Winona State University site:winona.edu ${query}`.trim();
+}
+
+function shouldUseWebSearch(
+  userQuery: string,
+  programContext: unknown,
+  professorContext: unknown
+): boolean {
+  const query = userQuery.toLowerCase();
+  const hasProgramMatches = Array.isArray(programContext) && programContext.length > 0;
+  const hasProfessorMatches = Array.isArray(professorContext) && professorContext.length > 0;
+
+  const currentInfoPattern = /tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i;
+  const factualQuestionPattern = /\b(what|when|where|how much|how many|can i|do they|is there|are there)\b/i;
+
+  if (currentInfoPattern.test(query)) {
+    return true;
+  }
+
+  return factualQuestionPattern.test(query) && !hasProgramMatches && !hasProfessorMatches;
+}
+
+async function runTavilySearch(query: string): Promise<string> {
+  if (!TAVILY_API_KEY) {
+    return "";
+  }
+
+  const tavilyResponse = await fetch("https://api.tavily.com/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      api_key: TAVILY_API_KEY,
+      query: buildWsuSearchQuery(query),
+      search_depth: "advanced",
+      include_answer: true,
+      max_results: 5,
+      include_domains: ["winona.edu"]
+    })
+  });
+
+  if (!tavilyResponse.ok) {
+    throw new Error(`Tavily responded with status ${tavilyResponse.status}`);
+  }
+
+  const searchResults = await tavilyResponse.json() as TavilySearchResponse;
+  const summarizedResults = (searchResults.results || [])
+    .slice(0, 5)
+    .map((result, index) => {
+      const title = result.title || `Result ${index + 1}`;
+      const url = result.url || "No URL provided";
+      const content = (result.content || "").trim();
+      return `${index + 1}. ${title}\nURL: ${url}\nSnippet: ${content}`;
+    })
+    .join("\n\n");
+
+  if (!searchResults.answer && !summarizedResults) {
+    return "";
+  }
+
+  return [
+    "Web search results for context. Prefer official Winona State University pages and cite them with markdown links when used.",
+    searchResults.answer ? `Answer summary: ${searchResults.answer}` : "",
+    summarizedResults
+  ].filter(Boolean).join("\n\n");
 }
 
 /**
@@ -73,7 +159,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     if (!(await applyRateLimiter(req))) {
-      return res.status(429).json({ error: "Daily message limit exceeded. Please try again tomorrow." });
+      return res.status(429).json({ error: DAILY_LIMIT_MESSAGE });
     }
 
     const { chatHistory, userQuery, programContext, professorContext, wsuStats } = req.body;
@@ -148,13 +234,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return { role, content: String(text).slice(0, MAX_HISTORY_MSG_CHARS) };
       });
 
-    const systemInstruction =
+    const baseSystemInstruction =
       `You are Warrior Bot, WSU's AI advisor. Help students explore programs using the data below. ` +
-      `CRITICAL INSTRUCTION: If a user asks about information NOT present in the provided context (e.g., tuition, deadlines, housing, general WSU info), you MUST use the web_search tool to find the answer. NEVER say you don't know or suggest consulting an advisor UNLESS you have already tried searching and couldn't find the answer. ` +
-      `If you find information via web search or know a relevant Winona State page, you MUST provide helpful markdown links to the WSU sources (e.g., [WSU Admissions](https://winona.edu/admissions)). You may also use **bold text** to highlight key terms. ` +
-      `PRIORITY: Use WSU data provided over your general knowledge. ` +
+      `CRITICAL INSTRUCTION: If a user asks about information NOT present in the provided context, especially current website information like tuition, deadlines, housing, admissions, requirements, costs, or campus services, you MUST use the web_search tool or the provided web search context before answering. ` +
+      `NEVER say you do not know or suggest consulting an advisor unless you have already used the available search results and still cannot find the answer. ` +
+      `Use web search quietly in the background and answer directly without saying things like "according to web search results" or narrating that you searched. ` +
+      `If the information is time-sensitive, include a brief date or timeframe when it helps clarify the answer. ` +
+      `If you use web search information, you MUST include helpful markdown links to the specific WSU sources you relied on when links are useful. ` +
+      `Prefer official Winona State University pages on winona.edu over third-party pages. ` +
+      `PRIORITY: Use provided WSU data over general knowledge. ` +
       `Programs data: Use exact credits/details. Professor data: ONLY mention listed professors. ` +
       contextSnippet;
+
+    let preFetchedSearchContext = "";
+    if (shouldUseWebSearch(userQuery, programContext, professorContext) && TAVILY_API_KEY) {
+      try {
+        preFetchedSearchContext = await runTavilySearch(userQuery);
+        if (preFetchedSearchContext) {
+          console.log(`Pre-fetched Tavily context for: ${userQuery}`);
+        }
+      } catch (error) {
+        console.error("Pre-search Tavily error:", error);
+      }
+    }
+
+    const systemInstruction = preFetchedSearchContext
+      ? `${baseSystemInstruction}\n\n${preFetchedSearchContext}`
+      : baseSystemInstruction;
 
     const tools = [
       {
@@ -196,33 +302,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (toolCalls && toolCalls.length > 0) {
       const searchCall = toolCalls[0];
       if (searchCall.function.name === "web_search") {
-        const args = JSON.parse(searchCall.function.arguments);
-        const searchQuery = args.query;
+        const args = JSON.parse(searchCall.function.arguments || "{}");
+        const searchQuery = args.query || userQuery;
 
         if (TAVILY_API_KEY) {
           try {
-            // Call Tavily Search API
-            const tavilyResponse = await fetch("https://api.tavily.com/search", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                api_key: TAVILY_API_KEY,
-                query: searchQuery,
-                search_depth: "basic",
-                include_answer: true,
-                max_results: 3
-              })
-            });
+            const searchContext = await runTavilySearch(searchQuery);
 
-            if (tavilyResponse.ok) {
-              const searchResults = await tavilyResponse.json();
-
-              // Format search results for the AI
-              const searchContext = searchResults.answer ||
-                (searchResults.results?.slice(0, 3).map((r: any) => `${r.title}: ${r.content}`).join("\n\n") ||
-                  "No results found.");
+            if (searchContext) {
 
               // Make a second API call with the search results
               const followUp = await openai.chat.completions.create({
@@ -240,16 +327,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
               responseText = followUp.choices[0]?.message?.content || "I found some information but couldn't process it properly.";
             } else {
-              responseText = "I tried to search for that information but encountered an error. For current details about tuition and costs, please visit winona.edu.";
+              responseText = "I searched the WSU website but couldn't find a clear answer. Please check the official Winona State site at [winona.edu](https://www.winona.edu/) for the most current details.";
             }
           } catch (error) {
             console.error("Tavily search error:", error);
-            responseText = "I wasn't able to search for that information right now. For current details, please visit the official Winona State website at winona.edu.";
+            responseText = "I wasn't able to search for that information right now. For current details, please visit the official Winona State website at [winona.edu](https://www.winona.edu/).";
           }
         } else {
           // No Tavily API key configured
-          responseText = `For current information about ${searchQuery.toLowerCase()}, I recommend visiting the official Winona State University website at winona.edu or contacting the admissions office directly.`;
+          responseText = `For current information about ${searchQuery.toLowerCase()}, I recommend visiting the official Winona State University website at [winona.edu](https://www.winona.edu/) or contacting the admissions office directly.`;
         }
+      }
+    } else if (!responseText && preFetchedSearchContext) {
+      const followUp = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: systemInstruction },
+          ...trimmedHistory,
+          { role: "user", content: userQuery }
+        ],
+        max_tokens: MAX_OUTPUT_TOKENS,
+        temperature: 0.7
+      });
+
+      responseText = followUp.choices[0]?.message?.content || "";
+
+      if (!responseText) {
+        responseText = "I found some WSU website information but couldn't turn it into a clean answer. Please try rephrasing your question.";
       }
     } else if (!responseText) {
       responseText = "I'm sorry, I couldn't process that.";
