@@ -73,15 +73,54 @@ function buildWsuSearchQuery(query) {
   return `Winona State University site:winona.edu ${query}`.trim();
 }
 
+function isTimeSensitiveQuery(query) {
+  return /\b(latest|current|currently|today|now|right now|this year|this semester|this fall|this spring|up to date|updated|as of|2025|2026|deadline|deadlines|tuition|cost|fees|housing|admission|admissions|requirements|application|calendar|event|events|start date|semester|fafsa|scholarship|financial aid)\b/i.test(query);
+}
+
+function isLikelyUniversitySpecificQuestion(query) {
+  return /\b(wsu|winona state|university|campus|department|program|major|minor|housing|residence|admission|admissions|financial aid|tuition|fees|deadline|requirements|advisor|professor|faculty|student services|dorm|meal plan|visit|tour)\b/i.test(query);
+}
+
+function extractQueryTerms(query) {
+  return Array.from(
+    new Set(
+      query
+        .toLowerCase()
+        .replace(/[^\w\s]/g, " ")
+        .split(/\s+/)
+        .filter((term) => term.length >= 4)
+        .filter((term) => !["winona", "state", "university", "with", "from", "what", "when", "where", "which", "about", "that", "this", "have", "does"].includes(term))
+    )
+  ).slice(0, 8);
+}
+
+function scoreSearchResult(result, queryTerms) {
+  const haystack = `${result.title || ""} ${result.url || ""} ${result.content || ""}`.toLowerCase();
+  let score = 0;
+
+  for (const term of queryTerms) {
+    if (haystack.includes(term)) score += 2;
+  }
+
+  if (/winona\.edu/i.test(result.url || "")) score += 2;
+  if (/housing|residence|admission|tuition|financial aid|program|department|student/i.test(result.title || "")) score += 1;
+
+  return score;
+}
+
 function shouldUseWebSearch(query) {
-  return /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(query);
+  return isTimeSensitiveQuery(query) || /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(query);
 }
 
 async function runTavilySearch(query) {
   if (!TAVILY_API_KEY) return "";
 
+  const searchMode = (isTimeSensitiveQuery(query) || isLikelyUniversitySpecificQuestion(query))
+    ? "high_accuracy"
+    : "standard";
+
   const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
-  const searchCacheKey = `tavily_cache:${Buffer.from(normalizedQuery).toString("base64").slice(0, 40)}`;
+  const searchCacheKey = `tavily_cache:${searchMode}:${Buffer.from(normalizedQuery).toString("base64").slice(0, 40)}`;
 
   try {
     if (redis) {
@@ -96,9 +135,9 @@ async function runTavilySearch(query) {
     body: JSON.stringify({
       api_key: TAVILY_API_KEY,
       query: normalizedQuery,
-      search_depth: "basic",
-      max_results: 3,
-      include_answer: false,
+      search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
+      max_results: searchMode === "high_accuracy" ? 5 : 3,
+      include_answer: searchMode === "high_accuracy",
       include_domains: ["winona.edu"],
     }),
   });
@@ -108,8 +147,19 @@ async function runTavilySearch(query) {
   }
 
   const tavilyData = await tavilyRes.json();
-  const snippets = (tavilyData.results || [])
-    .slice(0, 3)
+  const queryTerms = extractQueryTerms(query);
+  const filteredResults = (tavilyData.results || [])
+    .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
+    .filter(({ score, result }) => {
+      if (/winona\.edu/i.test(result.url || "") === false) return false;
+      if (queryTerms.length === 0) return true;
+      return score >= (searchMode === "high_accuracy" ? 3 : 2);
+    })
+    .sort((a, b) => b.score - a.score)
+    .map(({ result }) => result)
+    .slice(0, searchMode === "high_accuracy" ? 5 : 3);
+
+  const snippets = filteredResults
     .map((result, index) => {
       const title = result.title || `Result ${index + 1}`;
       const url = result.url || "No URL provided";
@@ -120,12 +170,13 @@ async function runTavilySearch(query) {
 
   const formatted = [
     "Web search results for context. Prefer official Winona State University pages and cite the source URL briefly when used.",
+    searchMode === "high_accuracy" && tavilyData.answer ? `Answer summary: ${tavilyData.answer}` : "",
     snippets,
   ].filter(Boolean).join("\n\n");
 
   try {
     if (redis && formatted) {
-      await redis.set(searchCacheKey, formatted, { ex: 60 * 60 * 12 });
+      await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
     }
   } catch (e) { }
 
@@ -153,7 +204,7 @@ app.post("/api/chat", async (req, res) => {
     // --- Backend Cache (Redis) ---
     const cacheKey = `ai:cache:${Buffer.from(userQuery).toString('base64').slice(0, 32)}`;
     try {
-      if (redis) {
+      if (redis && !isTimeSensitiveQuery(userQuery)) {
         const cached = await redis.get(cacheKey);
         if (cached) return res.json({ text: cached });
       }
