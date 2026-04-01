@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAdvisorResponse } from '../services/advisorService';
 import { Send, Bot, ChevronDown, GraduationCap } from 'lucide-react';
@@ -9,6 +9,18 @@ interface ChatMessage {
     role: 'user' | 'model';
     text: string;
 }
+
+declare global {
+    interface Window {
+        turnstile?: {
+            render: (container: HTMLElement, options: Record<string, unknown>) => string;
+            reset: (widgetId?: string) => void;
+            remove: (widgetId?: string) => void;
+        };
+    }
+}
+
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY ?? '';
 
 const shouldJustifyUserMessage = (text: string) => {
     const normalized = text.replace(/\s+/g, ' ').trim();
@@ -26,9 +38,61 @@ const AdvisorPage: React.FC = () => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isScrolledUp, setIsScrolledUp] = useState(false);
+    const [turnstileToken, setTurnstileToken] = useState('');
+    const [turnstileError, setTurnstileError] = useState('');
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const turnstileContainerRef = useRef<HTMLDivElement>(null);
+    const turnstileWidgetIdRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        if (!TURNSTILE_SITE_KEY || !turnstileContainerRef.current) return;
+
+        const renderWidget = () => {
+            if (!window.turnstile || !turnstileContainerRef.current || turnstileWidgetIdRef.current) return;
+
+            turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
+                sitekey: TURNSTILE_SITE_KEY,
+                theme: 'light',
+                callback: (token: string) => {
+                    setTurnstileToken(token);
+                    setTurnstileError('');
+                },
+                'error-callback': () => {
+                    setTurnstileToken('');
+                    setTurnstileError('Security check failed. Please refresh and try again.');
+                },
+                'expired-callback': () => {
+                    setTurnstileToken('');
+                    setTurnstileError('Security check expired. Please try again.');
+                }
+            });
+        };
+
+        if (window.turnstile) {
+            renderWidget();
+        } else {
+            const existingScript = document.querySelector<HTMLScriptElement>('script[src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"]');
+            if (existingScript) {
+                existingScript.addEventListener('load', renderWidget, { once: true });
+            } else {
+                const script = document.createElement('script');
+                script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+                script.async = true;
+                script.defer = true;
+                script.addEventListener('load', renderWidget, { once: true });
+                document.head.appendChild(script);
+            }
+        }
+
+        return () => {
+            if (window.turnstile && turnstileWidgetIdRef.current) {
+                window.turnstile.remove(turnstileWidgetIdRef.current);
+                turnstileWidgetIdRef.current = null;
+            }
+        };
+    }, []);
 
     const scrollToBottom = (behavior: 'smooth' | 'auto' = 'smooth') => {
         if (scrollContainerRef.current) {
@@ -52,11 +116,16 @@ const AdvisorPage: React.FC = () => {
     const handleSend = async (prefilledPrompt?: string) => {
         const query = prefilledPrompt || input;
         if (!query.trim()) return;
+        if (TURNSTILE_SITE_KEY && !turnstileToken) {
+            setTurnstileError('Please complete the security check before sending a message.');
+            return;
+        }
 
         const userMessage: ChatMessage = { role: 'user', text: query };
         setMessages(prev => [...prev, userMessage]);
         setInput('');
         setIsLoading(true);
+        setTurnstileError('');
 
         setTimeout(() => scrollToBottom('smooth'), 100);
 
@@ -66,7 +135,7 @@ const AdvisorPage: React.FC = () => {
         }));
 
         try {
-            const responseText = await getAdvisorResponse(chatHistoryForApi, query);
+            const responseText = await getAdvisorResponse(chatHistoryForApi, query, turnstileToken);
             const modelMessage: ChatMessage = { role: 'model', text: responseText };
             setMessages(prev => [...prev, modelMessage]);
         } catch (error) {
@@ -76,6 +145,10 @@ const AdvisorPage: React.FC = () => {
             setMessages(prev => [...prev, errorMessage]);
         } finally {
             setIsLoading(false);
+            if (TURNSTILE_SITE_KEY && window.turnstile && turnstileWidgetIdRef.current) {
+                setTurnstileToken('');
+                window.turnstile.reset(turnstileWidgetIdRef.current);
+            }
         }
     };
 
@@ -197,6 +270,14 @@ const AdvisorPage: React.FC = () => {
                                     <Send size={18} />
                                 </button>
                             </div>
+                            {TURNSTILE_SITE_KEY && (
+                                <div className="mt-3 flex flex-col items-center gap-2">
+                                    <div ref={turnstileContainerRef} />
+                                    {turnstileError && (
+                                        <p className="text-center text-xs text-red-600">{turnstileError}</p>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

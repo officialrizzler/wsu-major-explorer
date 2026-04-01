@@ -14,7 +14,11 @@ const COMMON_QUERIES_CACHE = new Map<string, string>([
 // Flatten the professors data for easier searching
 const allProfessors = Object.values(professorsData).flat();
 
-export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; parts: { text: string }[] }[], userQuery: string): Promise<string> => {
+export const getAdvisorResponse = async (
+    chatHistory: { role: 'user' | 'model'; parts: { text: string }[] }[],
+    userQuery: string,
+    turnstileToken?: string
+): Promise<string> => {
 
     const normalizedQuery = userQuery.trim().toLowerCase().replace(/[^\w\s]/g, '');
     if (COMMON_QUERIES_CACHE.has(normalizedQuery)) {
@@ -101,6 +105,7 @@ export const getAdvisorResponse = async (chatHistory: { role: 'user' | 'model'; 
             body: JSON.stringify({
                 chatHistory,
                 userQuery,
+                turnstileToken,
                 wsuStats,
                 programContext: matchedPrograms.map(p => ({
                     program_name: p.program_name,

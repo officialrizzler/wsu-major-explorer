@@ -8,6 +8,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
 const UPSTASH_REDIS_REST_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
+const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
 const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
@@ -246,6 +247,40 @@ async function applyRateLimiter(req: NextApiRequest): Promise<boolean> {
   return count <= RATE_LIMIT_MAX_REQUESTS;
 }
 
+async function verifyTurnstileToken(token: string, remoteIp?: string): Promise<boolean> {
+  if (!TURNSTILE_SECRET_KEY) {
+    return true;
+  }
+
+  if (!token) {
+    return false;
+  }
+
+  const params = new URLSearchParams({
+    secret: TURNSTILE_SECRET_KEY,
+    response: token,
+  });
+
+  if (remoteIp && remoteIp !== "unknown") {
+    params.set("remoteip", remoteIp);
+  }
+
+  const verifyResponse = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: params.toString()
+  });
+
+  if (!verifyResponse.ok) {
+    return false;
+  }
+
+  const verification = await verifyResponse.json() as { success?: boolean };
+  return !!verification.success;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log("API Handler Start. Method:", req.method);
   console.log("OpenAI Key Present:", !!OPENAI_API_KEY);
@@ -271,10 +306,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(429).json({ error: DAILY_LIMIT_MESSAGE });
     }
 
-    const { chatHistory, userQuery, programContext, professorContext, wsuStats } = req.body;
+    const { chatHistory, userQuery, programContext, professorContext, wsuStats, turnstileToken } = req.body;
 
     if (!userQuery || typeof userQuery !== "string" || !Array.isArray(chatHistory)) {
       return res.status(400).json({ error: "Invalid request body" });
+    }
+
+    const isTurnstileValid = await verifyTurnstileToken(
+      typeof turnstileToken === "string" ? turnstileToken : "",
+      getClientIp(req)
+    );
+
+    if (!isTurnstileValid) {
+      return res.status(403).json({ error: "Security check failed. Please refresh and try again." });
     }
 
     // Smart cache: Normalize queries to catch common variations

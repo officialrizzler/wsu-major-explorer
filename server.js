@@ -14,6 +14,7 @@ dotenv.config({ path: ".env.local" });
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
+const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const IS_LOCAL = process.env.NODE_ENV !== "production";
 
 if (!OPENAI_API_KEY) {
@@ -23,6 +24,9 @@ if (!TAVILY_API_KEY) {
   console.warn("⚠️ TAVILY_API_KEY is missing. Web search will be skipped.");
 } else {
   console.log("✅ Tavily web search enabled.");
+}
+if (!TURNSTILE_SECRET_KEY) {
+  console.warn("⚠️ TURNSTILE_SECRET_KEY is missing. Advisor security check is bypassed.");
 }
 if (IS_LOCAL) {
   console.log("🔓 Running locally — rate limiting bypassed.");
@@ -112,6 +116,31 @@ function shouldUseWebSearch(query) {
   return isTimeSensitiveQuery(query) || /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(query);
 }
 
+async function verifyTurnstileToken(token, remoteIp) {
+  if (!TURNSTILE_SECRET_KEY) return true;
+  if (!token) return false;
+
+  const params = new URLSearchParams({
+    secret: TURNSTILE_SECRET_KEY,
+    response: token,
+  });
+
+  if (remoteIp) {
+    params.set("remoteip", remoteIp);
+  }
+
+  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: params.toString(),
+  });
+
+  if (!response.ok) return false;
+
+  const data = await response.json();
+  return !!data?.success;
+}
+
 async function runTavilySearch(query) {
   if (!TAVILY_API_KEY) return "";
 
@@ -195,10 +224,16 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const { chatHistory, userQuery } = req.body || {};
+    const { chatHistory, userQuery, turnstileToken } = req.body || {};
 
     if (typeof userQuery !== "string" || !Array.isArray(chatHistory)) {
       return res.status(400).json({ error: "Invalid request body" });
+    }
+
+    const remoteIp = req.headers["x-forwarded-for"]?.toString().split(",")[0].trim() || req.socket?.remoteAddress || "";
+    const isTurnstileValid = await verifyTurnstileToken(typeof turnstileToken === "string" ? turnstileToken : "", remoteIp);
+    if (!isTurnstileValid) {
+      return res.status(403).json({ error: "Security check failed. Please refresh and try again." });
     }
 
     // --- Backend Cache (Redis) ---
