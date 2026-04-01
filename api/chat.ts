@@ -12,9 +12,13 @@ const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
 const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
 const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 1000);
-const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 200); // Reduced from 300
-const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 5); // Keep at 5 for better context
-const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1000); // Reduced from 1500
+const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 180);
+const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 4);
+const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 700);
+const MAX_PROGRAM_CONTEXT_ITEMS = Number(process.env.MAX_PROGRAM_CONTEXT_ITEMS ?? 3);
+const MAX_PROFESSOR_CONTEXT_ITEMS = Number(process.env.MAX_PROFESSOR_CONTEXT_ITEMS ?? 2);
+const TAVILY_MAX_RESULTS = Number(process.env.TAVILY_MAX_RESULTS ?? 3);
+const TAVILY_SNIPPET_CHARS = Number(process.env.TAVILY_SNIPPET_CHARS ?? 280);
 const DAILY_LIMIT_MESSAGE = "You've reached the 15-message daily limit for Warrior Bot. Please come back tomorrow, or contact Winona State directly if you need immediate help.";
 
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
@@ -106,6 +110,20 @@ async function runTavilySearch(query: string): Promise<string> {
     return "";
   }
 
+  const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
+  const searchCacheKey = `tavily_cache:${Buffer.from(normalizedQuery).toString("base64").slice(0, 40)}`;
+
+  if (redis) {
+    try {
+      const cached = await redis.get<string>(searchCacheKey);
+      if (cached) {
+        return cached;
+      }
+    } catch (error) {
+      console.error("Tavily cache get error:", error);
+    }
+  }
+
   const tavilyResponse = await fetch("https://api.tavily.com/search", {
     method: "POST",
     headers: {
@@ -113,10 +131,10 @@ async function runTavilySearch(query: string): Promise<string> {
     },
     body: JSON.stringify({
       api_key: TAVILY_API_KEY,
-      query: buildWsuSearchQuery(query),
-      search_depth: "advanced",
-      include_answer: true,
-      max_results: 5,
+      query: normalizedQuery,
+      search_depth: "basic",
+      include_answer: false,
+      max_results: TAVILY_MAX_RESULTS,
       include_domains: ["winona.edu"]
     })
   });
@@ -127,11 +145,11 @@ async function runTavilySearch(query: string): Promise<string> {
 
   const searchResults = await tavilyResponse.json() as TavilySearchResponse;
   const summarizedResults = (searchResults.results || [])
-    .slice(0, 5)
+    .slice(0, TAVILY_MAX_RESULTS)
     .map((result, index) => {
       const title = result.title || `Result ${index + 1}`;
       const url = result.url || "No URL provided";
-      const content = (result.content || "").trim();
+      const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, TAVILY_SNIPPET_CHARS);
       return `${index + 1}. ${title}\nURL: ${url}\nSnippet: ${content}`;
     })
     .join("\n\n");
@@ -140,11 +158,20 @@ async function runTavilySearch(query: string): Promise<string> {
     return "";
   }
 
-  return [
+  const formatted = [
     "Web search results for context. Prefer official Winona State University pages and cite them with markdown links when used.",
-    searchResults.answer ? `Answer summary: ${searchResults.answer}` : "",
     summarizedResults
   ].filter(Boolean).join("\n\n");
+
+  if (redis && formatted) {
+    try {
+      await redis.set(searchCacheKey, formatted, { ex: 60 * 60 * 12 });
+    } catch (error) {
+      console.error("Tavily cache set error:", error);
+    }
+  }
+
+  return formatted;
 }
 
 /**
@@ -241,7 +268,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Only add program context if programs were found
     if (programContext && Array.isArray(programContext) && programContext.length > 0) {
       contextSnippet += "\n\nRelevant WSU Programs:\n" +
-        programContext.map((p: any) =>
+        programContext.slice(0, MAX_PROGRAM_CONTEXT_ITEMS).map((p: any) =>
           `- ${p.program_name} (${p.degree_type}): ${p.program_credits || 'varies'} credits. ${p.short_description || ''}`
         ).join("\n");
     }
@@ -249,8 +276,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Only add professor context if professors were found
     if (professorContext && Array.isArray(professorContext) && professorContext.length > 0) {
       contextSnippet += "\n\nRelevant WSU Professors:\n" +
-        professorContext.map((prof: any) =>
-          `- ${prof.name} (${prof.title}): Rating ${prof.avg_rating}/5 (${prof.num_ratings} reviews), ${prof.would_take_again_percent}% would retake. Courses: ${prof.courses_taught}`
+        professorContext.slice(0, MAX_PROFESSOR_CONTEXT_ITEMS).map((prof: any) =>
+          `- ${prof.name} (${prof.title}): Rating ${prof.avg_rating}/5, Courses: ${prof.courses_taught}`
         ).join("\n");
     }
 
@@ -263,15 +290,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
     const baseSystemInstruction =
-      `You are Warrior Bot, WSU's AI advisor. Help students explore programs using the data below. ` +
-      `CRITICAL INSTRUCTION: If a user asks about information NOT present in the provided context, especially current website information like tuition, deadlines, housing, admissions, requirements, costs, or campus services, you MUST use the web_search tool or the provided web search context before answering. ` +
-      `NEVER say you do not know or suggest consulting an advisor unless you have already used the available search results and still cannot find the answer. ` +
-      `Use web search quietly in the background and answer directly without saying things like "according to web search results" or narrating that you searched. ` +
-      `If the information is time-sensitive, include a brief date or timeframe when it helps clarify the answer. ` +
-      `If you use web search information, you MUST include helpful markdown links to the specific WSU sources you relied on when links are useful. ` +
-      `Prefer official Winona State University pages on winona.edu over third-party pages. ` +
-      `PRIORITY: Use provided WSU data over general knowledge. ` +
-      `Programs data: Use exact credits/details. Professor data: ONLY mention listed professors. ` +
+      `You are Warrior Bot, WSU's AI advisor. Help students explore programs using the provided WSU data first. ` +
+      `For current website information not covered by the provided context, use the available web search context or web_search tool before answering. ` +
+      `Answer directly without narrating searches. Prefer official winona.edu sources and include markdown links when they help. ` +
+      `Keep responses concise by default while still being helpful. Use exact program details from context, and only mention professors that appear in the provided data. ` +
+      `If timing matters, briefly note the relevant date or timeframe. ` +
       contextSnippet;
 
     let preFetchedSearchContext = "";
@@ -310,6 +333,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     ];
 
+    const shouldEnableToolSearch = !preFetchedSearchContext && !!TAVILY_API_KEY;
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
@@ -319,8 +344,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ],
       max_tokens: MAX_OUTPUT_TOKENS,
       temperature: 0.7,
-      tools,
-      tool_choice: "auto"
+      tools: shouldEnableToolSearch ? tools : undefined,
+      tool_choice: shouldEnableToolSearch ? "auto" : undefined
     });
 
     let responseText = trimToNaturalEnding(
@@ -338,7 +363,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (TAVILY_API_KEY) {
           try {
-            const searchContext = await runTavilySearch(searchQuery);
+            const searchContext = preFetchedSearchContext || await runTavilySearch(searchQuery);
 
             if (searchContext) {
 

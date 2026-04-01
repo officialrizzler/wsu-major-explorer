@@ -80,15 +80,25 @@ function shouldUseWebSearch(query) {
 async function runTavilySearch(query) {
   if (!TAVILY_API_KEY) return "";
 
+  const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
+  const searchCacheKey = `tavily_cache:${Buffer.from(normalizedQuery).toString("base64").slice(0, 40)}`;
+
+  try {
+    if (redis) {
+      const cached = await redis.get(searchCacheKey);
+      if (cached) return cached;
+    }
+  } catch (e) { }
+
   const tavilyRes = await fetch("https://api.tavily.com/search", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       api_key: TAVILY_API_KEY,
-      query: buildWsuSearchQuery(query),
-      search_depth: "advanced",
-      max_results: 5,
-      include_answer: true,
+      query: normalizedQuery,
+      search_depth: "basic",
+      max_results: 3,
+      include_answer: false,
       include_domains: ["winona.edu"],
     }),
   });
@@ -99,20 +109,27 @@ async function runTavilySearch(query) {
 
   const tavilyData = await tavilyRes.json();
   const snippets = (tavilyData.results || [])
-    .slice(0, 5)
+    .slice(0, 3)
     .map((result, index) => {
       const title = result.title || `Result ${index + 1}`;
       const url = result.url || "No URL provided";
-      const content = (result.content || "").trim();
+      const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, 280);
       return `${index + 1}. ${title}\nSource: ${url}\nSnippet: ${content}`;
     })
     .join("\n\n");
 
-  return [
+  const formatted = [
     "Web search results for context. Prefer official Winona State University pages and cite the source URL briefly when used.",
-    tavilyData.answer ? `Answer summary: ${tavilyData.answer}` : "",
     snippets,
   ].filter(Boolean).join("\n\n");
+
+  try {
+    if (redis && formatted) {
+      await redis.set(searchCacheKey, formatted, { ex: 60 * 60 * 12 });
+    }
+  } catch (e) { }
+
+  return formatted;
 }
 
 app.post("/api/chat", async (req, res) => {
@@ -153,10 +170,10 @@ app.post("/api/chat", async (req, res) => {
     }
 
     // --- History Trimming (Cost Reduction) ---
-    const trimmedHistory = chatHistory.slice(-5).map((msg) => {
+    const trimmedHistory = chatHistory.slice(-4).map((msg) => {
       const text = msg?.parts?.[0]?.text ?? "";
       const role = msg?.role === "model" ? "assistant" : "user";
-      return { role, content: String(text).slice(0, 1000) };
+      return { role, content: String(text).slice(0, 700) };
     });
 
     // --- Tavily Web Search ---
@@ -184,7 +201,7 @@ app.post("/api/chat", async (req, res) => {
         ...trimmedHistory,
         { role: "user", content: userQuery.slice(0, 1500) },
       ],
-      max_tokens: 300,
+      max_tokens: 180,
       temperature: 0.7,
     });
 
