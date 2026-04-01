@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useCompare } from '../contexts/CompareContext';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { Program } from '../types';
-import { MessageCircle, Plus, X, Share2, Check, Sparkles, Bot } from 'lucide-react';
+import { Plus, X, Share2, Check, Sparkles, Bot } from 'lucide-react';
 import { useData } from '../contexts/DataContext';
 import DynamicBackground from '../components/DynamicBackground';
 import AddProgramModal from '../components/AddProgramModal';
@@ -29,7 +29,6 @@ const ComparePage: React.FC = () => {
     const [aiComparison, setAiComparison] = useState<string | null>(null);
     const [isGeneratingComparison, setIsGeneratingComparison] = useState(false);
     const [aiError, setAiError] = useState<string | null>(null);
-    const navigate = useNavigate();
     const location = useLocation();
 
 
@@ -115,12 +114,6 @@ const ComparePage: React.FC = () => {
         if (numericValues.length < 2) return null;
         return metric.higherIsBetter ? Math.max(...numericValues) : Math.min(...numericValues);
     };
-
-    const handleStillCantDecide = () => {
-        const programNames = compareList.map(p => p.program_name).join(', ');
-        const prompt = `I'm trying to decide between these majors: ${programNames}. Can you help me understand the key differences and ask some questions to help me figure out which one is a better fit for me?`;
-        navigate(`/advisor?prompt=${encodeURIComponent(prompt)}`);
-    }
 
     const handleGenerateAIComparison = async () => {
         setIsGeneratingComparison(true);
@@ -250,7 +243,7 @@ const ComparePage: React.FC = () => {
                 </div>
 
                 {compareList.length > 1 && (
-                    <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <div className="mt-8 flex items-center justify-center">
                         <button
                             onClick={handleGenerateAIComparison}
                             disabled={isGeneratingComparison}
@@ -258,13 +251,6 @@ const ComparePage: React.FC = () => {
                         >
                             {isGeneratingComparison ? <span className="animate-spin w-5 h-5 border-2 border-white/30 border-t-white rounded-full"></span> : <Sparkles size={20} />}
                             {isGeneratingComparison ? "Generating Insights..." : "AI Comparison Summary"}
-                        </button>
-                        <button
-                            onClick={handleStillCantDecide}
-                            className="font-body inline-flex items-center gap-2 px-6 py-3 border border-gray-200 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition shadow-sm w-full sm:w-auto justify-center"
-                        >
-                            <MessageCircle size={20} />
-                            Ask Advisor
                         </button>
                     </div>
                 )}
