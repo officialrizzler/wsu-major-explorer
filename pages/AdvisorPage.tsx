@@ -1,15 +1,19 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAdvisorResponse } from '../services/advisorService';
-import { Send, Bot, User, ChevronDown } from 'lucide-react';
+import { Send, Bot, ChevronDown, GraduationCap } from 'lucide-react';
 import { useCompare } from '../contexts/CompareContext';
-import DynamicBackground from '../components/DynamicBackground';
 import ReactMarkdown from 'react-markdown';
 
 interface ChatMessage {
     role: 'user' | 'model';
     text: string;
 }
+
+const shouldJustifyUserMessage = (text: string) => {
+    const normalized = text.replace(/\s+/g, ' ').trim();
+    return normalized.length > 90 || text.includes('\n');
+};
 
 const AdvisorPage: React.FC = () => {
     const location = useLocation();
@@ -54,7 +58,6 @@ const AdvisorPage: React.FC = () => {
         setInput('');
         setIsLoading(true);
 
-
         setTimeout(() => scrollToBottom('smooth'), 100);
 
         const chatHistoryForApi = [...messages, userMessage].slice(-8).map(msg => ({
@@ -68,7 +71,6 @@ const AdvisorPage: React.FC = () => {
             setMessages(prev => [...prev, modelMessage]);
         } catch (error) {
             console.error("Advisor Error:", error);
-            // Show the specific error message to help with debugging
             const errorMessageText = error instanceof Error ? error.message : "I'm sorry, I encountered an unexpected error.";
             const errorMessage: ChatMessage = { role: 'model', text: `Debug Error: ${errorMessageText}` };
             setMessages(prev => [...prev, errorMessage]);
@@ -87,26 +89,46 @@ const AdvisorPage: React.FC = () => {
     }, [location.search]);
 
     return (
-        <div className={`relative flex flex-col h-[100dvh] min-h-0 overflow-hidden ${compareList.length > 0 ? 'pb-20 sm:pb-0' : ''}`}>
-            <DynamicBackground className="absolute inset-0" />
-            <div className="relative z-10 w-full max-w-4xl mx-auto flex-1 min-h-0 flex flex-col p-4 sm:py-12 sm:px-8">
-                <div className="w-full flex-1 min-h-0 flex flex-col bg-white/90 backdrop-blur-xl sm:rounded-xl border sm:border border-gray-200 overflow-hidden shadow-sm relative">
-                    <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 min-h-0 p-4 sm:p-6 space-y-6 overflow-y-auto scroll-shadows">
+        <div className={`relative flex h-[calc(100dvh-4rem)] min-h-0 flex-col overflow-hidden bg-[#f6f7fb] ${compareList.length > 0 ? 'pb-20 sm:pb-0' : ''}`}>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-white via-[#f8f8fb] to-transparent" />
+                <div className="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(34,91,255,0.10),_transparent_65%)]" />
+                <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white/90 to-transparent" />
+            </div>
+
+            <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 min-h-0 flex-col px-4 pb-4 pt-4 sm:px-8 sm:pb-6 sm:pt-5">
+                <div
+                    ref={scrollContainerRef}
+                    onScroll={handleScroll}
+                    className="flex-1 min-h-0 overflow-y-auto scroll-smooth [mask-image:linear-gradient(to_bottom,transparent,black_2rem,black_calc(100%-2rem),transparent)]"
+                >
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 pb-10 pt-4 sm:gap-10 sm:pb-12 sm:pt-6">
                         {messages.map((msg, index) => (
-                            <div key={index} className={`flex gap-3 message-bubble-animation ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                {msg.role === 'model' && (
-                                    <div className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center">
-                                        <Bot className="text-gray-700" size={24} />
+                            <div key={index} className={`message-bubble-animation w-full ${msg.role === 'user' ? 'flex flex-col items-end' : ''}`}>
+                                <div className={`mb-3 flex items-center gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
+                                    <div className={`flex h-9 w-9 items-center justify-center rounded-full border ${msg.role === 'user' ? 'border-primary-200 bg-primary-50 text-primary-700' : 'border-gray-200 bg-white text-gray-700 shadow-sm'}`}>
+                                        {msg.role === 'user' ? <GraduationCap size={16} /> : <Bot size={18} />}
                                     </div>
-                                )}
-                                <div className={`p-4 rounded-2xl shadow-sm ${msg.role === 'user' ? 'bg-primary-600 text-white rounded-br-none max-w-lg' : 'bg-gray-100 text-gray-900 rounded-bl-none max-w-xl border border-gray-200'}`}>
-                                    <div className="text-sm leading-relaxed font-body">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-400">
+                                        {msg.role === 'user' ? 'You' : 'AI Advisor'}
+                                    </p>
+                                </div>
+
+                                <div className={msg.role === 'user' ? 'w-full max-w-2xl px-6 sm:px-8' : 'pl-12 sm:pl-14'}>
+                                    <div
+                                        className={`text-[14px] leading-7 sm:text-[15px] ${msg.role === 'user' ? 'font-medium text-gray-900' : 'text-gray-700'}`}
+                                        style={msg.role === 'user'
+                                            ? shouldJustifyUserMessage(msg.text)
+                                                ? { textAlign: 'justify', textAlignLast: 'left' }
+                                                : { textAlign: 'right' }
+                                            : undefined}
+                                    >
                                         <ReactMarkdown
                                             components={{
-                                                a: ({ node, ...props }) => <a {...props} className={`underline hover:opacity-80 font-medium ${msg.role === 'user' ? 'text-white' : 'text-primary-700'}`} target="_blank" rel="noopener noreferrer" />,
+                                                a: ({ node, ...props }) => <a {...props} className="font-medium text-primary-700 underline decoration-primary-200 underline-offset-4 hover:text-primary-800" target="_blank" rel="noopener noreferrer" />,
                                                 p: ({ node, ...props }) => <p {...props} className="mb-3 last:mb-0 whitespace-pre-wrap" />,
-                                                ul: ({ node, ...props }) => <ul {...props} className="list-disc pl-5 mb-3 space-y-1" />,
-                                                ol: ({ node, ...props }) => <ol {...props} className="list-decimal pl-5 mb-3 space-y-1" />,
+                                                ul: ({ node, ...props }) => <ul {...props} className={`mb-3 list-disc space-y-1.5 pl-6 ${msg.role === 'user' ? 'inline-block text-left' : 'text-left'}`} />,
+                                                ol: ({ node, ...props }) => <ol {...props} className={`mb-3 list-decimal space-y-1.5 pl-6 ${msg.role === 'user' ? 'inline-block text-left' : 'text-left'}`} />,
                                                 li: ({ node, ...props }) => <li {...props} />,
                                                 strong: ({ node, ...props }) => <strong {...props} className="font-semibold" />
                                             }}
@@ -115,63 +137,66 @@ const AdvisorPage: React.FC = () => {
                                         </ReactMarkdown>
                                     </div>
                                 </div>
-                                {msg.role === 'user' && (
-                                    <div className="w-10 h-10 rounded-full bg-primary-100 flex-shrink-0 flex items-center justify-center">
-                                        <User className="text-primary-600" size={24} />
-                                    </div>
-                                )}
                             </div>
                         ))}
                         <div ref={messagesEndRef} />
                     </div>
+                </div>
 
-                    {isLoading && (
-                        <div className="flex-shrink-0 px-4 sm:px-6 pt-4">
-                            <div className="flex gap-3 justify-start">
-                                <div className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200 flex-shrink-0 flex items-center justify-center">
-                                    <Bot className="text-gray-700" size={24} />
+                {isLoading && (
+                    <div className="pointer-events-none absolute inset-x-0 bottom-32 z-10">
+                        <div className="mx-auto w-full max-w-3xl px-4 sm:px-0">
+                            <div className="flex items-center gap-3 text-sm text-gray-500">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm">
+                                    <Bot size={18} />
                                 </div>
-                                <div className="max-w-lg p-4 rounded-2xl bg-gray-100 text-gray-900 rounded-bl-none border border-gray-200">
-                                    <div className="flex items-center gap-2">
-                                        <span className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                                        <span className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                                        <span className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></span>
+                                <div className="flex items-center gap-2 rounded-full border border-gray-200 bg-white/95 px-4 py-2 shadow-sm backdrop-blur">
+                                    <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-gray-400">Thinking</span>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]"></span>
+                                        <span className="h-1.5 w-1.5 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]"></span>
+                                        <span className="h-1.5 w-1.5 rounded-full bg-gray-400 animate-bounce"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    )}
+                    </div>
+                )}
 
-                    {isScrolledUp && (
-                        <button
-                            onClick={() => scrollToBottom()}
-                            className="absolute bottom-24 right-6 z-20 bg-primary-600 text-white rounded-full p-2 shadow-lg hover:bg-primary-500 transition-opacity animate-fade-in"
-                            aria-label="Scroll to latest messages"
-                        >
-                            <ChevronDown size={24} />
-                        </button>
-                    )}
+                {isScrolledUp && (
+                    <button
+                        onClick={() => scrollToBottom()}
+                        className="absolute bottom-24 right-5 z-20 rounded-full border border-gray-200 bg-white/95 p-2 text-gray-700 shadow-lg shadow-gray-200/80 transition hover:border-gray-300 hover:bg-white"
+                        aria-label="Scroll to latest messages"
+                    >
+                        <ChevronDown size={20} />
+                    </button>
+                )}
 
-                    <div className="flex-shrink-0 p-4 bg-gray-50 border-t border-gray-200">
-                        <div className="relative flex items-center gap-3">
-                            <div className="flex-1 relative">
-                                <input
-                                    type="text"
-                                    value={input}
-                                    maxLength={1000}
-                                    onChange={e => setInput(e.target.value)}
-                                    onKeyPress={e => e.key === 'Enter' && handleSend()}
-                                    placeholder="Ask about majors, careers, or college life..."
-                                    className="font-body w-full px-4 py-3 pr-12 bg-white rounded-full border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:outline-none transition text-gray-900 placeholder-gray-500 shadow-sm"
-                                    disabled={isLoading}
-                                />
-                                <span className={`absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-mono ${input.length >= 900 ? 'text-rose-500' : 'text-gray-500'}`}>
-                                    {input.length}/1000
-                                </span>
+                <div className="pointer-events-none z-20 mt-3 px-1 pb-1 sm:mt-4">
+                    <div className="mx-auto w-full max-w-3xl">
+                        <div className="pointer-events-auto rounded-[28px] border border-gray-200/80 bg-white/88 p-3 shadow-[0_20px_70px_rgba(15,23,42,0.10)] backdrop-blur-xl">
+                            <div className="relative flex items-end gap-3">
+                                <div className="relative flex-1">
+                                    <input
+                                        type="text"
+                                        value={input}
+                                        maxLength={1000}
+                                        onChange={e => setInput(e.target.value)}
+                                        onKeyPress={e => e.key === 'Enter' && handleSend()}
+                                        placeholder="Message WSU Advisor..."
+                                        className="font-body w-full rounded-[22px] border border-transparent bg-transparent px-4 py-3.5 pr-12 text-[15px] text-gray-900 placeholder:text-gray-400 focus:outline-none"
+                                        disabled={isLoading}
+                                    />
+                                </div>
+                                <button
+                                    onClick={() => handleSend()}
+                                    disabled={isLoading || !input.trim()}
+                                    className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gray-900 text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
+                                >
+                                    <Send size={18} />
+                                </button>
                             </div>
-                            <button onClick={() => handleSend()} disabled={isLoading || !input.trim()} className="w-11 h-11 flex-shrink-0 rounded-full bg-primary-600 text-white flex items-center justify-center hover:bg-primary-700 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed transition shadow-sm hover:shadow-md">
-                                <Send size={20} />
-                            </button>
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
-import { GraduationCap, Menu, X, Hammer } from 'lucide-react';
+import { GraduationCap, Menu, X } from 'lucide-react';
 
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isConstructionTooltipOpen, setIsConstructionTooltipOpen] = useState(false);
 
     const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
         `text-sm transition-colors font-normal ${isActive
@@ -63,36 +62,6 @@ const Header: React.FC = () => {
 
                     { }
                     <div className="flex items-center gap-2 sm:gap-4">
-                        { }
-                        <div className="hidden xl:flex items-center gap-2 px-3 py-1 text-sm font-medium text-yellow-500 bg-yellow-500/10 rounded-full border border-yellow-500/20">
-                            <Hammer size={16} />
-                            <span>This site is actively under construction as of 2/2/2026</span>
-                        </div>
-
-                        { }
-                        <div className="xl:hidden relative">
-                            <button
-                                className="flex items-center justify-center p-2 text-yellow-500 bg-yellow-500/10 rounded-full border border-yellow-500/20 hover:bg-yellow-500/20 transition-colors"
-                                onClick={() => setIsConstructionTooltipOpen(!isConstructionTooltipOpen)}
-                                onMouseEnter={() => setIsConstructionTooltipOpen(true)}
-                                onMouseLeave={() => setIsConstructionTooltipOpen(false)}
-                                aria-label="Under construction info"
-                            >
-                                <Hammer size={18} />
-                            </button>
-
-                            { }
-                            <div
-                                className={`absolute right-0 top-full mt-2 w-56 p-4 bg-white border border-gray-200 rounded-xl shadow-xl shadow-gray-200/50 text-sm font-medium text-gray-800 transition-all duration-200 z-50 transform origin-top-right ${isConstructionTooltipOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}
-                            >
-                                <div className="absolute -top-1.5 right-3 w-3 h-3 bg-white border-t border-l border-gray-200 transform rotate-45 shadow-sm"></div>
-                                <div className="flex gap-2">
-                                    <Hammer size={16} className="text-yellow-500 shrink-0 mt-0.5" />
-                                    <p>This site is actively under construction as of 2/2/2026.</p>
-                                </div>
-                            </div>
-                        </div>
-
                         <div className="md:hidden">
                             <button
                                 onPointerUp={(e) => {

@@ -6,7 +6,7 @@ import Footer from './Footer';
 
 const Layout: React.FC = () => {
     const location = useLocation();
-    const isComparePage = location.pathname === '/compare';
+    const showCompareTray = location.pathname === '/explore';
 
     return (
         <div className="min-h-screen bg-[#f5f5f7] text-gray-900 font-body transition-colors duration-300 flex flex-col">
@@ -15,7 +15,7 @@ const Layout: React.FC = () => {
                 <Outlet />
             </main>
             {}
-            {!isComparePage && <CompareTray />}
+            {showCompareTray && <CompareTray />}
             <Footer />
         </div>
     );

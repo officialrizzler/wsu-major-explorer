@@ -46,6 +46,34 @@ function getClientIp(req: NextApiRequest) {
   return first || req.socket.remoteAddress || "unknown";
 }
 
+function trimToNaturalEnding(text: string, wasTruncated: boolean): string {
+  const normalized = text.trim();
+  if (!normalized) return normalized;
+  if (!wasTruncated) return normalized;
+
+  const sentenceMatches = [...normalized.matchAll(/[\s\S]*?[.!?](?=\s|$)/g)];
+  const lastSentence = sentenceMatches.at(-1)?.[0]?.trim();
+  if (lastSentence && lastSentence.length >= normalized.length * 0.55) {
+    return lastSentence;
+  }
+
+  const lastParagraphBreak = Math.max(
+    normalized.lastIndexOf("\n\n"),
+    normalized.lastIndexOf("\n- "),
+    normalized.lastIndexOf("\n")
+  );
+  if (lastParagraphBreak > normalized.length * 0.55) {
+    return normalized.slice(0, lastParagraphBreak).trim();
+  }
+
+  const lastSpace = normalized.lastIndexOf(" ");
+  if (lastSpace > normalized.length * 0.7) {
+    return `${normalized.slice(0, lastSpace).trim()}...`;
+  }
+
+  return `${normalized}...`;
+}
+
 function buildWsuSearchQuery(query: string): string {
   if (/winona state|wsu|winona\.edu/i.test(query)) {
     return query.trim();
@@ -295,7 +323,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       tool_choice: "auto"
     });
 
-    let responseText = completion.choices[0]?.message?.content ?? "";
+    let responseText = trimToNaturalEnding(
+      completion.choices[0]?.message?.content ?? "",
+      completion.choices[0]?.finish_reason === "length"
+    );
     const toolCalls = completion.choices[0]?.message?.tool_calls;
 
     // Handle web search function call
@@ -325,7 +356,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 temperature: 0.7
               });
 
-              responseText = followUp.choices[0]?.message?.content || "I found some information but couldn't process it properly.";
+              responseText = trimToNaturalEnding(
+                followUp.choices[0]?.message?.content || "I found some information but couldn't process it properly.",
+                followUp.choices[0]?.finish_reason === "length"
+              );
             } else {
               responseText = "I searched the WSU website but couldn't find a clear answer. Please check the official Winona State site at [winona.edu](https://www.winona.edu/) for the most current details.";
             }
@@ -350,7 +384,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         temperature: 0.7
       });
 
-      responseText = followUp.choices[0]?.message?.content || "";
+      responseText = trimToNaturalEnding(
+        followUp.choices[0]?.message?.content || "",
+        followUp.choices[0]?.finish_reason === "length"
+      );
 
       if (!responseText) {
         responseText = "I found some WSU website information but couldn't turn it into a clean answer. Please try rephrasing your question.";

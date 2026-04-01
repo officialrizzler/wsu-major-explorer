@@ -37,6 +37,34 @@ const openai = OPENAI_API_KEY ? new OpenAI({
   apiKey: OPENAI_API_KEY,
 }) : null;
 
+function trimToNaturalEnding(text, wasTruncated) {
+  const normalized = String(text || "").trim();
+  if (!normalized) return normalized;
+  if (!wasTruncated) return normalized;
+
+  const sentenceMatches = [...normalized.matchAll(/[\s\S]*?[.!?](?=\s|$)/g)];
+  const lastSentence = sentenceMatches.at(-1)?.[0]?.trim();
+  if (lastSentence && lastSentence.length >= normalized.length * 0.55) {
+    return lastSentence;
+  }
+
+  const lastParagraphBreak = Math.max(
+    normalized.lastIndexOf("\n\n"),
+    normalized.lastIndexOf("\n- "),
+    normalized.lastIndexOf("\n")
+  );
+  if (lastParagraphBreak > normalized.length * 0.55) {
+    return normalized.slice(0, lastParagraphBreak).trim();
+  }
+
+  const lastSpace = normalized.lastIndexOf(" ");
+  if (lastSpace > normalized.length * 0.7) {
+    return `${normalized.slice(0, lastSpace).trim()}...`;
+  }
+
+  return `${normalized}...`;
+}
+
 function buildWsuSearchQuery(query) {
   if (/winona state|wsu|winona\.edu/i.test(query)) {
     return query.trim();
@@ -160,7 +188,10 @@ app.post("/api/chat", async (req, res) => {
       temperature: 0.7,
     });
 
-    const responseText = completion.choices[0]?.message?.content ?? "";
+    const responseText = trimToNaturalEnding(
+      completion.choices[0]?.message?.content ?? "",
+      completion.choices[0]?.finish_reason === "length"
+    );
 
     // Store in cache for 1 hour
     try {
