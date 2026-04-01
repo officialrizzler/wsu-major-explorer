@@ -55,6 +55,7 @@ const AdvisorPage: React.FC = () => {
             turnstileWidgetIdRef.current = window.turnstile.render(turnstileContainerRef.current, {
                 sitekey: TURNSTILE_SITE_KEY,
                 theme: 'light',
+                appearance: 'interaction-only',
                 callback: (token: string) => {
                     setTurnstileToken(token);
                     setTurnstileError('');
@@ -271,10 +272,10 @@ const AdvisorPage: React.FC = () => {
                                 </button>
                             </div>
                             {TURNSTILE_SITE_KEY && (
-                                <div className="mt-3 flex flex-col items-center gap-2">
-                                    <div ref={turnstileContainerRef} />
+                                <div className="mt-2 flex flex-col items-end gap-1">
+                                    <div ref={turnstileContainerRef} className="min-h-0 [&>div]:min-h-0" />
                                     {turnstileError && (
-                                        <p className="text-center text-xs text-red-600">{turnstileError}</p>
+                                        <p className="text-right text-xs text-red-600">{turnstileError}</p>
                                     )}
                                 </div>
                             )}
