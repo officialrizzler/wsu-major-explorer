@@ -1,6 +1,6 @@
 
 import React, { useRef, useEffect } from 'react';
-import { Database, ListChecks, ExternalLink, Target, Info, Mail, AlertTriangle, ArrowRight, User, Github } from 'lucide-react';
+import { AlertTriangle, ArrowRight, User, LineChart, Landmark, MessageSquareText, BarChart3, Globe2, ExternalLink } from 'lucide-react';
 import DynamicBackground from '../components/DynamicBackground';
 import { dataSources } from '../data/wsuData';
 
@@ -27,6 +27,56 @@ const useAnimateOnScroll = (ref: React.RefObject<HTMLElement>) => {
       }
     };
   }, [ref]);
+};
+
+const SourceIcon: React.FC<{ source: { source_id: string; source_name: string; source_url: string } }> = ({ source }) => {
+  const sourceKey = `${source.source_id} ${source.source_name} ${source.source_url}`.toLowerCase();
+
+  if (sourceKey.includes('winona') || sourceKey.includes('wsu') || sourceKey.includes('catalog.winona.edu')) {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-primary-100 bg-primary-50 text-primary-700">
+        <span className="text-xl font-black tracking-[-0.06em] leading-none">W</span>
+      </div>
+    );
+  }
+
+  if (sourceKey.includes('mn') || sourceKey.includes('deed') || sourceKey.includes('state.mn.us')) {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-sky-100 bg-sky-50 text-sky-700">
+        <LineChart size={18} strokeWidth={2.2} />
+      </div>
+    );
+  }
+
+  if (sourceKey.includes('ipeds') || sourceKey.includes('nces')) {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-slate-100 text-slate-700">
+        <Landmark size={18} strokeWidth={2.1} />
+      </div>
+    );
+  }
+
+  if (sourceKey.includes('rate my professors') || sourceKey.includes('ratemyprofessors')) {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-amber-100 bg-amber-50 text-amber-700">
+        <MessageSquareText size={18} strokeWidth={2.1} />
+      </div>
+    );
+  }
+
+  if (sourceKey.includes('nsse')) {
+    return (
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-violet-100 bg-violet-50 text-violet-700">
+        <BarChart3 size={18} strokeWidth={2.1} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-200 bg-gray-100 text-gray-700">
+      <Globe2 size={18} strokeWidth={2.1} />
+    </div>
+  );
 };
 
 const AboutPage: React.FC = () => {
@@ -60,9 +110,7 @@ const AboutPage: React.FC = () => {
             {dataSources.map((source) => (
               <div key={source.source_id} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all group flex flex-col h-full shadow-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="p-2 bg-primary-50 rounded-lg text-primary-600 group-hover:text-primary-700 transition-colors">
-                    <Database size={20} />
-                  </div>
+                  <SourceIcon source={source} />
                   <span className="text-xs font-bold font-mono bg-gray-50 text-gray-600 px-2 py-1 rounded border border-gray-200">
                     {source.source_year}
                   </span>
@@ -80,7 +128,7 @@ const AboutPage: React.FC = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-xs font-bold text-primary-500 hover:text-primary-300 uppercase tracking-widest transition-colors"
                   >
-                    Verify Source <ArrowRight size={12} />
+                    Go to Source <ArrowRight size={12} />
                   </a>
                 </div>
               </div>

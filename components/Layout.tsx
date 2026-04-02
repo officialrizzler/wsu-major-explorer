@@ -11,7 +11,7 @@ const Layout: React.FC = () => {
     return (
         <div className="min-h-screen bg-[#f5f5f7] text-gray-900 font-body transition-colors duration-300 flex flex-col">
             <Header />
-            <main className="pt-16 flex-1 min-h-0 flex flex-col">
+            <main className="pt-14 flex-1 min-h-0 flex flex-col">
                 <Outlet />
             </main>
             {}

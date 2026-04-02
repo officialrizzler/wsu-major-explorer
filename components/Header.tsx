@@ -21,7 +21,7 @@ const Header: React.FC = () => {
     return (
         <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300">
-                <div className="relative flex items-center justify-between h-16 transition-all duration-300">
+                <div className="grid h-14 grid-cols-[1fr_auto_1fr] items-center transition-all duration-300">
                     { }
                     <div className="flex items-center transition-all duration-300 ease-in-out">
                         <div
@@ -31,9 +31,9 @@ const Header: React.FC = () => {
                                 e.preventDefault();
                                 navigate('/');
                             }}
-                            className="flex items-center gap-3 group relative z-20 touch-manipulation cursor-pointer"
+                            className="flex items-center gap-2 group relative z-20 touch-manipulation cursor-pointer"
                         >
-                            <div className="p-2 rounded-lg border border-gray-200 bg-white/50 transition-all duration-300">
+                            <div className="transition-all duration-300">
                                 <GraduationCap className="text-primary-600" size={24} />
                             </div>
                             <span className="text-gray-900 text-lg font-semibold tracking-tight transition-all duration-300 hidden lg:block">
@@ -43,8 +43,8 @@ const Header: React.FC = () => {
                     </div>
 
                     { }
-                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex">
-                        <nav className="flex items-center space-x-10">
+                    <div className="hidden md:flex items-center justify-center">
+                        <nav className="flex items-center gap-12 lg:gap-14">
                             <NavLink to="/explore" className={navLinkClasses}>
                                 Catalog
                             </NavLink>
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
                     </div>
 
                     { }
-                    <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="flex items-center justify-end gap-2 sm:gap-4">
                         <div className="md:hidden">
                             <button
                                 onPointerUp={(e) => {

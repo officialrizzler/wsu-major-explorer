@@ -128,7 +128,7 @@ const ComparePage: React.FC = () => {
         }
     };
 
-    const EmptyState = () => (
+    const renderEmptyState = () => (
         <DynamicBackground className="flex-grow flex flex-col">
             <div className="flex-grow flex items-center justify-center py-40">
                 <div className="text-center container mx-auto px-4 relative z-10">
@@ -142,9 +142,9 @@ const ComparePage: React.FC = () => {
         </DynamicBackground>
     );
 
-    const TableView = () => (
+    const renderTableView = () => (
         <DynamicBackground className="flex-grow">
-            <div className={`container mx-auto px-4 sm:px-6 lg:px-8 py-24 relative`}>
+            <div className={`container mx-auto px-4 sm:px-6 lg:px-8 py-20 relative`}>
                 <div className="text-center mb-12">
                     {isSharedView && (
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-500/10 border border-primary-500/20 text-primary-400 text-xs font-semibold mb-4 animate-fade-in">
@@ -159,8 +159,8 @@ const ComparePage: React.FC = () => {
                     <p className="mt-3 max-w-2xl mx-auto text-gray-600 font-body">A side-by-side look at your selected programs.</p>
                 </div>
 
-                <div className="rounded-xl border border-gray-200 bg-white/50 backdrop-blur-lg shadow-sm">
-                    <div className="p-4 border-b border-gray-200 flex justify-between items-center sticky top-16 z-50 bg-white/90 backdrop-blur-lg px-2 sm:px-4 rounded-t-xl">
+                <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+                    <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-white px-2 sm:px-4 rounded-t-xl">
                         <div className="flex gap-2">
                             {compareList.length < 4 && (
                                 <button onClick={() => setAddModalOpen(true)} className="font-body flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 border border-primary-200 text-xs sm:text-sm font-semibold rounded-md text-primary-700 hover:bg-primary-50">
@@ -177,17 +177,17 @@ const ComparePage: React.FC = () => {
                     </div>
 
                     <div className="overflow-x-auto rounded-b-xl">
-                        <table className="w-full min-w-[600px] border-separate border-spacing-0 table-fixed">
+                        <table className="w-full min-w-[860px] border-separate border-spacing-0 table-auto">
                             <tbody>
                                 { }
                                 <tr className="border-b border-gray-200 bg-gray-50/50">
-                                    <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-900 font-body bg-white z-20 border-r border-b border-gray-200 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.05)]">
+                                    <td className="sticky left-0 min-w-[180px] w-[180px] sm:min-w-[220px] sm:w-[220px] md:min-w-[250px] md:w-[250px] p-2 sm:p-4 font-semibold text-gray-900 font-body bg-white z-20 border-r border-b border-gray-200 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         <span className="text-sm sm:text-base">Programs</span>
                                     </td>
                                     {compareList.map(p => (
                                         <td
                                             key={`programs-${p.program_id}`}
-                                            className="p-3 bg-white align-top border-b border-gray-200"
+                                            className="min-w-[220px] p-3 bg-white align-top border-b border-gray-200"
                                         >
                                             <div
                                                 className="relative h-full min-h-[56px] pl-3 pr-9 py-2 rounded-md bg-gray-100/50 flex flex-col justify-center border border-gray-100"
@@ -195,7 +195,7 @@ const ComparePage: React.FC = () => {
                                                     borderLeft: `4px solid ${collegeColorHexMap[p.department?.college_name || ''] || '#4b5563'}`
                                                 }}
                                             >
-                                                <p className="text-gray-900 text-sm sm:text-base font-semibold leading-snug truncate">
+                                                <p className="text-gray-900 text-sm sm:text-base font-semibold leading-snug break-words pr-2">
                                                     {p.program_name}
                                                 </p>
                                                 <button
@@ -216,7 +216,7 @@ const ComparePage: React.FC = () => {
 
                                     return (
                                         <tr key={metric.label} className="group">
-                                            <td className="sticky left-0 w-[140px] sm:w-[200px] md:w-[260px] p-2 sm:p-4 font-semibold text-gray-700 font-body bg-white z-20 border-b border-gray-200 border-r border-gray-200 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.05)] transition-colors hover:bg-gray-50">
+                                            <td className="sticky left-0 min-w-[180px] w-[180px] sm:min-w-[220px] sm:w-[220px] md:min-w-[250px] md:w-[250px] p-2 sm:p-4 font-semibold text-gray-700 font-body bg-white z-20 border-b border-gray-200 border-r border-gray-200 shadow-[4px_0_12px_-4px_rgba(0,0,0,0.05)] transition-colors hover:bg-gray-50">
                                                 <span className="text-xs sm:text-sm">{metric.label}</span>
                                             </td>
                                             {compareList.map(p => {
@@ -229,7 +229,7 @@ const ComparePage: React.FC = () => {
                                                 const alignClass = metric.isNumeric ? 'text-center' : 'text-left';
 
                                                 return (
-                                                    <td key={p.program_id} className={`p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-white/80 backdrop-blur-sm border-b border-gray-200 ${alignClass} ${isBest ? 'text-green-600 font-bold' : 'text-gray-700'} transition-colors hover:bg-gray-50`}>
+                                                    <td key={p.program_id} className={`min-w-[220px] p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-white border-b border-gray-200 break-words ${alignClass} ${isBest ? 'text-green-600 font-bold' : 'text-gray-700'} transition-colors hover:bg-gray-50`}>
                                                         {displayValue}
                                                     </td>
                                                 )
@@ -242,7 +242,7 @@ const ComparePage: React.FC = () => {
                     </div>
                 </div>
 
-                {compareList.length > 1 && (
+                {compareList.length > 1 && !aiComparison && !aiError && (
                     <div className="mt-8 flex items-center justify-center">
                         <button
                             onClick={handleGenerateAIComparison}
@@ -294,7 +294,7 @@ const ComparePage: React.FC = () => {
 
     return (
         <>
-            {compareList.length === 0 ? <EmptyState /> : <TableView />}
+            {compareList.length === 0 ? renderEmptyState() : renderTableView()}
             {isAddModalOpen && <AddProgramModal onClose={() => setAddModalOpen(false)} />}
 
             { }

@@ -79,16 +79,19 @@ const AddProgramModal: React.FC<AddProgramModalProps> = ({ onClose }) => {
                 <div className="px-4 pb-2 flex-grow overflow-y-auto custom-scrollbar">
                     <ul className="space-y-1">
                         {filteredPrograms.map(p => (
-                            <li key={p.program_id} className="flex justify-between items-center py-3 px-2 rounded-md hover:bg-gray-50 transition-colors group">
-                                <div className="flex-1 min-w-0 mr-4 text-left">
-                                    <p className="font-body truncate font-medium text-gray-900">{p.program_name}</p>
-                                    <p className="font-body text-xs text-gray-500">{p.department?.college_name}</p>
-                                </div>
+                            <li key={p.program_id}>
                                 <button
+                                    type="button"
                                     onClick={() => handleAdd(p)}
-                                    className="flex-shrink-0 text-primary-600 hover:text-primary-700 text-sm font-semibold opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
+                                    className="group flex w-full items-center justify-between rounded-md py-3 px-2 text-left transition-colors hover:bg-gray-50 focus:bg-gray-50"
                                 >
-                                    Add
+                                    <div className="flex-1 min-w-0 mr-4">
+                                        <p className="font-body truncate font-medium text-gray-900">{p.program_name}</p>
+                                        <p className="font-body text-xs text-gray-500">{p.department?.college_name}</p>
+                                    </div>
+                                    <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-lg font-semibold leading-none text-primary-600 opacity-0 transition-opacity group-hover:opacity-100 group-focus:opacity-100">
+                                        +
+                                    </span>
                                 </button>
                             </li>
                         ))}
