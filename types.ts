@@ -41,6 +41,7 @@ export interface Program {
 }
 
 export interface Course {
+    type: 'course';
     course_id: string;
     course_title: string;
     credits: string;
@@ -61,14 +62,6 @@ export interface CourseGroup {
 export interface CourseText {
     type: 'text';
     content: string;
-}
-
-export interface Course {
-    type: 'course';
-    course_id: string;
-    course_title: string;
-    credits: string;
-    description?: string;
 }
 
 export interface CareerOutcome {

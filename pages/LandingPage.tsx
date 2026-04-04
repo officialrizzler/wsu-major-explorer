@@ -27,7 +27,7 @@ const LandingPage: React.FC = () => {
 
                         <div className="space-y-4">
                             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-gray-950 leading-[1.05]">
-                                Major Decisions,<br />
+                                Major Decisions<br />
                                 Made Simpler.
                             </h1>
 

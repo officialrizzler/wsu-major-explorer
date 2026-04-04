@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
 import { useData } from '../contexts/DataContext';
-import { ArrowLeft, ExternalLink, Scale, CheckCircle, XCircle, Briefcase, Handshake, Building, MapPin, BookOpen, TrendingUp, TrendingDown, Minus, Users, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Scale, CheckCircle, XCircle, Briefcase, Handshake, Building, MapPin, BookOpen, TrendingUp, TrendingDown, Minus, Users, ChevronDown, Calendar } from 'lucide-react';
 import { useCompare } from '../contexts/CompareContext';
 
 import { CareerOutcome } from '../types';
@@ -11,28 +11,21 @@ import ProfessorWidget from '../components/ProfessorWidget';
 import professorsData from '../data/professors_data.json';
 
 
-const Widget: React.FC<{ title: string, icon?: React.ReactNode, children: React.ReactNode, year?: string, defaultOpen?: boolean }> = ({ title, icon, children, year, defaultOpen = true }) => {
-    const [isOpen, setIsOpen] = React.useState(defaultOpen);
-
+const Widget: React.FC<{ title: string, icon?: React.ReactNode, children: React.ReactNode, year?: string, badges?: React.ReactNode }> = ({ title, icon, children, year, badges }) => {
     return (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm relative overflow-hidden transition-all duration-300">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full p-6 flex items-center justify-between text-left group hover:bg-gray-50 transition-colors"
-            >
-                <h2 className="text-xl sm:text-2xl font-bold flex items-center text-gray-900">
-                    <span className="flex items-center gap-3">{icon} {title}</span>
-                    {year && <span className="ml-3 text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-gray-500 uppercase tracking-widest">{year}</span>}
-                </h2>
-                <ChevronDown className={`text-gray-400 group-hover:text-gray-600 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
-                <div className="overflow-hidden">
-                    <div className="px-6 pb-6 border-t border-gray-100 pt-6">
-                        {children}
-                    </div>
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden transition-all duration-300">
+            <div className="px-6 pt-6 sm:px-8 sm:pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-wrap items-center gap-y-2 gap-x-4">
+                    <h2 className="text-xl sm:text-2xl font-black flex items-center text-gray-900 tracking-tight">
+                        <span className="flex items-center gap-3">{icon} {title}</span>
+                        {year && <span className="ml-3 text-[10px] font-bold px-2 py-0.5 rounded bg-gray-100 border border-gray-200 text-gray-500 uppercase tracking-widest">{year}</span>}
+                    </h2>
+                    {badges}
                 </div>
+            </div>
+
+            <div className="p-6 sm:p-8 pt-6 sm:pt-6">
+                {children}
             </div>
         </div>
     );
@@ -200,7 +193,7 @@ const ProgramDetailPage: React.FC = () => {
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2 space-y-8">
+                    <div className="lg:col-span-2 space-y-6">
 
                         {program.you_might_like && program.you_might_like.length > 0 && (
                             <Widget title="Is This Major Right For You?">
@@ -233,41 +226,50 @@ const ProgramDetailPage: React.FC = () => {
 
                         { }
                         {program.course_structure && (
-                            <Widget title="Program Requirements" icon={<BookOpen size={24} className="text-purple-600" />} defaultOpen={false}>
+                            <Widget 
+                                title="Course Requirements" 
+                                icon={<BookOpen size={24} className="text-purple-600" />} 
+                                defaultOpen={false}
+                                badges={
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[10px] font-bold inline-flex items-center px-2.5 py-1.5 rounded-md bg-gray-50 border border-gray-200 text-gray-600 uppercase tracking-widest shadow-sm"><Calendar size={12} className="mr-1.5 opacity-60" /> {program.academic_year || '24-25'} CATALOG</span>
+                                    </div>
+                                }
+                            >
                                 <CourseRequirementWidget courseStructure={program.course_structure} />
                             </Widget>
                         )}
 
-                        {((program.career_outcomes && program.career_outcomes.length > 0) || (program.related_job_titles && program.related_job_titles.length > 0)) && (
-                            <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
-                                {program.career_outcomes && program.career_outcomes.length > 0 && (
+                        {program.career_outcomes && program.career_outcomes.length > 0 && (
+                            <>
+                                <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
                                     <div className="space-y-6">
                                         {program.career_outcomes.map(outcome => (
                                             <CareerOutlookCard key={outcome.occupation_code} outcome={outcome} />
                                         ))}
                                     </div>
-                                )}
 
-                                {program.related_job_titles && program.related_job_titles.length > 0 && (
-                                    <div className={`${(program.career_outcomes && program.career_outcomes.length > 0) ? 'mt-6 pt-4 border-t border-gray-100' : ''}`}>
-                                        <h3 className="text-xs font-bold mb-2 text-gray-900 uppercase tracking-wider">Other Common Roles</h3>
-                                        <p className="text-sm text-gray-500 font-body">
-                                            {program.related_job_titles.slice(0, 4).join(', ')}
-                                        </p>
+                                    {program.related_job_titles && program.related_job_titles.length > 0 && (
+                                        <div className="mt-6 pt-4 border-t border-gray-100">
+                                            <h3 className="text-xs font-bold mb-2 text-gray-900 uppercase tracking-wider">Other Common Roles</h3>
+                                            <p className="text-sm text-gray-500 font-body">
+                                                {program.related_job_titles.slice(0, 4).join(', ')}
+                                            </p>
+                                        </div>
+                                    )}
+                                </Widget>
+
+                                <Widget title="Explore Job Opportunities" icon={<Building size={24} className="text-amber-400" />}>
+                                    <p className="text-sm text-gray-500 mb-6 font-body">Find jobs related to this major in the Winona area and beyond</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <JobLinkCard icon={<Building />} title="Indeed" subtitle="Jobs in Winona, MN area" href={`https://www.indeed.com/q-${program.program_name}-jobs.html`} />
+                                        <JobLinkCard icon={<Briefcase />} title="LinkedIn" subtitle="Professional network" href={`https://www.linkedin.com/jobs/search/?keywords=${program.program_name}`} />
+                                        <JobLinkCard icon={<MapPin />} title="Minnesota Works" subtitle="State job bank" href="https://www.minnesotaworks.net/" />
+                                        <JobLinkCard icon={<Handshake />} title="Handshake" subtitle="WSU career platform" href="https://winona.joinhandshake.com/" />
                                     </div>
-                                )}
-                            </Widget>
+                                </Widget>
+                            </>
                         )}
-
-                        <Widget title="Explore Job Opportunities" icon={<Building size={24} className="text-amber-400" />}>
-                            <p className="text-sm text-gray-500 mb-6 font-body">Find jobs related to this major in the Winona area and beyond</p>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <JobLinkCard icon={<Building />} title="Indeed" subtitle="Jobs in Winona, MN area" href={`https://www.indeed.com/q-${program.program_name}-jobs.html`} />
-                                <JobLinkCard icon={<Briefcase />} title="LinkedIn" subtitle="Professional network" href={`https://www.linkedin.com/jobs/search/?keywords=${program.program_name}`} />
-                                <JobLinkCard icon={<MapPin />} title="Minnesota Works" subtitle="State job bank" href="https://www.minnesotaworks.net/" />
-                                <JobLinkCard icon={<Handshake />} title="Handshake" subtitle="WSU career platform" href="https://winona.joinhandshake.com/" />
-                            </div>
-                        </Widget>
 
                     </div>
 
@@ -280,9 +282,13 @@ const ProgramDetailPage: React.FC = () => {
                             <dl className="space-y-1">
                                 <SnapshotRow label="Est. Time" value="4 years" />
                                 <SnapshotRow label="Program Credits" value={program.program_credits} />
-                                <SnapshotRow label="Total Credits" value={program.total_credits} />
-                                <SnapshotRow label="Fall 2021 Enrollment" value={`${program.enrollment_fall_2021 ?? 'N/A'}`} trend={program.enrollment_trend} />
-                                <SnapshotRow label="Graduates (2021)" value={`${program.graduates_total ?? 'N/A'}`} />
+                                {program.total_credits && <SnapshotRow label="Total Credits" value={program.total_credits} />}
+                                {program.enrollment_fall_2021 !== null && program.enrollment_fall_2021 !== undefined && (
+                                    <SnapshotRow label="Fall 2021 Enrollment" value={program.enrollment_fall_2021} trend={program.enrollment_trend} />
+                                )}
+                                {program.graduates_total !== null && program.graduates_total !== undefined && (
+                                    <SnapshotRow label="Graduates (2021)" value={program.graduates_total} />
+                                )}
                             </dl>
                         </div>
 
