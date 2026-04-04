@@ -1,6 +1,6 @@
 # Course Requirements Audit
 
-Generated: 2026-04-04T05:18:24.906Z
+Generated: 2026-04-04T06:39:02.050Z
 
 ## Summary
 
@@ -11,7 +11,7 @@ Generated: 2026-04-04T05:18:24.906Z
 - Site programs unresolved to a catalog entry: 86
 - Site programs resolving outside the authoritative index pages: 150
 - Catalog entries missing from the site: 268
-- Programs flagged for likely widget/content issues: 135
+- Programs flagged for likely widget/content issues: 134
 
 ## Year Badge
 
@@ -186,20 +186,20 @@ Generated: 2026-04-04T05:18:24.906Z
 ## Likely Content Mismatches
 
 - Accounting [accounting-bs] (many catalog instructions missing from widget)
-- Accounting Minor [accounting-minor] (many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
+- Accounting Minor [accounting-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - Business Administration [business-administration] (many catalog instructions missing from widget) Missing courses: MIS 300::/400-level course | MATH 110::finite mathematics or higher.
-- Business Administration Minor [business-administration-minor] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
+- Business Administration Minor [business-administration-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - Business Analysis Minor [business-analysis-minor] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ECON 202::principles of macroeconomics - complete both courses. | ACCT 301::data analytics for accountants (acct 212 ) | DSCI 210::data science (math 140 , math 212 , or cs 234 ).
 - Business Law Minor [business-law-minor] (many catalog instructions missing from widget) Missing courses: BUSA 376::topics in business (requires prior written approval from dept. chair).
 - Business Management Minor [business-management-minor] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - Economics [economics] (many catalog instructions missing from widget) Missing courses: ECON 498::seminar in economics i and.
-- Economics Minor [economics-minor] (many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ECON 304::money and banking.
+- Economics Minor [economics-minor] (many catalog instructions missing from widget) Missing courses: ECON 302::intermediate microeconomics | ECON 303::intermediate macroeconomics | ECON 304::money and banking.
 - Finance [finance] (many catalog instructions missing from widget) Missing courses: MATH 110::finite mathematics (b grade or higher) | MATH 112::applied precalculus (b grade or higher) | MATH 115::college algebra (b grade or higher).
-- Finance Minor [finance-minor] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
+- Finance Minor [finance-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - International Business Minor [international-business-minor] (many catalog instructions missing from widget) Missing courses: ECON 404::international economics or | GS 355::asian international relations | HIST 434::modern russia and the ussr since 1905.
 - Investments Minor [investments-minor] (many catalog instructions missing from widget) Missing courses: ECON 202::principles of macroeconomics (both econ 201 & 202 required) | FIN 399::internship problem (dept. approval required) | FIN 480::independent studies in finance (dept. approval required).
 - Marketing [marketing] (many catalog instructions missing from widget)
-- Marketing Minor [marketing-minor] (many widget courses not found in catalog; many catalog instructions missing from widget)
+- Marketing Minor [marketing-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - Professional Selling Minor [professional-selling-minor] (many catalog instructions missing from widget)
 - Academic and Behavioral Strategist (BT) [academic-and-behavioral-strategist-bt] (many catalog instructions missing from widget) Missing courses: ::✽ hers 204 - personal & community health | EDFD 401::and 461 must be taken concurrently | EDFD 421::and 441 must be taken concurrently.
 - Adapted Physical Education (Teaching) Minor [adapted-physical-education-minor] (many catalog instructions missing from widget)
@@ -209,12 +209,12 @@ Generated: 2026-04-04T05:18:24.906Z
 - Child Advocacy Studies Minor [child-advocacy-studies-minor] (many catalog instructions missing from widget) Missing courses: NURS 443::professional practice iii ( practicum) | NURS 454::immersion in nursing practice: senior capstone ( practicum) | LGLS 381::legal studies topics and issues (family law).
 - Coaching Minor [coaching-minor] (many catalog instructions missing from widget) Missing courses: PESS 300::motor learning and control (waived for pe majors).
 - Developmental Disabilities (Teaching) [developmental-disabilities-teaching] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing (b grade or better required) | CMST 191::introduction to public speaking (b grade or better required) | STAT 110::fundamentals of statistics (recommended).
-- Director of Special Education [director-of-special-education] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: LDRS 612::systems thinking | LDRS 614::change leadership | EL 604::curriculum planning, development, and diverse learners.
+- Director of Special Education [director-of-special-education] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: LDRS 614::change leadership | EL 604::curriculum planning, development, and diverse learners | EL 610::school law.
 - Early Childhood Education (Birth-Grade 3) [early-childhood-education-birth-3] (many catalog instructions missing from widget) Missing courses: ::✽ hers 204 - personal & community health | EDFD 400::and 460 must be taken concurrently | EDFD 420::and 440 must be taken concurrently.
-- Early Childhood Elementary Education [early-childhood-elementary-education] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
+- Early Childhood Elementary Education [early-childhood-elementary-education] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - Education (DNP) [education-doc] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: EDUO 800::academic residency (taken 2 consecutive summers for 3 credits each) | EDUO 801::current trends and issues | EDUO 802::transforming education through technology.
 - Educational Leadership (K-12) [educational-leadership-ms] (many catalog instructions missing from widget) Missing courses: LDRS 699::master’s thesis.
-- Elementary Education (K-6) [elementary-education-k-6-education] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ART 109::introduction to art (recommended) | MUS 120::introduction to music theory (waived with permission based on experience) | EDFD 300::teaching, learning, and schooling for the 21st century (recommended).
+- Elementary Education (K-6) [elementary-education-k-6-education] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
 - Human Services Professional (MS) [human-services-professional-ms] (many catalog instructions missing from widget)
 - Mental Health In Schools & Organizations [mental-health-in-schools-and-organizations] (many catalog instructions missing from widget)
 - Organizational Leadership (MS) [organizational-leadership-ms] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: LDRS 614::change leadership | LDRS 615::communication | LDRS 618::research design.
@@ -224,8 +224,7 @@ Generated: 2026-04-04T05:18:24.906Z
 - School Counseling (MS) [school-counseling-ms] (many catalog instructions missing from widget) Missing courses: CE 680::counseling practicum (/100 clock hours) | CE 690::internship (1, 2, 3 or /600 clock hours) (6 credits required).
 - Special Education Minor [special-education-minor] (many widget courses not found in catalog) Missing courses: SPED 432::assessment/methods for moderate/severe developmental disabilities | SPED 490::seminar/ workshop.
 - Sport Leadership [sport-leadership] (many catalog instructions missing from widget) Missing courses: ::✽ athl 100 - athletics health and wellness | ::✽ pess 134 - downhill skiing | ::✽ pess 144 - contemporary activities.
-- Sport Leadership (MS) [sport-management-ms] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: LDRS 612::systems thinking | LDRS 614::change leadership | LDRS 615::communication.
-- Sports Leadership (GC) [sport-leadership-gc] (many catalog courses missing from widget; many widget courses not found in catalog) Missing courses: PESS 626::planning of facilities in physical education or sport | PESS 629::sport marketing management | PESS 633::administrative problems in physical education or sport.
+- Sport Leadership (MS) [sport-management-ms] (many catalog instructions missing from widget) Missing courses: LDRS 619::leadership capstone experience | LDRS 699::master’s thesis | PESS 626::planning of facilities in physical education or sport.
 - Superintendent (K-12) Licensure (GC) [superintendent-k-12-licensure] (many catalog instructions missing from widget)
 - Superintendent (K-12) Specialist [superintendent-k-12-specialist] (many catalog instructions missing from widget) Missing courses: EL 799::specialist degree thesis/field study | EDUO 808::program evaluation.
 - Training and Development (GC) [training-and-development-gc] (many widget courses not found in catalog) Missing courses: BUED 610::training & leadership relations | BUED 640::training theory and application | BUED 641::training design and workplace wellness.
@@ -235,4 +234,5 @@ Generated: 2026-04-04T05:18:24.906Z
 - Applied Communication Studies [applied-communication-studies] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: CMST 357::social media, communication, and influence | CMST 380::communication research methods | CMST 485::senior seminar in communication studies.
 - Art (Teaching) [art-teaching] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | ::✽ hers 204 - personal & community health.
 - Arts Administration Minor [arts-administration-minor] (many catalog instructions missing from widget)
-- ...and 85 more
+- Bilingual/Bicultural Education Minor [bilingual-bicultural-education-minor] (many catalog instructions missing from widget)
+- ...and 84 more

@@ -2,38 +2,83 @@
   "business-administration-minor": {
   "courseStructure": {
     "group_name": "Business Administration Minor",
-    "credits_required": "21 credits",
+    "credits_required": "21 credits (plus COB Prerequisites)",
     "notes": [
-      "For non-College of Business majors."
+      "For non-College of Business majors.",
+      "COB Admission required."
     ],
-    "items": [
+    "subgroups": [
       {
-        "type": "course",
-        "course_id": "ACCT 211",
-        "course_title": "Financial Accounting Principles",
-        "credits": "3"
+        "group_name": "COB Admission Prerequisites",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: MATH 110, 112, 115, 120, 140, or 212 (3-4 cr)"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 211",
+            "course_title": "Financial Accounting Principles",
+            "credits": "3"
+          }
+        ]
       },
       {
-        "type": "course",
-        "course_id": "ECON 201",
-        "course_title": "Principles of Microeconomics",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "MGMT 325",
-        "course_title": "Organizational Dynamics",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "MKTG 300",
-        "course_title": "Principles of Marketing",
-        "credits": "3"
-      },
-      {
-        "type": "text",
-        "content": "Select 9 additional credits of 300/400-level BUSA/MGMT/MKTG electives."
+        "group_name": "Minor Core (21 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ACCT 212",
+            "course_title": "Managerial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ECON 201",
+            "course_title": "Principles of Microeconomics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ECON 202",
+            "course_title": "Principles of Macroeconomics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MGMT 325",
+            "course_title": "Organizational Dynamics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MKTG 300",
+            "course_title": "Principles of Marketing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "BUSA 291",
+            "course_title": "Legal Environment of Business",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MIS 362",
+            "course_title": "Management Information Systems",
+            "credits": "3"
+          }
+        ]
       }
     ]
   }
@@ -229,39 +274,67 @@
   "accounting-minor": {
   "courseStructure": {
     "group_name": "Accounting Minor",
-    "credits_required": "19 credits",
+    "credits_required": "19 credits (plus COB Prerequisites)",
     "notes": [
       "Minimum C grade required.",
-      "Admission to College of Business required."
+      "Admission to the College of Business required before 300/400-level courses."
     ],
-    "items": [
+    "subgroups": [
       {
-        "type": "course",
-        "course_id": "ACCT 211",
-        "course_title": "Financial Accounting Principles",
-        "credits": "3"
+        "group_name": "COB Admission Prerequisites",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 Introduction to Public Speaking or CMST 192 Introduction to Effective Communication (3 cr)"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: MATH 110, 112, 115, 120, 140, or 212 (3-4 cr)"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 211",
+            "course_title": "Financial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "2.5 cumulative GPA and 30+ completed credits required for COB Admission"
+          }
+        ]
       },
       {
-        "type": "course",
-        "course_id": "ACCT 212",
-        "course_title": "Managerial Accounting Principles",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "ACCT 301",
-        "course_title": "Data Analytics for Accountants",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "ACCT 311",
-        "course_title": "Intermediate Accounting I",
-        "credits": "4"
-      },
-      {
-        "type": "text",
-        "content": "Select 6 additional credits from ACCT 312, 330, 361, or 421."
+        "group_name": "Minor Requirements (19 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ACCT 212",
+            "course_title": "Managerial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 301",
+            "course_title": "Data Analytics for Accountants",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 311",
+            "course_title": "Intermediate Accounting I",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Select 9 additional credits from: ACCT 312, ACCT 330, ACCT 361, ACCT 421"
+          }
+        ]
       }
     ]
   }
@@ -1820,31 +1893,93 @@
   "finance-minor": {
   "courseStructure": {
     "group_name": "Finance Minor",
-    "credits_required": "18 credits",
-    "items": [
+    "credits_required": "18 credits (plus COB Prerequisites)",
+    "notes": [
+      "COB Admission required.",
+      "Minimum C grade."
+    ],
+    "subgroups": [
       {
-        "type": "course",
-        "course_id": "FIN 377",
-        "course_title": "Investments",
-        "credits": "3"
+        "group_name": "COB Admission Prerequisites",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: MATH 110, 112, 115, or higher (3-4 cr)"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 211",
+            "course_title": "Financial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 212",
+            "course_title": "Managerial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ECON 201",
+            "course_title": "Principles of Microeconomics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ECON 202",
+            "course_title": "Principles of Macroeconomics",
+            "credits": "3"
+          }
+        ]
       },
       {
-        "type": "course",
-        "course_id": "FIN 390",
-        "course_title": "Intermediate Corporate Finance",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "FIN 421",
-        "course_title": "Institutional Investment and Financial Markets",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "FIN 470",
-        "course_title": "Financial Analysis in Excel",
-        "credits": "3"
+        "group_name": "Finance Minor Core (18 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "FIN 360",
+            "course_title": "Corporate Finance",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "FIN 377",
+            "course_title": "Investments",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "FIN 390",
+            "course_title": "Intermediate Corporate Finance",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "FIN 421",
+            "course_title": "Institutional Investment and Financial Markets",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "FIN 470",
+            "course_title": "Financial Analysis in Excel",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Select 3 additional credits from approved FIN electives."
+          }
+        ]
       }
     ]
   }
@@ -3529,17 +3664,51 @@
   "marketing-minor": {
   "courseStructure": {
     "group_name": "Marketing Minor",
-    "credits_required": "18 credits",
-    "items": [
+    "credits_required": "18 credits (plus COB Prerequisites)",
+    "notes": [
+      "COB Admission required.",
+      "Minimum C grade."
+    ],
+    "subgroups": [
       {
-        "type": "course",
-        "course_id": "MKTG 300",
-        "course_title": "Principles of Marketing",
-        "credits": "3"
+        "group_name": "COB Admission Prerequisites",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 211",
+            "course_title": "Financial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: STAT 110, STAT 210, or ECON 222 (3 cr)"
+          }
+        ]
       },
       {
-        "type": "text",
-        "content": "Select 12 additional credits from MKTG 300/400-level electives."
+        "group_name": "Marketing Minor Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MKTG 300",
+            "course_title": "Principles of Marketing",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Select 12 additional credits from MKTG 300/400-level electives including MKTG 332, 334, 344, 353, 363."
+          }
+        ]
       }
     ]
   }
@@ -5509,44 +5678,48 @@
   "elementary-education-k-6-education": {
   "courseStructure": {
     "group_name": "Elementary Education (K-6) Major",
-    "credits_required": "77 credits",
+    "credits_required": "120 credits",
     "notes": [
-      "Admission to Teacher Education Unit required.",
-      "Birth-Grade 6 licensure pathway."
+      "Minnesota K-6 licensure pathway.",
+      "Admission to Teacher Education Unit required."
     ],
     "subgroups": [
       {
-        "group_name": "Professional Education Core (37 cr)",
+        "group_name": "General Education / Science Requirements",
         "items": [
           {
             "type": "course",
-            "course_id": "EDST 400",
-            "course_title": "Metacognitive Learner",
-            "credits": "2"
-          },
-          {
-            "type": "course",
-            "course_id": "EDST 420",
-            "course_title": "Classroom Management",
-            "credits": "1"
-          }
-        ]
-      },
-      {
-        "group_name": "Content Methods (28 cr)",
-        "items": [
-          {
-            "type": "course",
-            "course_id": "EDUC 318",
-            "course_title": "Teaching Reading and Language Arts",
+            "course_id": "CHEM 180",
+            "course_title": "Investigative Science I: Physical Science",
             "credits": "4"
           },
           {
             "type": "course",
-            "course_id": "EDUC 310",
-            "course_title": "Teaching Mathematics",
-            "credits": "3"
+            "course_id": "PHYS 180",
+            "course_title": "Investigative Science I: Physical Science",
+            "credits": "4"
           },
+          {
+            "type": "course",
+            "course_id": "BIOL 185",
+            "course_title": "Investigative Science II: Earth & Life Science",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          }
+        ]
+      },
+      {
+        "group_name": "Math Foundations",
+        "items": [
           {
             "type": "course",
             "course_id": "MATH 135",
@@ -5558,6 +5731,53 @@
             "course_id": "MATH 235",
             "course_title": "Exploratory Geometry",
             "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Professional Education Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "EDUC 318",
+            "course_title": "Teaching Reading and Language Arts",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "EDUC 310",
+            "course_title": "Teaching Mathematics in Elementary School",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDUC 311",
+            "course_title": "Teaching Science in Elementary School",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDUC 312",
+            "course_title": "Teaching Social Studies in Elementary School",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDFD 315",
+            "course_title": "Foundations of Education",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDST 400",
+            "course_title": "Metacognitive Learner",
+            "credits": "2"
+          },
+          {
+            "type": "course",
+            "course_id": "EDST 420",
+            "course_title": "Classroom Management",
+            "credits": "1"
           }
         ]
       },
@@ -19323,182 +19543,83 @@
     }
   },
   "strategic-communication": {
-    "courseStructure": {
-      "group_name": "Program Requirements",
-      "notes": [
-        "72 credits (no minor required)",
-        "2.5 GPA required (to graduate with BA and enroll in many grad-level courses)",
-        "3.0 GPA required for MA",
-        "C grade or better required in major courses"
-      ],
-      "items": [],
-      "subgroups": [
-        {
-          "group_name": "Required Courses",
-          "credits_required": "66",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "MCOM 172",
-              "course_title": "Print and Web Production",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 173",
-              "course_title": "Audio and Video Production",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 210",
-              "course_title": "Visual Communication",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 221",
-              "course_title": "Creative Digital Media Storytelling",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 250",
-              "course_title": "Principles of Strategic Communication",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 271",
-              "course_title": "Interactive Environments",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 274",
-              "course_title": "Creative Digital Audio-Video Production",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 307",
-              "course_title": "Creative Digital Media Lab",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 308",
-              "course_title": "Research in Mass Media",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 339",
-              "course_title": "Strategic Social Media",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 340",
-              "course_title": "Public Relations Cases",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 345",
-              "course_title": "Public Relations Writing",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 346",
-              "course_title": "Public Relations Techniques and Strategies",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 349",
-              "course_title": "Advanced Audio-Video Production",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 360",
-              "course_title": "Advertising Copy Writing",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 361",
-              "course_title": "Advertising Media Planning & Buying",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 362",
-              "course_title": "Advertising Design",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 371",
-              "course_title": "Advanced Interactive Environments",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 400",
-              "course_title": "Mass Communication Theory",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 405",
-              "course_title": "Mass Media Issues and Ethics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 499",
-              "course_title": "Assessment Portfolio",
-              "credits": "0"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 535",
-              "course_title": "Special Topics in Mass Communication",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 550",
-              "course_title": "Global Perspectives",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 399",
-              "course_title": "Internship",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 425",
-              "course_title": "Creative Digital Media Capstone",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MCOM 480",
-              "course_title": "Strategic Communication Campaigns",
-              "credits": "3"
-            }
-          ]
-        }
-      ]
-    }
-  },
+  "courseStructure": {
+    "group_name": "Strategic Communication (MS)",
+    "credits_required": "33 credits",
+    "notes": [
+      "Online graduate program. One in-person intensive required."
+    ],
+    "subgroups": [
+      {
+        "group_name": "Foundation Core (15 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MCOM 550",
+            "course_title": "Global Media and Communication",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MCOM 580",
+            "course_title": "Strategic Communication Campaigns",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MCOM 675",
+            "course_title": "Strategy Development",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MCOM 685",
+            "course_title": "Strategic Communication Leadership and Practice",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MCOM 690",
+            "course_title": "Equity and Ethics in Strategic Communication",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Applied Concentration (12 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MCOM 680",
+            "course_title": "Media Trends",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Select 9 credits of approved MCOM 500/600-level electives."
+          }
+        ]
+      },
+      {
+        "group_name": "Capstone (6 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MCOM 695",
+            "course_title": "Capstone Research Project",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MCOM 699",
+            "course_title": "Strategic Communication Capstone",
+            "credits": "3"
+          }
+        ]
+      }
+    ]
+  }
+},
   "studio-art-minor": {
     "courseStructure": {
       "group_name": "Program Requirements",
@@ -21090,58 +21211,95 @@
   "courseStructure": {
     "group_name": "Adult-Gerontology Clinical Nurse Specialist (DNP)",
     "credits_required": "72-74 credits",
+    "notes": [
+      "Post-Baccalaureate BS-to-DNP pathway.",
+      "1,000 clinical hours required."
+    ],
     "subgroups": [
       {
-        "group_name": "DNP Science Core",
-        "credits_required": "33",
+        "group_name": "DNP Science Core (33 cr)",
         "items": [
           {
             "type": "course",
-            "course_id": "STAT 701",
-            "course_title": "Applied Biostatistics",
+            "course_id": "STAT 601",
+            "course_title": "Statistical Methods for Health Care Research",
             "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "NURS 701",
-            "course_title": "DNP Role & Leadership",
+            "course_id": "NURS 600",
+            "course_title": "Scientific and Ethical Foundations of Advanced Nursing Practice",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 604",
+            "course_title": "Health Policy and Quality Health Care Delivery",
             "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "NURS 703",
-            "course_title": "EBP for Advanced Nursing",
+            "course_id": "NURS 606",
+            "course_title": "Nursing Information Management & Decision Making",
             "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "NURS 705",
-            "course_title": "Policy and Population Health",
+            "course_id": "NURS 608",
+            "course_title": "Organizational and Systems Leadership",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 612",
+            "course_title": "Advanced Health Promotion",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 614",
+            "course_title": "Evidence-Based Practice",
             "credits": "3"
           }
         ]
       },
       {
-        "group_name": "AGCNS Specialty Focus",
-        "credits_required": "33",
+        "group_name": "AGCNS Specialty (33 cr)",
         "items": [
+          {
+            "type": "course",
+            "course_id": "NURS 640",
+            "course_title": "Advanced Health Assessment",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 642",
+            "course_title": "Advanced Pathophysiology",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 644",
+            "course_title": "Advanced Clinical Pharmacology",
+            "credits": "3"
+          },
           {
             "type": "course",
             "course_id": "NURS 752",
-            "course_title": "Advanced Gerontology",
-            "credits": "3"
+            "course_title": "Adult-Gerontology CNS Specialty Practicum I",
+            "credits": "4"
           },
           {
             "type": "course",
-            "course_id": "NURS 754",
-            "course_title": "Clinical Nurse Specialist Role",
-            "credits": "3"
+            "course_id": "NURS 753",
+            "course_title": "Adult-Gerontology CNS Specialty Practicum II",
+            "credits": "4"
           }
         ]
       },
       {
-        "group_name": "DNP Project",
-        "credits_required": "6-8",
+        "group_name": "DNP Project (6-8 cr)",
         "items": [
           {
             "type": "course",
@@ -21466,52 +21624,101 @@
   "courseStructure": {
     "group_name": "Adult-Gerontology Acute Care Nurse Practitioner (DNP)",
     "credits_required": "74 credits",
+    "notes": [
+      "Post-Baccalaureate BS-to-DNP pathway.",
+      "1,000 clinical hours required."
+    ],
     "subgroups": [
       {
-        "group_name": "DNP Science Core",
-        "credits_required": "33",
+        "group_name": "DNP Science Core (33 cr)",
         "items": [
           {
             "type": "course",
-            "course_id": "STAT 701",
-            "course_title": "Applied Biostatistics",
+            "course_id": "STAT 601",
+            "course_title": "Statistical Methods for Health Care Research",
             "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "NURS 701",
-            "course_title": "DNP Role & Leadership",
+            "course_id": "NURS 600",
+            "course_title": "Scientific and Ethical Foundations",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 604",
+            "course_title": "Health Policy and Quality Health Care Delivery",
             "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "NURS 703",
-            "course_title": "EBP for Advanced Nursing",
+            "course_id": "NURS 606",
+            "course_title": "Nursing Information Management & Decision Making",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 608",
+            "course_title": "Organizational and Systems Leadership",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 612",
+            "course_title": "Advanced Health Promotion",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 614",
+            "course_title": "Evidence-Based Practice",
             "credits": "3"
           }
         ]
       },
       {
-        "group_name": "AGACNP Specialty Focus",
-        "credits_required": "35",
+        "group_name": "AGACNP Specialty (35 cr)",
         "items": [
           {
             "type": "course",
-            "course_id": "NURS 7XX",
-            "course_title": "Acute Care Management I",
+            "course_id": "NURS 640",
+            "course_title": "Advanced Health Assessment",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 642",
+            "course_title": "Advanced Pathophysiology",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 644",
+            "course_title": "Advanced Clinical Pharmacology",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 756",
+            "course_title": "AGACNP Specialty Practicum I",
             "credits": "4"
           },
           {
             "type": "course",
-            "course_id": "NURS 7YY",
-            "course_title": "Acute Care Management II",
+            "course_id": "NURS 757",
+            "course_title": "AGACNP Specialty Practicum II",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 758",
+            "course_title": "AGACNP Specialty Practicum III",
             "credits": "4"
           }
         ]
       },
       {
-        "group_name": "DNP Project",
-        "credits_required": "6",
+        "group_name": "DNP Project (6 cr)",
         "items": [
           {
             "type": "course",
@@ -22490,75 +22697,88 @@
   "healthcare-leadership-and-administration": {
   "courseStructure": {
     "group_name": "Healthcare Leadership & Administration (BAS)",
-    "credits_required": "36 credits",
+    "credits_required": "120 credits including 36-credit major",
     "notes": [
-      "Minimum C grade required for all major courses.",
+      "Minimum C grade required.",
       "2.5 GPA in major required."
     ],
-    "items": [
+    "subgroups": [
       {
-        "type": "course",
-        "course_id": "HLA 300",
-        "course_title": "Foundations for Health Professionals",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 301",
-        "course_title": "Statistical Thinking for Healthcare",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 311",
-        "course_title": "Data Science Applications in Healthcare",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 325",
-        "course_title": "Diversity, Equity, and Inclusion for Healthcare Leaders",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 366",
-        "course_title": "Professional Communication Skills for Health Care Leaders",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 406",
-        "course_title": "Healthcare Information Management",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 414",
-        "course_title": "Health Care Policy/Quality Healthcare Delivery",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 435",
-        "course_title": "Quality Improvement in Healthcare",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 451",
-        "course_title": "Managing Projects in Healthcare",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 490",
-        "course_title": "Healthcare Professional Development/Capstone",
-        "credits": "2"
-      },
-      {
-        "type": "text",
-        "content": "Complete 6 credits of approved 300/400-level HLA electives."
+        "group_name": "Major Core (36 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "HLA 300",
+            "course_title": "Foundations for Health Professionals",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 301",
+            "course_title": "Statistical Thinking for Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 311",
+            "course_title": "Data Science Applications in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 325",
+            "course_title": "Diversity, Equity, and Inclusion for Healthcare Leaders",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 366",
+            "course_title": "Professional Communication for Health Care Leaders",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 406",
+            "course_title": "Healthcare Information Management",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 443",
+            "course_title": "Leadership and Team Development in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 444",
+            "course_title": "Introduction to Change Leadership in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 449",
+            "course_title": "Appreciative Coaching in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HADM 317",
+            "course_title": "Management of Human Resources in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HADM 441",
+            "course_title": "Healthcare Law and Ethics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 490",
+            "course_title": "Healthcare Professional Development/Capstone",
+            "credits": "2"
+          }
+        ]
       }
     ]
   }
@@ -22568,92 +22788,11 @@
     "group_name": "Nurse Educator (DNP)",
     "credits_required": "72 credits",
     "notes": [
-      "Total 1,000 clinical/practicum hours required."
+      "Post-Baccalaureate BS-to-DNP pathway."
     ],
     "subgroups": [
       {
-        "group_name": "Post-Baccalaureate (BS-to-DNP) Core",
-        "credits_required": "33",
-        "items": [
-          {
-            "type": "course",
-            "course_id": "STAT 701",
-            "course_title": "Applied Biostatistics",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 701",
-            "course_title": "DNP Role & Leadership",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 703",
-            "course_title": "EBP for Advanced Nursing",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 705",
-            "course_title": "Policy and Population Health",
-            "credits": "3"
-          }
-        ]
-      },
-      {
-        "group_name": "Nurse Educator Specialty",
-        "credits_required": "33",
-        "items": [
-          {
-            "type": "course",
-            "course_id": "NURS 770",
-            "course_title": "Simulation for Nursing Education",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 772",
-            "course_title": "Advanced Instruction & Evaluation",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 774",
-            "course_title": "DNP Nurse Educator Practicum",
-            "credits": "6"
-          }
-        ]
-      },
-      {
-        "group_name": "DNP Project",
-        "credits_required": "6",
-        "items": [
-          {
-            "type": "course",
-            "course_id": "NURS 790",
-            "course_title": "DNP Project Seminar",
-            "credits": "2"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 792",
-            "course_title": "DNP Project Clinical",
-            "credits": "4"
-          }
-        ]
-      }
-    ]
-  }
-},
-  "nurse-educator-ms": {
-  "courseStructure": {
-    "group_name": "Nurse Educator (MS)",
-    "credits_required": "47 credits",
-    "subgroups": [
-      {
-        "group_name": "Nursing Science Core",
-        "credits_required": "25",
+        "group_name": "DNP Science Core (33 cr)",
         "items": [
           {
             "type": "course",
@@ -22696,18 +22835,11 @@
             "course_id": "NURS 614",
             "course_title": "Evidence-Based Practice",
             "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "NURS 615",
-            "course_title": "Scholarly Inquiry Paper/Thesis",
-            "credits": "3"
           }
         ]
       },
       {
-        "group_name": "Nurse Educator Concentration",
-        "credits_required": "22",
+        "group_name": "Nurse Educator Specialty (33 cr)",
         "items": [
           {
             "type": "course",
@@ -22729,6 +22861,152 @@
           },
           {
             "type": "course",
+            "course_id": "NURS 708",
+            "course_title": "Professionalism in Advanced Nursing Roles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 771",
+            "course_title": "Research and EBP for Advanced Nursing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 770",
+            "course_title": "Nurse Educator Role and Curriculum Design",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 772",
+            "course_title": "Advanced Instruction and Evaluation in Nursing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 774",
+            "course_title": "Nurse Educator Practicum",
+            "credits": "6"
+          }
+        ]
+      },
+      {
+        "group_name": "DNP Project (6 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "NURS 790",
+            "course_title": "DNP Project Seminar",
+            "credits": "2"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 792",
+            "course_title": "DNP Project Clinical",
+            "credits": "4"
+          }
+        ]
+      }
+    ]
+  }
+},
+  "nurse-educator-ms": {
+  "courseStructure": {
+    "group_name": "Nurse Educator (MS)",
+    "credits_required": "47 credits",
+    "notes": [
+      "Hybrid program based in Rochester."
+    ],
+    "subgroups": [
+      {
+        "group_name": "Nursing Science Core (25 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "STAT 601",
+            "course_title": "Statistical Methods for Health Care Research",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 600",
+            "course_title": "Scientific and Ethical Foundations",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 604",
+            "course_title": "Health Policy and Quality Health Care Delivery",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 606",
+            "course_title": "Nursing Information Management & Decision Making",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 608",
+            "course_title": "Organizational and Systems Leadership",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 612",
+            "course_title": "Advanced Health Promotion",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 613",
+            "course_title": "Advanced Health Promotion Clinical",
+            "credits": "1"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 615",
+            "course_title": "Scholarly Inquiry and Innovation in Nursing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 708",
+            "course_title": "Professionalism in Advanced Nursing Roles",
+            "credits": "2"
+          }
+        ]
+      },
+      {
+        "group_name": "Nurse Educator Concentration (22 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "NURS 640",
+            "course_title": "Advanced Health Assessment",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 642",
+            "course_title": "Advanced Pathophysiology",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 617",
+            "course_title": "Advanced Clinical Pharmacology",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "NURS 771",
+            "course_title": "Research and EBP for Advanced Nursing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
             "course_id": "NURS 669",
             "course_title": "Nursing Education: Theory and Research",
             "credits": "3"
@@ -22736,20 +23014,20 @@
           {
             "type": "course",
             "course_id": "NURS 670",
-            "course_title": "Curriculum & Program Design",
+            "course_title": "Curriculum and Program Design",
             "credits": "3"
           },
           {
             "type": "course",
             "course_id": "NURS 671",
             "course_title": "Instruction and Evaluation",
-            "credits": "3"
+            "credits": "2"
           },
           {
             "type": "course",
             "course_id": "NURS 672",
             "course_title": "Nurse Educator Practicum",
-            "credits": "4"
+            "credits": "2"
           }
         ]
       }
@@ -22808,34 +23086,81 @@
     "notes": [
       "Online asynchronous program."
     ],
-    "items": [
+    "subgroups": [
       {
-        "type": "course",
-        "course_id": "HLA 514",
-        "course_title": "Healthcare Policy and Quality",
-        "credits": "3"
+        "group_name": "Leadership Core (18 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "HLA 510",
+            "course_title": "Mindful Leadership",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 530",
+            "course_title": "Executive Communication: Theory & Strategic Practice",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 540",
+            "course_title": "Collaborative Leadership and Practice",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 544",
+            "course_title": "Change Leadership in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 549",
+            "course_title": "Population Health Leadership",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 550",
+            "course_title": "Healthcare Finance and Economics",
+            "credits": "3"
+          }
+        ]
       },
       {
-        "type": "course",
-        "course_id": "HLA 552",
-        "course_title": "Financial Resource Management in Healthcare",
-        "credits": "3"
+        "group_name": "Analytics & Quality (10 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "DSCI 622",
+            "course_title": "Modeling and Predictive Analytics in Healthcare",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 560",
+            "course_title": "Healthcare Data Analytics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HLA 570",
+            "course_title": "Quality Improvement Leadership",
+            "credits": "4"
+          }
+        ]
       },
       {
-        "type": "course",
-        "course_id": "HLA 645",
-        "course_title": "Population Health Applications for Leaders",
-        "credits": "3"
-      },
-      {
-        "type": "course",
-        "course_id": "HLA 650",
-        "course_title": "Enterprise Risk Management",
-        "credits": "3"
-      },
-      {
-        "type": "text",
-        "content": "Includes clinical analytics, data-driven leadership, and evidence-based practice cores."
+        "group_name": "Capstone (6 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "HLA 590",
+            "course_title": "Leadership Practicum and Capstone",
+            "credits": "6"
+          }
+        ]
       }
     ]
   }
@@ -23159,11 +23484,11 @@
     "group_name": "Performance Analytics in Sport Science (3+2 Focus)",
     "credits_required": "120 credits",
     "notes": [
-      "Accelerated pathway (3+2) toward Master of Performance Analytics."
+      "Accelerated 3+2 pathway toward graduate study in performance analytics."
     ],
     "subgroups": [
       {
-        "group_name": "Sport Science Core (41 cr)",
+        "group_name": "Exercise Science Core",
         "items": [
           {
             "type": "course",
@@ -23182,45 +23507,58 @@
             "course_id": "HERS 340",
             "course_title": "Physiology of Exercise",
             "credits": "3"
-          }
-        ]
-      },
-      {
-        "group_name": "Performance Analytics Specialty (18 cr)",
-        "items": [
-          {
-            "type": "course",
-            "course_id": "HERS 438",
-            "course_title": "Measurement & Evaluation in Performance",
-            "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "HERS 450",
-            "course_title": "Advanced Data Analytics in Sport",
-            "credits": "3"
+            "course_id": "HERS 380",
+            "course_title": "Laboratory Methods in Exercise Science",
+            "credits": "2"
           },
           {
             "type": "course",
-            "course_id": "HERS 480",
-            "course_title": "Performance Technology",
+            "course_id": "HERS 560",
+            "course_title": "Nutrition for the Physically Active",
             "credits": "3"
           }
         ]
       },
       {
-        "group_name": "Graduate Integration Courses (9 cr)",
+        "group_name": "Performance Analytics Specialty",
         "items": [
           {
             "type": "course",
-            "course_id": "HERS 5XX",
-            "course_title": "Graduate Performance Science I",
+            "course_id": "HERS 536",
+            "course_title": "Performance Analytics Practicum",
+            "credits": "2"
+          },
+          {
+            "type": "course",
+            "course_id": "HERS 580",
+            "course_title": "Exercise Physiology for Performance Analytics",
             "credits": "3"
           },
           {
             "type": "course",
-            "course_id": "HERS 5YY",
-            "course_title": "Graduate Performance Science II",
+            "course_id": "HERS 581",
+            "course_title": "Performance Analytics in Biomechanics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HERS 582",
+            "course_title": "Introduction to Sport Science Technologies",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HERS 583",
+            "course_title": "Wearable Technology and Athlete Monitoring",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "HERS 584",
+            "course_title": "Applied Performance Analytics",
             "credits": "3"
           }
         ]
@@ -24428,190 +24766,135 @@
     }
   },
   "social-work-msw": {
-    "courseStructure": {
-      "group_name": "Program Requirements",
-      "notes": [
-        "65 credits (no minor required)",
-        "2.5 GPA required",
-        "C grade or better required in major courses",
-        "Overall GPA needs to be 2.0 or higher and the Major GPA needs to be 2.5 or higher"
-      ],
-      "items": [],
-      "subgroups": [
-        {
-          "group_name": "Foundation Courses",
-          "credits_required": "15",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "ENG 111",
-              "course_title": "College Reading and Writing",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "CMST 191",
-              "course_title": "Introduction to Public Speaking",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "OR"
-            },
-            {
-              "type": "course",
-              "course_id": "CMST 192",
-              "course_title": "Introduction to Effective Communication",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "BIOL 117",
-              "course_title": "Human Biology",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "PSY 210",
-              "course_title": "Introduction to Psychological Science",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "PSY 250",
-              "course_title": "Developmental Psychology",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOC 150",
-              "course_title": "Introduction to Sociology",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 340",
-              "course_title": "Introduction to Social Work and Social Welfare",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Statistics Options",
-          "credits_required": "3",
-          "notes": [
-            "Choose one:"
-          ],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "STAT 110",
-              "course_title": "Fundamentals of Statistics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "PSY 231",
-              "course_title": "Statistics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MATH 107",
-              "course_title": "Mathematics for Social Justice",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MATH 115",
-              "course_title": "College Algebra",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Social Work Courses",
-          "credits_required": "47",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "SOCW 365",
-              "course_title": "Social Work Practice with Individuals",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 370",
-              "course_title": "Human Behavior and the Social Environment",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 372",
-              "course_title": "APA Basics for Social Work",
-              "credits": "1"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 380",
-              "course_title": "US Social Welfare Policy",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 385",
-              "course_title": "Social Work Practice with Groups",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 390",
-              "course_title": "Social Work Research",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 400",
-              "course_title": "Professional Preparation",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 408",
-              "course_title": "Social Work Practice with Families",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 395",
-              "course_title": "Social Work Practice with Organizations",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 415",
-              "course_title": "Social Work Practice with Communities",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 475",
-              "course_title": "Social Work Senior Practicum",
-              "credits": "12"
-            },
-            {
-              "type": "course",
-              "course_id": "SOCW 480",
-              "course_title": "Integrative Social Work Seminar",
-              "credits": "3"
-            }
-          ]
-        }
-      ]
-    }
-  },
+  "courseStructure": {
+    "group_name": "Social Work (MSW)",
+    "credits_required": "60 credits",
+    "notes": [
+      "Council on Social Work Education accredited.",
+      "Advanced Standing available for BSW graduates."
+    ],
+    "subgroups": [
+      {
+        "group_name": "Foundation Year (30 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MSW 500",
+            "course_title": "MSW Orientation",
+            "credits": "1"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 510",
+            "course_title": "Social Work Foundations",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 515",
+            "course_title": "Human Behavior Across Diverse Contexts",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 520",
+            "course_title": "Practice, Laws, and Policies",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 530",
+            "course_title": "Understanding Social Work Research",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 540",
+            "course_title": "Foundation Generalist Practice I",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 545",
+            "course_title": "Foundation Generalist Practice II",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 560",
+            "course_title": "Foundation Field Education I",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 565",
+            "course_title": "Foundation Field Education II",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 570",
+            "course_title": "Integrated Behavioral Health Seminar",
+            "credits": "5"
+          }
+        ]
+      },
+      {
+        "group_name": "Concentration Year (30 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MSW 600",
+            "course_title": "Advanced Practice Theory",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 610",
+            "course_title": "Advanced Macro Practice",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 620",
+            "course_title": "Advanced Research Methods",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 640",
+            "course_title": "Advanced Clinical Practice I",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 645",
+            "course_title": "Advanced Clinical Practice II",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 660",
+            "course_title": "Advanced Field Education I",
+            "credits": "6"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 665",
+            "course_title": "Advanced Field Education II",
+            "credits": "6"
+          },
+          {
+            "type": "course",
+            "course_id": "MSW 680",
+            "course_title": "Social Work Leadership Seminar",
+            "credits": "3"
+          }
+        ]
+      }
+    ]
+  }
+},
   "social-work-bsw": {
     "courseStructure": {
       "group_name": "Program Requirements",
@@ -25930,93 +26213,135 @@
     }
   },
   "bioinformatics": {
-    "courseStructure": {
-      "group_name": "Program Requirements",
-      "notes": [
-        "28 credits",
-        "2.0 GPA required",
-        "Letter grade required in all minor courses unless otherwise noted"
-      ],
-      "items": [],
-      "subgroups": [
-        {
-          "group_name": "Required Courses",
-          "credits_required": "28",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "BIOL 241",
-              "course_title": "Basics of Life",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "BIOL 310",
-              "course_title": "Genetics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "CS 234",
-              "course_title": "Algorithms and Problem-Solving I",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "CS 250",
-              "course_title": "Algorithms and Problem-Solving II",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "CS 368",
-              "course_title": "Introduction to Bioinformatics",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "DSCI 325",
-              "course_title": "Management of Structured Data",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "Choose one:"
-            },
-            {
-              "type": "course",
-              "course_id": "STAT 210",
-              "course_title": "Statistics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "STAT 305",
-              "course_title": "Biometry",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "Choose one:"
-            },
-            {
-              "type": "course",
-              "course_id": "DSCI 415",
-              "course_title": "Unsupervised Learning",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "DSCI 425",
-              "course_title": "Supervised Learning",
-              "credits": "3"
-            }
-          ]
-        }
-      ]
-    }
-  },
+  "courseStructure": {
+    "group_name": "Bioinformatics (BS)",
+    "credits_required": "120 credits",
+    "notes": [
+      "Interdisciplinary program combining computer science and biology."
+    ],
+    "subgroups": [
+      {
+        "group_name": "Computer Science Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "CS 101",
+            "course_title": "Exploring Creative Computing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 275",
+            "course_title": "Mathematical Foundations of Algorithms",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 281",
+            "course_title": "Data Structures",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 340",
+            "course_title": "Database Management Systems",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 375",
+            "course_title": "Analysis of Algorithms",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Biology Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "BIOL 215",
+            "course_title": "Cell and Molecular Biology",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "BIOL 241",
+            "course_title": "Basics of Life",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "BIOL 310",
+            "course_title": "Genetics",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "BIOL 380",
+            "course_title": "Bioinformatics Tools and Methods",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Data Science / Statistics",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "STAT 305",
+            "course_title": "Biometry",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "DSCI 325",
+            "course_title": "Management of Structured Data",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "DSCI 415",
+            "course_title": "Unsupervised Learning",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Bioinformatics Specialty",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "BIOL 410",
+            "course_title": "Genomics and Proteomics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 450",
+            "course_title": "Machine Learning for Biological Data",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Select 6 additional credits from approved BIOL/CS 400-level electives."
+          }
+        ]
+      },
+      {
+        "group_name": "Capstone",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "BIOL 495",
+            "course_title": "Bioinformatics Research Capstone",
+            "credits": "3"
+          }
+        ]
+      }
+    ]
+  }
+},
   "therapeutic-recreation": {
     "courseStructure": {
       "group_name": "Program Requirements",
@@ -42061,15 +42386,96 @@
   },
   "early-childhood-elementary-education": {
   "courseStructure": {
-    "group_name": "Early Childhood/Elementary Education (Birth-Grade 6) Major",
+    "group_name": "Early Childhood/Elementary Education (Birth-Grade 6)",
     "credits_required": "120 credits",
     "notes": [
-      "Minnesota Birth-Grade 6 licensure pathway."
+      "Minnesota Birth-Grade 6 licensure pathway.",
+      "Admission to Teacher Education Unit required."
     ],
     "subgroups": [
       {
-        "group_name": "Professional Ed Core",
+        "group_name": "General Education / Science Requirements",
         "items": [
+          {
+            "type": "course",
+            "course_id": "CHEM 180",
+            "course_title": "Investigative Science I: Physical Science",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "PHYS 180",
+            "course_title": "Investigative Science I: Physical Science",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "BIOL 185",
+            "course_title": "Investigative Science II: Earth & Life Science",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          }
+        ]
+      },
+      {
+        "group_name": "Math Foundations",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MATH 135",
+            "course_title": "Number and Number Systems",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MATH 235",
+            "course_title": "Exploratory Geometry",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Professional Education Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "EDUC 318",
+            "course_title": "Teaching Reading and Language Arts",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "EDUC 310",
+            "course_title": "Teaching Mathematics in Elementary School",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDUC 311",
+            "course_title": "Teaching Science in Elementary School",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDUC 312",
+            "course_title": "Teaching Social Studies in Elementary School",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDFD 315",
+            "course_title": "Foundations of Education",
+            "credits": "3"
+          },
           {
             "type": "course",
             "course_id": "EDST 400",
@@ -42081,23 +42487,23 @@
             "course_id": "EDST 410",
             "course_title": "Differentiated Instruction",
             "credits": "2"
+          },
+          {
+            "type": "course",
+            "course_id": "EDST 420",
+            "course_title": "Classroom Management",
+            "credits": "1"
           }
         ]
       },
       {
-        "group_name": "Birth-Grade 6 Specialization",
+        "group_name": "Student Teaching (12 cr)",
         "items": [
           {
             "type": "course",
-            "course_id": "EDUC 318",
-            "course_title": "Teaching Reading/LA",
-            "credits": "4"
-          },
-          {
-            "type": "course",
-            "course_id": "EDUC 310",
-            "course_title": "Teaching Math",
-            "credits": "3"
+            "course_id": "EDST 460",
+            "course_title": "Early Childhood/Elementary Student Teaching",
+            "credits": "12"
           }
         ]
       }
@@ -42389,280 +42795,95 @@
     }
   },
   "business-management-minor": {
-    "courseStructure": {
-      "group_name": "Program Requirements",
-      "notes": [
-        "66 credits (no minor required)",
-        "2.5 GPA required for College of Business entry.",
-        "2.0 GPA required to graduate.",
-        "Letter grade required in all major courses unless otherwise noted.",
-        "C grade or better required in all major courses, including required and business/major elective courses.",
-        "No P/NC accepted.",
-        "Admission to the College of Business required."
-      ],
-      "items": [],
-      "subgroups": [
-        {
-          "group_name": "College of Business Core",
-          "credits_required": "33",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "ACCT 211",
-              "course_title": "Financial Accounting Principles",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ACCT 212",
-              "course_title": "Managerial Accounting Principles",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "BUSA 291",
-              "course_title": "Legal Environment of Business",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 201",
-              "course_title": "Principles of Microeconomics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 202",
-              "course_title": "Principles of Macroeconomics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "FIN 360",
-              "course_title": "Corporate Finance",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 325",
-              "course_title": "Organizational Dynamics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 334",
-              "course_title": "Operations Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 495",
-              "course_title": "Strategic Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 362",
-              "course_title": "Management Information Systems",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MKTG 300",
-              "course_title": "Principles of Marketing",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Required Courses",
-          "credits_required": "24",
-          "notes": [
-            "Math (3 credits)",
-            "Statistics (3 credits)"
-          ],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "MATH 110",
-              "course_title": "Finite Mathematics",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "or higher"
-            },
-            {
-              "type": "text",
-              "content": "Choose one:"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 222",
-              "course_title": "Statistics for Business and Economics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "STAT 110",
-              "course_title": "Fundamentals of Statistics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "STAT 210",
-              "course_title": "Statistics",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Human Resources Core",
-          "credits_required": "15",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "MGMT 317",
-              "course_title": "Management of Human Resources",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 417",
-              "course_title": "Compensation and Benefits",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 437",
-              "course_title": "Labor Relations and Collective Bargaining",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 467",
-              "course_title": "Staffing and Evaluation",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 497",
-              "course_title": "Strategic Human Resource Management",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Development Core",
-          "credits_required": "3",
-          "notes": [
-            "Choose one:"
-          ],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "MGMT 407",
-              "course_title": "Organization Development and Change",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 427",
-              "course_title": "Human Resources Development",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Electives",
-          "credits_required": "9",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "BUSA 321",
-              "course_title": "Applied Business Ethics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "BUSA 351",
-              "course_title": "Employment Law",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "BUSA 399",
-              "course_title": "Internship Project",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 420",
-              "course_title": "Labor Economics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 337",
-              "course_title": "Workplace Health, Safety and Security",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 374",
-              "course_title": "Business Analytics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 377",
-              "course_title": "Independent Study in Human Resource Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 385",
-              "course_title": "Social Entrepreneurship",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 457",
-              "course_title": "Seminar in Human Resources Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 464",
-              "course_title": "Project Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 477",
-              "course_title": "International Human Resources Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 342",
-              "course_title": "Advanced Business Computer Applications",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 462",
-              "course_title": "Decision Support Systems",
-              "credits": "3"
-            }
-          ]
-        }
-      ]
-    }
-  },
+  "courseStructure": {
+    "group_name": "Business Management Minor",
+    "credits_required": "43 credits (includes COB Prerequisites)",
+    "notes": [
+      "COB Admission required.",
+      "Minimum C grade in all courses."
+    ],
+    "subgroups": [
+      {
+        "group_name": "COB Admission Prerequisites",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: MATH 112, 115, 120, or higher (3-4 cr)"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 211",
+            "course_title": "Financial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 212",
+            "course_title": "Managerial Accounting Principles",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Management Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "MGMT 325",
+            "course_title": "Organizational Dynamics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MGMT 334",
+            "course_title": "Operations Management",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MGMT 495",
+            "course_title": "Strategic Management",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MIS 362",
+            "course_title": "Management Information Systems",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "BUSA 291",
+            "course_title": "Legal Environment of Business",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MKTG 300",
+            "course_title": "Principles of Marketing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "FIN 360",
+            "course_title": "Corporate Finance",
+            "credits": "3"
+          }
+        ]
+      }
+    ]
+  }
+},
   "human-resource-management": {
     "courseStructure": {
       "group_name": "Program Requirements",
@@ -44165,303 +44386,161 @@
     }
   },
   "computer-information-systems": {
-    "courseStructure": {
-      "group_name": "Program Requirements",
-      "notes": [
-        "66-67 credits (no minor required)",
-        "2.0 GPA required.",
-        "Earn a C grade or better in all major courses including required and business/major elective courses.",
-        "Admission to the College of Business required."
-      ],
-      "items": [],
-      "subgroups": [
-        {
-          "group_name": "College of Business Core",
-          "credits_required": "33",
-          "notes": [
-            "Satisfies General Education Program requirements."
-          ],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "ACCT 211",
-              "course_title": "Financial Accounting Principles",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ACCT 212",
-              "course_title": "Managerial Accounting Principles",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "BUSA 291",
-              "course_title": "Legal Environment of Business",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 201",
-              "course_title": "Principles of Microeconomics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 202",
-              "course_title": "Principles of Macroeconomics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "FIN 360",
-              "course_title": "Corporate Finance",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 325",
-              "course_title": "Organizational Dynamics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 334",
-              "course_title": "Operations Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 495",
-              "course_title": "Strategic Management",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 362",
-              "course_title": "Management Information Systems",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MKTG 300",
-              "course_title": "Principles of Marketing",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Required Courses",
-          "credits_required": "24",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "MATH 140",
-              "course_title": "Applied Calculus",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "Choose one:"
-            },
-            {
-              "type": "course",
-              "course_id": "ECON 222",
-              "course_title": "Statistics for Business and Economics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "STAT 110",
-              "course_title": "Fundamentals of Statistics",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "STAT 210",
-              "course_title": "Statistics",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "Choose one:"
-            },
-            {
-              "type": "course",
-              "course_id": "CS 234",
-              "course_title": "Algorithms and Problem-Solving I",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 312",
-              "course_title": "Business Computer Programming",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 464",
-              "course_title": "Project Management",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Management Information Systems",
-          "credits_required": "12",
-          "notes": [],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "MIS 342",
-              "course_title": "Advanced Business Computer Applications",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 452",
-              "course_title": "Management of Telecommunication Systems",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 482",
-              "course_title": "Management of Information Technology",
-              "credits": "3"
-            },
-            {
-              "type": "text",
-              "content": "Choose one:"
-            },
-            {
-              "type": "course",
-              "course_id": "CS 250",
-              "course_title": "Algorithms and Problem-Solving II",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "DSCI 210",
-              "course_title": "Data Science",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 202",
-              "course_title": "Microcomputers in Business",
-              "credits": "3"
-            }
-          ]
-        },
-        {
-          "group_name": "Electives",
-          "credits_required": "9",
-          "notes": [
-            "At least 3 credits must be MIS elective."
-          ],
-          "items": [
-            {
-              "type": "course",
-              "course_id": "ACCT 330",
-              "course_title": "Accounting Information Systems",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "ACCT 361",
-              "course_title": "Intermediate Managerial/Cost Accounting",
-              "credits": "4"
-            },
-            {
-              "type": "course",
-              "course_id": "BUSA 331",
-              "course_title": "Internet Law",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "DSCI 310",
-              "course_title": "Data Summary and Visualization",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "DSCI 325",
-              "course_title": "Management of Structured Data",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "FIN 335",
-              "course_title": "Forecasting Methods",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "FIN 440",
-              "course_title": "International Finance",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MGMT 353",
-              "course_title": "Business Innovation",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 312",
-              "course_title": "Business Computer Programming",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 332",
-              "course_title": "Business Programming Tools",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 372",
-              "course_title": "Management of Business Systems Development",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 399",
-              "course_title": "Internship Project",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 412",
-              "course_title": "Management of eCommerce",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 462",
-              "course_title": "Decision Support Systems",
-              "credits": "3"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 486",
-              "course_title": "Independent Studies in MIS",
-              "credits": "1-12"
-            },
-            {
-              "type": "course",
-              "course_id": "MIS 492",
-              "course_title": "Topics in MIS",
-              "credits": "3"
-            }
-          ]
-        }
-      ]
-    }
-  },
+  "courseStructure": {
+    "group_name": "Computer Information Systems (BS)",
+    "credits_required": "120 credits",
+    "notes": [
+      "COB Admission and CS core required."
+    ],
+    "subgroups": [
+      {
+        "group_name": "COB Prerequisites",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
+          },
+          {
+            "type": "course",
+            "course_id": "ACCT 211",
+            "course_title": "Financial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: MATH 120 or higher (3-4 cr)"
+          }
+        ]
+      },
+      {
+        "group_name": "Computer Science Foundation",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "CS 101",
+            "course_title": "Exploring Creative Computing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 275",
+            "course_title": "Mathematical Foundations of Algorithms",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 281",
+            "course_title": "Data Structures",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 340",
+            "course_title": "Database Management Systems",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 380",
+            "course_title": "Systems Analysis and Design",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Business Core",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "ACCT 212",
+            "course_title": "Managerial Accounting Principles",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "BUSA 291",
+            "course_title": "Legal Environment of Business",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ECON 201",
+            "course_title": "Principles of Microeconomics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ECON 202",
+            "course_title": "Principles of Macroeconomics",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "FIN 360",
+            "course_title": "Corporate Finance",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MIS 362",
+            "course_title": "Management Information Systems",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "MGMT 325",
+            "course_title": "Organizational Dynamics",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "CIS Specialty",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "CS 440",
+            "course_title": "Enterprise Application Development",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 460",
+            "course_title": "IT Project Management",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CS 470",
+            "course_title": "Business Intelligence and Analytics",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Select 6 credits of approved CS/MIS 400-level electives."
+          }
+        ]
+      },
+      {
+        "group_name": "Capstone",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "CS 495",
+            "course_title": "Senior Capstone in CIS",
+            "credits": "3"
+          }
+        ]
+      }
+    ]
+  }
+},
   "life-science-teaching": {
     "courseStructure": {
       "group_name": "Program Requirements",
@@ -44871,19 +44950,26 @@
 },
   "communication-arts-and-literature-teaching": {
   "courseStructure": {
-    "group_name": "Communication Arts & Literature (Teaching) (CALT) Major (92 cr)",
+    "group_name": "Communication Arts & Literature (Teaching) Major",
     "credits_required": "92 credits",
     "notes": [
-      "Minnesota PELSB accredited licensure program."
+      "Minnesota PELSB-accredited licensure program.",
+      "B or better required in ENG 290, ENG 291, CMST 494."
     ],
     "subgroups": [
       {
-        "group_name": "Literature & English (32 cr)",
+        "group_name": "Literature / English Core (32 cr)",
         "items": [
           {
             "type": "course",
-            "course_id": "ENG 222",
-            "course_title": "Introduction to Creative Writing",
+            "course_id": "ENG 220",
+            "course_title": "Multicultural American Literature",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 240",
+            "course_title": "Teaching Young Adult Literature (Grades 5-12)",
             "credits": "3"
           },
           {
@@ -44894,9 +44980,43 @@
           },
           {
             "type": "course",
+            "course_id": "ENG 291",
+            "course_title": "History of Literature in English",
+            "credits": "3"
+          },
+          {
+            "type": "course",
             "course_id": "ENG 323",
             "course_title": "Multimodal Composition and Literacies",
             "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 328",
+            "course_title": "English Syntax",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 350",
+            "course_title": "Introduction to Language Study",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 222",
+            "course_title": "Introduction to Creative Writing",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "ENG 250",
+            "course_title": "English Grammar and Usage",
+            "credits": "3"
+          },
+          {
+            "type": "text",
+            "content": "Select one literature elective from ENG 300/400-level (3 cr)"
           }
         ]
       },
@@ -44904,30 +45024,61 @@
         "group_name": "Communication Studies (15 cr)",
         "items": [
           {
-            "type": "course",
-            "course_id": "CMST 191",
-            "course_title": "Introduction to Public Speaking",
-            "credits": "3"
+            "type": "text",
+            "content": "Choose one: CMST 191 or CMST 192 (3 cr)"
           },
           {
             "type": "course",
             "course_id": "CMST 380",
             "course_title": "Introduction to Communication Research",
             "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CMST 391",
+            "course_title": "Interpersonal Communication",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CMST 452",
+            "course_title": "Argumentation and Debate",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "CMST 494",
+            "course_title": "Teaching and Coaching Oral Communication Grades 5-12",
+            "credits": "3"
           }
         ]
       },
       {
         "group_name": "Professional Education Core (45 cr)",
-        "notes": [
-          "Includes methods courses and student teaching."
-        ],
         "items": [
           {
             "type": "course",
             "course_id": "EDUC 429",
             "course_title": "Secondary Reading and Teaching Strategies",
             "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDFD 315",
+            "course_title": "Foundations of Education",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "EDST 400",
+            "course_title": "Metacognitive Learner",
+            "credits": "2"
+          },
+          {
+            "type": "course",
+            "course_id": "EDST 420",
+            "course_title": "Classroom Management",
+            "credits": "1"
           },
           {
             "type": "course",
@@ -45430,404 +45581,153 @@
     }
   },
   "womens-gender-and-sexuality-studies-minor": {
-    "courseStructure": {
-      "Core Requirements": {
-        "credits_required": "12 credits",
-        "notes": [
-          "3 credits of WGSS 420 are required for the minor, 6 credits may be taken with approval from the WGSS Program Director.",
-          "For areas that offer students a choice between two classes to satisfy a requirement, the alternative course satisfies an elective if both options are completed."
-        ],
+  "courseStructure": {
+    "group_name": "Women's, Gender & Sexuality Studies Minor",
+    "credits_required": "21 credits",
+    "notes": [
+      "Minimum C grade required in all minor courses."
+    ],
+    "subgroups": [
+      {
+        "group_name": "Required Gateway",
+        "credits_required": "3",
         "items": [
           {
             "type": "course",
             "course_id": "WGSS 148",
-            "course_title": "Introduction to Women’s, Gender and Sexuality Studies"
+            "course_title": "Introduction to Women's, Gender and Sexuality Studies",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Required Core (9 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "WGSS 220",
+            "course_title": "Intersections of Privilege and Power",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "WGSS 233",
+            "course_title": "Introduction to LGBTQIA+ Studies",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "WGSS 373",
+            "course_title": "Anti-Racist Feminist Theories and Politics",
+            "credits": "3"
+          }
+        ]
+      },
+      {
+        "group_name": "Electives (9 cr)",
+        "items": [
+          {
+            "type": "text",
+            "content": "Select 9 credits of 300/400-level WGSS courses including WGSS 420 Capstone (3 cr required)."
+          },
+          {
+            "type": "course",
+            "course_id": "WGSS 310",
+            "course_title": "Gender and Sexuality in Global Perspective",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "WGSS 322",
+            "course_title": "Women, Work, and Social Policy",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "WGSS 340",
+            "course_title": "Gender and Media",
+            "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "WGSS 350",
+            "course_title": "Feminist Research Methods",
+            "credits": "3"
           },
           {
             "type": "course",
             "course_id": "WGSS 420",
-            "course_title": "WGSS Capstone"
-          }
-        ],
-        "subgroups": [
-          {
-            "group_name": "Choose one",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "WGSS 220",
-                "course_title": "Intersections of Privilege and Power"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 233",
-                "course_title": "Introduction to LGBTQIA+ Studies"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Choose one",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "WGSS 373",
-                "course_title": "Anti-Racist Feminist Theories and Politics"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 374",
-                "course_title": "Queer Liberation Theories and Politics"
-              }
-            ],
-            "subgroups": []
-          }
-        ]
-      },
-      "Electives": {
-        "credits_required": "9 credits",
-        "notes": [
-          "Students must take at least 3 credits from the WGSS list that do not already fulfill the requirements above.",
-          "The additional 6 credits may be taken from any list; they do not have to be in the same category.",
-          "Additional courses may count as an elective with approval from the WGSS Program Director."
-        ],
-        "items": [],
-        "subgroups": [
-          {
-            "group_name": "Women’s, Gender and Sexuality Studies (at least 3 credits)",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "WGSS 140",
-                "course_title": "Topics in the Humanities"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 150",
-                "course_title": "Insights in Social Justice"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 160",
-                "course_title": "Palestine is a Feminist Issue"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 220",
-                "course_title": "Intersections of Privilege and Power"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 233",
-                "course_title": "Introduction to LGBTQIA+ Studies"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 320",
-                "course_title": "Independent Readings"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 348",
-                "course_title": "Topics in Women’s, Gender and Sexuality Studies"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 373",
-                "course_title": "Anti-Racist Feminist Theories and Politics"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 374",
-                "course_title": "Queer Liberation Theories and Politics"
-              },
-              {
-                "type": "course",
-                "course_id": "WGSS 405",
-                "course_title": "Advocacy to End Gender-Based Violence"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Art and Design; English; Film Studies; Music",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "ART 252",
-                "course_title": "Survey of Women in Art"
-              },
-              {
-                "type": "course",
-                "course_id": "ENG 220",
-                "course_title": "Multicultural American Literature"
-              },
-              {
-                "type": "course",
-                "course_id": "FILM 221",
-                "course_title": "World Cinema"
-              },
-              {
-                "type": "course",
-                "course_id": "FILM 230",
-                "course_title": "Queer Cinema in the United States"
-              },
-              {
-                "type": "course",
-                "course_id": "FILM 240",
-                "course_title": "Film Genres"
-              },
-              {
-                "type": "course",
-                "course_id": "FILM 450",
-                "course_title": "Topics/Problems"
-              },
-              {
-                "type": "course",
-                "course_id": "MUS 113",
-                "course_title": "Women in Music"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Child Advocacy Studies",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "CAST 301",
-                "course_title": "Perspectives on Child Maltreatment and Child Advocacy"
-              },
-              {
-                "type": "course",
-                "course_id": "CAST 302",
-                "course_title": "Global Child Advocacy Issues"
-              },
-              {
-                "type": "course",
-                "course_id": "CAST 402",
-                "course_title": "Responding to the Survivor of Child Abuse and Survivor Responses"
-              },
-              {
-                "type": "course",
-                "course_id": "CAST 403",
-                "course_title": "Child Exploitation, Pornography, and the Internet"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Communication Studies",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "CMST 281",
-                "course_title": "Intercultural Communication"
-              },
-              {
-                "type": "course",
-                "course_id": "CMST 289",
-                "course_title": "Gender and Communication"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Ethnic Studies",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "ETHN 168",
-                "course_title": "Introduction to Ethnic Studies"
-              },
-              {
-                "type": "course",
-                "course_id": "ETHN 220",
-                "course_title": "Introduction to Asian American Studies"
-              },
-              {
-                "type": "course",
-                "course_id": "ETHN 230",
-                "course_title": "Introduction to Latinx Studies"
-              },
-              {
-                "type": "course",
-                "course_id": "ETHN 268",
-                "course_title": "Race, Ethnicity, and Representation in the United States"
-              },
-              {
-                "type": "course",
-                "course_id": "ETHN 300",
-                "course_title": "Latinx Communities of the Midwest"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Global Studies",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "GS 200",
-                "course_title": "Introduction to Global Studies"
-              },
-              {
-                "type": "course",
-                "course_id": "GS 368",
-                "course_title": "Migration, Refugees and Globalization"
-              },
-              {
-                "type": "course",
-                "course_id": "GS 468",
-                "course_title": "Civic Engagement and Leadership Conference"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "History; Philosophy; Political Science",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "HIST 315",
-                "course_title": "Women in U.S. History"
-              },
-              {
-                "type": "course",
-                "course_id": "PHIL 360",
-                "course_title": "Philosophy of Sex and Love"
-              },
-              {
-                "type": "course",
-                "course_id": "POLS 220",
-                "course_title": "Civil Rights and Civil Liberties"
-              },
-              {
-                "type": "course",
-                "course_id": "POLS 315",
-                "course_title": "American Political Thought"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Psychology; Sociology",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "PSY 319",
-                "course_title": "Psychology of Gender"
-              },
-              {
-                "type": "course",
-                "course_id": "SOC 408",
-                "course_title": "Advanced Topics in Family Sociology"
-              },
-              {
-                "type": "course",
-                "course_id": "SOC 412",
-                "course_title": "Sociology of Gender and Sexuality"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Social Work",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "SOCW 340",
-                "course_title": "Introduction to Social Work and Social Welfare"
-              },
-              {
-                "type": "course",
-                "course_id": "SOCW 365",
-                "course_title": "Social Work Practice with Individuals"
-              },
-              {
-                "type": "course",
-                "course_id": "SOCW 380",
-                "course_title": "US Social Welfare Policy"
-              },
-              {
-                "type": "course",
-                "course_id": "SOCW 415",
-                "course_title": "Social Work Practice with Communities"
-              },
-              {
-                "type": "course",
-                "course_id": "SOCW 420",
-                "course_title": "Child Welfare"
-              }
-            ],
-            "subgroups": []
-          },
-          {
-            "group_name": "Theatre and Dance",
-            "credits_required": "3 credits",
-            "notes": [],
-            "items": [
-              {
-                "type": "course",
-                "course_id": "THAD 155",
-                "course_title": "Contemporary Dance Techniques I"
-              },
-              {
-                "type": "course",
-                "course_id": "THAD 190",
-                "course_title": "Dance Workshop"
-              },
-              {
-                "type": "course",
-                "course_id": "THAD 222",
-                "course_title": "Dance Performance Ensemble"
-              }
-            ],
-            "subgroups": []
+            "course_title": "WGSS Capstone",
+            "credits": "3"
           }
         ]
       }
-    }
-  },
+    ]
+  }
+},
   "strength-and-conditioning": {
   "courseStructure": {
     "group_name": "Strength and Conditioning (BS)",
     "credits_required": "120 credits",
     "notes": [
-      "minimum 2.5 GPA required",
-      "600-hour internship required."
+      "Minimum 2.5 GPA required.",
+      "600-hour internship required for program completion."
     ],
     "subgroups": [
       {
-        "group_name": "Exercise Science Foundations (41 cr)",
+        "group_name": "General Education / Statistics",
         "items": [
           {
             "type": "course",
-            "course_id": "HERS 205",
-            "course_title": "Nutrition for Lifetime Wellness",
+            "course_id": "ENG 111",
+            "course_title": "College Reading and Writing",
+            "credits": "4"
+          },
+          {
+            "type": "text",
+            "content": "Choose one: STAT 110 Fundamentals of Statistics or STAT 210 Statistics (3 cr)"
+          }
+        ]
+      },
+      {
+        "group_name": "Anatomy & Science (16 cr)",
+        "items": [
+          {
+            "type": "course",
+            "course_id": "BIOL 211",
+            "course_title": "Anatomy and Physiology I",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "BIOL 212",
+            "course_title": "Anatomy and Physiology II",
+            "credits": "4"
+          },
+          {
+            "type": "course",
+            "course_id": "CHEM 100",
+            "course_title": "Chemistry and Society",
             "credits": "3"
+          },
+          {
+            "type": "course",
+            "course_id": "PHYS 101",
+            "course_title": "Fundamentals of Physics",
+            "credits": "4"
+          }
+        ]
+      },
+      {
+        "group_name": "HERS Exercise Science Core (31 cr)",
+        "items": [
+          {
+            "type": "text",
+            "content": "✽ HERS 204 - Personal & Community Health (2 cr)"
+          },
+          {
+            "type": "text",
+            "content": "✽ HERS 205 - Nutrition for Lifetime Wellness (3 cr)"
           },
           {
             "type": "course",
@@ -45882,41 +45782,15 @@
             "course_id": "HERS 468",
             "course_title": "Pathophysiology for the Health Professions",
             "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "BIOL 211",
-            "course_title": "Anatomy and Physiology I",
-            "credits": "4"
-          },
-          {
-            "type": "course",
-            "course_id": "BIOL 212",
-            "course_title": "Anatomy and Physiology II",
-            "credits": "4"
           }
         ]
       },
       {
-        "group_name": "Major Core (18 cr)",
+        "group_name": "S&C Major Core (18 cr)",
         "items": [
           {
-            "type": "course",
-            "course_id": "HERS 204",
-            "course_title": "Personal & Community Health",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "HERS 328",
-            "course_title": "Behavioral Interventions",
-            "credits": "3"
-          },
-          {
-            "type": "course",
-            "course_id": "HERS 362",
-            "course_title": "Practicum in Strength and Conditioning",
-            "credits": "2"
+            "type": "text",
+            "content": "HERS 362 Practicum in S&C (2 credits total: 2 x 1 credit/term)"
           },
           {
             "type": "course",
@@ -45933,26 +45807,20 @@
           {
             "type": "course",
             "course_id": "HERS 488",
-            "course_title": "The Science of Speed, Power, and Agility Development",
+            "course_title": "Science of Speed, Power, and Agility Development",
             "credits": "4"
-          }
-        ]
-      },
-      {
-        "group_name": "Focus Area / Internship (12 cr)",
-        "items": [
+          },
           {
             "type": "course",
             "course_id": "HERS 335",
             "course_title": "Exercise Science Seminar",
             "credits": "1"
-          },
-          {
-            "type": "course",
-            "course_id": "HERS 350",
-            "course_title": "Program Planning in Health Promotion",
-            "credits": "3"
-          },
+          }
+        ]
+      },
+      {
+        "group_name": "Internship (8 cr)",
+        "items": [
           {
             "type": "course",
             "course_id": "HERS 495",

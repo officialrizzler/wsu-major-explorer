@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-04T05:18:24.906Z",
+  "generated_at": "2026-04-04T06:39:02.050Z",
   "authoritative_indexes": [
     {
       "level": "Undergraduate",
@@ -25,7 +25,7 @@
     "unresolved_site_programs": 86,
     "resolved_outside_authoritative_indexes": 150,
     "catalog_programs_missing_from_site": 268,
-    "likely_content_mismatches": 135
+    "likely_content_mismatches": 134
   },
   "site_programs_missing_widgets": [],
   "site_programs_unresolved_to_catalog": [
@@ -1337,7 +1337,7 @@
     },
     {
       "program_id": "womens-gender-and-sexuality-studies-minor",
-      "program_name": "Wome\\",
+      "program_name": "Women\\",
       "degree_type": "Minor",
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/womens-gender-sexuality-studies/",
@@ -3303,27 +3303,31 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/accounting-minor/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2938",
-      "localCourseCount": 29,
+      "localCourseCount": 4,
       "remoteCourseCount": 22,
-      "localTextCount": 7,
+      "localTextCount": 2,
       "remoteTextCount": 15,
       "missingCourses": [
         "ENG 111::college reading and writing",
         "CMST 191::introduction to public speaking",
-        "CMST 192::introduction to effective communication"
+        "CMST 192::introduction to effective communication",
+        "MATH 110::finite mathematics",
+        "MATH 112::applied precalculus",
+        "MATH 115::college algebra",
+        "MATH 120::precalculus",
+        "MATH 140::applied calculus",
+        "MATH 212::calculus i",
+        "STAT 110::fundamentals of statistics",
+        "STAT 210::statistics",
+        "ECON 222::statistics for business and economics",
+        "ECON 201::principles of microeconomics",
+        "ECON 202::principles of macroeconomics",
+        "ACCT 312::intermediate accounting ii",
+        "ACCT 330::accounting information systems",
+        "ACCT 361::intermediate managerial/cost accounting",
+        "ACCT 421::introduction to taxation"
       ],
-      "extraCourses": [
-        "ACCT 397::seminar: professionalism and experiential learning",
-        "ACCT 471::auditing",
-        "FIN 360::corporate finance",
-        "BUSA 291::legal environment of business",
-        "BUSA 311::business law ii",
-        "MGMT 325::organizational dynamics",
-        "MGMT 334::operations management",
-        "MGMT 495::strategic management",
-        "MIS 362::management information systems",
-        "MKTG 300::principles of marketing"
-      ],
+      "extraCourses": [],
       "missingTexts": [
         "header:cob admission requirements (19-20 credits)",
         "acct and mis majors require math 140 or math 212",
@@ -3339,14 +3343,12 @@
         "wsu policy requires a minor contain at least one course unique to the minor and not used in major or additional requirements. see degree audit for details"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses",
-        "header:economics/finance",
-        "header:business administration"
+        "header:accounting minor",
+        "select 6 additional credits from acct 312, 330, 361, or 421"
       ],
       "localIssues": [],
       "severity": [
-        "many widget courses not found in catalog",
+        "many catalog courses missing from widget",
         "many catalog instructions missing from widget"
       ]
     },
@@ -3401,29 +3403,32 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/business-administration-minor/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2897",
-      "localCourseCount": 20,
+      "localCourseCount": 4,
       "remoteCourseCount": 23,
-      "localTextCount": 9,
+      "localTextCount": 2,
       "remoteTextCount": 18,
       "missingCourses": [
         "ENG 111::college reading and writing",
         "CMST 191::introduction to public speaking",
         "CMST 192::introduction to effective communication",
+        "MATH 110::finite mathematics",
         "MATH 112::applied precalculus",
         "MATH 115::college algebra",
         "MATH 120::precalculus",
         "MATH 140::applied calculus",
         "MATH 212::calculus i",
-        "ECON 202::principles of macroeconomics (both econ 201 & 202 are required)"
+        "STAT 110::fundamentals of statistics",
+        "STAT 210::statistics",
+        "ECON 222::statistics for business and economics",
+        "ECON 202::principles of macroeconomics",
+        "BUSA 291::legal environment of business",
+        "ECON 202::principles of macroeconomics (both econ 201 & 202 are required)",
+        "FIN 360::corporate finance",
+        "MGMT 317::management of human resources",
+        "MGMT 334::operations management",
+        "MIS 362::management information systems"
       ],
-      "extraCourses": [
-        "ACCT 212::managerial accounting principles",
-        "MGMT 495::strategic management",
-        "BUSA 311::business law ii",
-        "MIS 202::microcomputers in business",
-        "MGMT 345::international business",
-        "MGMT 464::project management"
-      ],
+      "extraCourses": [],
       "missingTexts": [
         "header:cob admission requirements (19-20 credits)",
         "acct and mis majors require math 140 or math 212",
@@ -3439,18 +3444,12 @@
         "upon approval by business administration department, other relevant courses notably study abroad courses may be accepted"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:college of business core",
-        "header:additional required courses",
-        "or mis 300/400-level course",
-        "math and statistics (6 credits)",
-        "6 credits of 300/400-level courses from ba department: busa, mgmt, or mis",
-        "6 credits of 300/400-level courses from college of business: acct, busa, econ, fin, mgmt, mis, mktg"
+        "header:business administration minor",
+        "select 9 additional credits of 300/400-level busa/mgmt/mktg electives"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -3671,33 +3670,16 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/economics-minor/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2910",
-      "localCourseCount": 22,
+      "localCourseCount": 2,
       "remoteCourseCount": 5,
-      "localTextCount": 7,
+      "localTextCount": 3,
       "remoteTextCount": 6,
       "missingCourses": [
+        "ECON 302::intermediate microeconomics",
+        "ECON 303::intermediate macroeconomics",
         "ECON 304::money and banking"
       ],
-      "extraCourses": [
-        "ECON 307::freakonomics",
-        "ECON 498::seminar in economics i",
-        "ECON 499::seminar in economics ii",
-        "ECON 222::statistics for business and economics",
-        "ECON 312::econometrics",
-        "MATH 140::applied calculus",
-        "MATH 212::calculus i",
-        "ACCT 311::intermediate accounting i",
-        "ACCT 312::intermediate accounting ii",
-        "BUSA 326::business and the future",
-        "FIN 335::forecasting methods",
-        "FIN 360::corporate finance",
-        "FIN 377::investments",
-        "MATH 337::probability",
-        "MKTG 300::principles of marketing",
-        "MKTG 327::marketing and entrepreneurship",
-        "MGMT 334::operations management",
-        "STAT 310::intermediate statistics"
-      ],
+      "extraCourses": [],
       "missingTexts": [
         "header:required courses (9 credits)",
         "header:choose one (3 credits)",
@@ -3707,14 +3689,12 @@
         "wsu policy requires a minor contain at least one course unique to the minor and not used in major or additional requirements. see degree audit for details"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses",
-        "header:statistics/quantitative tools",
-        "header:additional options"
+        "header:economics minor",
+        "select one from: econ 302, 303, or 304",
+        "select 9 additional 300/400-level econ credits"
       ],
       "localIssues": [],
       "severity": [
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -3774,39 +3754,33 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/finance-minor/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2906",
-      "localCourseCount": 50,
+      "localCourseCount": 4,
       "remoteCourseCount": 31,
-      "localTextCount": 12,
+      "localTextCount": 1,
       "remoteTextCount": 16,
       "missingCourses": [
         "ENG 111::college reading and writing",
         "CMST 191::introduction to public speaking",
         "CMST 192::introduction to effective communication",
+        "ACCT 211::financial accounting principles",
+        "MATH 110::finite mathematics",
+        "MATH 112::applied precalculus",
+        "MATH 115::college algebra",
+        "MATH 120::precalculus",
+        "MATH 140::applied calculus",
+        "MATH 212::calculus i",
+        "STAT 110::fundamentals of statistics",
+        "STAT 210::statistics",
+        "ECON 222::statistics for business and economics",
+        "ECON 201::principles of microeconomics",
+        "ECON 202::principles of macroeconomics",
         "ECON 202::principles of macroeconomics (both econ 201 & 202 required)",
-        "FIN 480::independent studies in finance"
+        "FIN 360::corporate finance",
+        "FIN 335::forecasting methods",
+        "FIN 404::commercial bank management",
+        "FIN 422::student managed investment fund"
       ],
-      "extraCourses": [
-        "ACCT 212::managerial accounting principles",
-        "BUSA 291::legal environment of business",
-        "MGMT 325::organizational dynamics",
-        "MGMT 334::operations management",
-        "MGMT 495::strategic management",
-        "MIS 362::management information systems",
-        "ECON 322::intermediate statistics for business and economics",
-        "STAT 310::intermediate statistics",
-        "MKTG 300::principles of marketing",
-        "ACCT 311::intermediate accounting i",
-        "ACCT 312::intermediate accounting ii",
-        "ACCT 421::introduction to taxation",
-        "ECON 302::intermediate microeconomics",
-        "ECON 425::managerial economics",
-        "MATH 213::calculus ii",
-        "MATH 312::multivariable calculus",
-        "MGMT 345::international business",
-        "MGMT 475::international management",
-        "MIS 312::business computer programming",
-        "MIS 342::advanced business computer applications"
-      ],
+      "extraCourses": [],
       "missingTexts": [
         "header:cob admission requirements (19-20 credits)",
         "acct and mis majors require math 140 or math 212",
@@ -3821,17 +3795,10 @@
         "header:course(s) unique to minor",
         "wsu policy requires a minor contain at least one course unique to the minor and not used in major or additional requirements. see degree audit for details"
       ],
-      "extraTexts": [
-        "header:program requirements",
-        "header:business administration",
-        "header:intermediate statistics",
-        "header:finance major requirements",
-        "header:additional finance courses"
-      ],
+      "extraTexts": [],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -3976,20 +3943,33 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/marketing-minor/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2930",
-      "localCourseCount": 43,
+      "localCourseCount": 1,
       "remoteCourseCount": 36,
-      "localTextCount": 9,
+      "localTextCount": 2,
       "remoteTextCount": 20,
-      "missingCourses": [],
-      "extraCourses": [
-        "ACCT 212::managerial accounting principles",
-        "BUSA 291::legal environment of business",
-        "MGMT 325::organizational dynamics",
-        "MGMT 334::operations management",
-        "MGMT 495::strategic management",
-        "MIS 362::management information systems",
-        "FIN 360::corporate finance"
+      "missingCourses": [
+        "ENG 111::college reading and writing",
+        "CMST 191::introduction to public speaking",
+        "CMST 192::introduction to effective communication",
+        "ACCT 211::financial accounting principles",
+        "MATH 110::finite mathematics",
+        "MATH 112::applied precalculus",
+        "MATH 115::college algebra",
+        "MATH 120::precalculus",
+        "MATH 140::applied calculus",
+        "MATH 212::calculus i",
+        "STAT 110::fundamentals of statistics",
+        "STAT 210::statistics",
+        "ECON 222::statistics for business and economics",
+        "ECON 201::principles of microeconomics",
+        "ECON 202::principles of macroeconomics",
+        "MKTG 332::market analysis",
+        "MKTG 344::buyer behavior",
+        "MKTG 265::introduction to professional selling",
+        "MKTG 327::marketing and entrepreneurship",
+        "MKTG 329::sports marketing"
       ],
+      "extraCourses": [],
       "missingTexts": [
         "header:graduation requirements",
         "d, f, or w grades in marketing courses may be repeated once. complete at least 50% of required minor credits at wsu. meet all other wsu graduation requirements",
@@ -4005,17 +3985,12 @@
         "header:electives (12 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:cob admission requirements",
-        "math (3-4 credits) choose one",
-        "stats (3 credits) choose one",
-        "economics (3 credits) choose one",
-        "header:required courses",
-        "header:marketing practicum"
+        "header:marketing minor",
+        "select 12 additional credits from mktg 300/400-level electives"
       ],
       "localIssues": [],
       "severity": [
-        "many widget courses not found in catalog",
+        "many catalog courses missing from widget",
         "many catalog instructions missing from widget"
       ]
     },
@@ -4393,32 +4368,22 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/director-of-special-education/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4819",
-      "localCourseCount": 9,
+      "localCourseCount": 5,
       "remoteCourseCount": 10,
       "localTextCount": 3,
       "remoteTextCount": 4,
       "missingCourses": [
-        "LDRS 612::systems thinking",
         "LDRS 614::change leadership",
         "EL 604::curriculum planning, development, and diverse learners",
         "EL 610::school law",
         "EL 623::leadership of special programs",
         "EL 628::human resources and collective bargaining",
         "EL 635::public relations and politics",
-        "EL 758::educational finance",
-        "EL 764::director of special education internship i",
-        "EL 765::director of special education internship ii"
+        "EL 758::educational finance"
       ],
       "extraCourses": [
-        "SPED 300::children and youth with exceptionalities",
-        "SPED 405::student management systems",
-        "SPED 410::introduction to assessment/methods",
-        "SPED 420::special education administrative procedures",
-        "SPED 425::inclusion in regular classrooms",
-        "SPED 101::elementary american sign language i",
-        "SPED 102::elementary american sign language ii",
-        "SPED 432::assessment/methods for moderate/severe developmental disabilities",
-        "SPED 473::transition and secondary skills instruction"
+        "SPED 600::leadership in special education",
+        "SPED 610::special education law & policy"
       ],
       "missingTexts": [
         "header:certificate and licensure option",
@@ -4427,13 +4392,12 @@
         "header:internship (6 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses"
+        "header:director of special education (licensure)",
+        "header:core licensure courses"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -4490,9 +4454,9 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/early-childhood-elementary-education/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/1821",
-      "localCourseCount": 24,
+      "localCourseCount": 4,
       "remoteCourseCount": 46,
-      "localTextCount": 6,
+      "localTextCount": 3,
       "remoteTextCount": 30,
       "missingCourses": [
         "ENG 111::college reading and writing",
@@ -4502,6 +4466,7 @@
         "PHYS 180::investigative science i: physical science",
         "BIOL 185::investigative science ii: earth & life science",
         "GEOS 185::investigative science ii: earth & life science",
+        "MATH 202::elements of mathematics",
         "HIST 150::united states history to 1865",
         "HIST 151::united states history since 1865",
         "POLS 120::introduction to american politics",
@@ -4513,24 +4478,13 @@
         "MATH 203::number and number systems",
         "MATH 204::exploratory geometry",
         "EDUC 221::children’s literature",
-        "PESS 200::elementary physical education for classroom teachers",
-        "HERS 310::foundations of elementary health education"
+        "PESS 200::elementary physical education for classroom teachers"
       ],
       "extraCourses": [
-        "CPEC 300::field experience: early childhood semester 1",
-        "ECEO 321::children’s literature",
-        "ECEO 327::foundations of literacy, early childhood",
-        "CPEC 350::field experience: early childhood semester 2",
-        "CPEC 400::field experience: early childhood semester 3",
-        "ECEO 405::topics of early childhood education",
-        "CPEC 450::field experience: elementary-primary semester 3",
-        "ECEO 413::infant and toddler curriculum and methods",
-        "ECEO 416::preschool and kindergarten curriculum and methods",
-        "ECEO 425::early numeracy methods",
-        "ECEO 428::reading and language arts methods",
-        "ECEO 435::primary methods 1: physical education and the fine arts",
-        "ECEO 436::primary methods 2: science, health and social studies",
-        "HERS 204::personal & community health"
+        "EDST 400::metacognitive learner",
+        "EDST 410::differentiated instruction",
+        "EDUC 318::teaching reading/la",
+        "EDUC 310::teaching math"
       ],
       "missingTexts": [
         "header:repetition of courses",
@@ -4547,16 +4501,13 @@
         "header:goal 1: communication (7 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:license requirements",
-        "header:additional license requirements",
-        "header:professional education sequence",
-        "header:student teaching"
+        "header:early childhood/elementary education (birth-grade 6) major",
+        "header:professional ed core",
+        "header:birth-grade 6 specialization"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -4567,7 +4518,7 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/education/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4359",
-      "localCourseCount": 39,
+      "localCourseCount": 11,
       "remoteCourseCount": 11,
       "localTextCount": 6,
       "remoteTextCount": 11,
@@ -4578,33 +4529,16 @@
         "EDUO 803::multiple perspectives of teaching and learning",
         "EDUO 804::policy, politics and change",
         "EDUO 805::multicultural perspectives in community and educational practice",
-        "EDUO 808::program evaluation",
-        "EDUO 810::qualitative research methods",
-        "EDUO 811::quantitative research methods",
-        "EDUO 898::dissertation research seminar",
-        "EDUO 899::dissertation research"
+        "EDUO 899::��- dissertation research"
       ],
       "extraCourses": [
-        "ENG 111::college reading and writing",
-        "CMST 191::introduction to public speaking",
-        "CMST 192::introduction to effective communication",
-        "EDFD 400::metacognitive learner: b-6th grade",
-        "EDFD 420::classroom management: b-6th grade",
-        "EDFD 440::curriculum, instruction, and assessment: b-6th grade",
-        "EDFD 459::the professional educator",
-        "EDFD 460::multicultural youth, children, and families part i: b-6th grade",
-        "EDFD 462::multicultural youth, children, and families part ii",
-        "HERS 204::personal & community health",
-        "INDS 300::academic planning and career foundations",
-        "SPED 300::children and youth with exceptionalities",
-        "EDFD 497::individual educational topics",
-        "EDFD 498::educational issues and trends",
-        "EDFD 499::educational workshops and seminars",
-        "MATH 202::elements of mathematics",
-        "SOC 212::sociology of families",
-        "ECEO 320::foundations of literacy, early childhood",
-        "ECEO 321::children’s literature",
-        "ECEO 405::topics of early childhood education"
+        "EDUO 800::academic residency (3 cr / 2 terms)",
+        "EDUO 801::current educational issues",
+        "EDUO 802::theoretical foundations of education",
+        "EDUO 803::instructional leadership",
+        "EDUO 804::strategic planning in education",
+        "EDUO 805::educational ethics and law",
+        "EDUO 899::dissertation research"
       ],
       "missingTexts": [
         "header:eduo transition points",
@@ -4620,11 +4554,10 @@
         "header:dissertation (15 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:education studies core courses",
-        "header:education electives",
-        "header:track 1: required courses",
-        "header:track 2: required courses"
+        "header:doctor of education (edd)",
+        "header:education core",
+        "header:emphasis / electives",
+        "choose 4 courses (12 credits) in a chosen area of emphasis such as curriculum & instruction, evaluation and assessment, or organizational leadership"
       ],
       "localIssues": [],
       "severity": [
@@ -4681,32 +4614,40 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/elementary-education-k-6/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2940",
-      "localCourseCount": 40,
+      "localCourseCount": 7,
       "remoteCourseCount": 41,
-      "localTextCount": 10,
+      "localTextCount": 4,
       "remoteTextCount": 30,
       "missingCourses": [
+        "ENG 111::college reading and writing",
+        "CMST 191::introduction to public speaking",
+        "CMST 192::introduction to effective communication",
+        "CHEM 180::investigative science i: physical science",
+        "PHYS 180::investigative science i: physical science",
+        "BIOL 185::investigative science ii: earth & life science",
+        "GEOS 185::investigative science ii: earth & life science",
+        "MATH 202::elements of mathematics",
+        "HIST 150::united states history to 1865",
+        "HIST 151::united states history since 1865",
+        "POLS 120::introduction to american politics",
         "ART 109::introduction to art (recommended)",
         "MUS 120::introduction to music theory (waived with permission based on experience)",
         "EDFD 300::teaching, learning, and schooling for the 21st century (recommended)",
         "BIOL 104::the environment, society, and conservation",
         "GEOS 325::environmental geoscience",
-        "::✽ hers 204 - personal & community health",
-        "EDFD 400::and 460 must be taken concurrently",
-        "EDFD 420::and 440 must be taken concurrently",
-        "EDFD 459::and 462 must be taken concurrently",
-        "EDST 464::k-6 student teaching"
+        "MATH 203::number and number systems",
+        "MATH 204::exploratory geometry",
+        "EDUC 221::children’s literature",
+        "PESS 200::elementary physical education for classroom teachers"
       ],
       "extraCourses": [
-        "ART 109::introduction to art",
-        "MUS 120::introduction to music theory",
-        "SOC 212::sociology of families",
-        "HERS 204::personal & community health",
-        "EDUC 410::foundations of early childhood education",
-        "EDUC 413::development in infancy",
-        "EDUC 414::the developing child in the social world",
-        "EDUC 416::early childhood/kindergarten curriculum",
-        "EDST 460::elementary education with early childhood student teaching"
+        "EDST 400::metacognitive learner",
+        "EDST 420::classroom management",
+        "EDUC 318::teaching reading and language arts",
+        "EDUC 310::teaching mathematics",
+        "MATH 135::number and number systems",
+        "MATH 235::exploratory geometry",
+        "EDST 460::elementary student teaching"
       ],
       "missingTexts": [
         "header:repetition of courses",
@@ -4718,19 +4659,15 @@
         "b grade or better in a 3-credit college level speech course (cmst 191 or cmst 192 if taken at wsu)",
         "c grade or better in a 3-credit college level math course (math 202 is required for elementary and early childhood majors)",
         "early clinical experience; clinical hours ≥ 15 hours: complete 15 hours of experience working with children post high school graduation",
+        "header:elementary education gep courses",
         "required for wi licensure (choose one)",
-        "header:goal 1: communication (7 credits)",
-        "header:goal 2: critical thinking"
+        "header:goal 1: communication (7 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:natural sciences",
-        "header:mathematics/logical reasoning",
-        "header:history and the social and behavioral sciences",
-        "header:the humanities and fine arts",
-        "header:license requirements",
-        "header:professional educational sequence",
-        "header:student teaching"
+        "header:elementary education (k-6) major",
+        "header:professional education core (37 cr)",
+        "header:content methods (28 cr)",
+        "header:student teaching (12 cr)"
       ],
       "localIssues": [],
       "severity": [
@@ -5084,45 +5021,19 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/sport-management-masters/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4355",
-      "localCourseCount": 36,
+      "localCourseCount": 10,
       "remoteCourseCount": 12,
-      "localTextCount": 5,
+      "localTextCount": 4,
       "remoteTextCount": 14,
       "missingCourses": [
-        "LDRS 612::systems thinking",
-        "LDRS 614::change leadership",
-        "LDRS 615::communication",
-        "LDRS 618::research design",
         "LDRS 619::leadership capstone experience",
         "LDRS 699::master’s thesis",
         "PESS 626::planning of facilities in physical education or sport",
-        "PESS 629::sport marketing management",
-        "PESS 633::administrative problems in physical education or sport",
-        "PESS 636::sport law & ethics",
-        "PESS 642::sport leadership/internship",
-        "PESS 645::sport sales management"
+        "PESS 633::administrative problems in physical education or sport"
       ],
       "extraCourses": [
-        "PESS 114::fundamentals of adventure education",
-        "PESS 152::fundamentals of games education",
-        "PESS 161::fundamentals of outdoor activities",
-        "PESS 226::methods of planning, instruction & assessment in adventure education",
-        "PESS 235::principles of coaching",
-        "PESS 237::introduction to adapted physical activity",
-        "PESS 251::sports science",
-        "PESS 280::psychology of physical activity and sport",
-        "PESS 300::motor learning and control",
-        "PESS 308::challenge course programming",
-        "PESS 309::diversity, equity and inclusion in adventure sports and coaching",
-        "PESS 320::introduction to adventure sports coaching",
-        "PESS 327::advocacy and fundraising in sport leadership",
-        "PESS 336::introduction to sport leadership",
-        "PESS 402::organization and administration of sport",
-        "PESS 404::risk management, planning, and development in physical education and sport",
-        "ATHL 100::athletics health and wellness",
-        "ATHL 300::game day sports management",
-        "PESS 124::water safety instructor",
-        "PESS 134::downhill skiing"
+        "PESS 626::planning of facilities in physical education/sport",
+        "PESS 633::administrative problems in physical education/sport"
       ],
       "missingTexts": [
         "header:description of program",
@@ -5139,68 +5050,14 @@
         "header:comprehensive examination"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:activity/experiential electives"
+        "header:sport leadership (ms)",
+        "header:leadership education core",
+        "ldrs 619: leadership capstone or ldrs 699: thesis (3 cr)",
+        "header:sport leadership emphasis"
       ],
       "localIssues": [],
       "severity": [
-        "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
-      ]
-    },
-    {
-      "program_id": "sport-leadership-gc",
-      "program_name": "Sports Leadership (GC)",
-      "degree_type": "GC",
-      "credential_level": "Graduate",
-      "program_page_url": "https://www.winona.edu/academics/programs/sport-management/",
-      "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4338",
-      "localCourseCount": 36,
-      "remoteCourseCount": 6,
-      "localTextCount": 5,
-      "remoteTextCount": 1,
-      "missingCourses": [
-        "PESS 626::planning of facilities in physical education or sport",
-        "PESS 629::sport marketing management",
-        "PESS 633::administrative problems in physical education or sport",
-        "PESS 636::sport law & ethics",
-        "PESS 642::sport leadership/internship",
-        "PESS 660::sport leadership theory, research, and practice"
-      ],
-      "extraCourses": [
-        "PESS 114::fundamentals of adventure education",
-        "PESS 152::fundamentals of games education",
-        "PESS 161::fundamentals of outdoor activities",
-        "PESS 226::methods of planning, instruction & assessment in adventure education",
-        "PESS 235::principles of coaching",
-        "PESS 237::introduction to adapted physical activity",
-        "PESS 251::sports science",
-        "PESS 280::psychology of physical activity and sport",
-        "PESS 300::motor learning and control",
-        "PESS 308::challenge course programming",
-        "PESS 309::diversity, equity and inclusion in adventure sports and coaching",
-        "PESS 320::introduction to adventure sports coaching",
-        "PESS 327::advocacy and fundraising in sport leadership",
-        "PESS 336::introduction to sport leadership",
-        "PESS 402::organization and administration of sport",
-        "PESS 404::risk management, planning, and development in physical education and sport",
-        "ATHL 100::athletics health and wellness",
-        "ATHL 300::game day sports management",
-        "PESS 124::water safety instructor",
-        "PESS 134::downhill skiing"
-      ],
-      "missingTexts": [
-        "header:required courses (18 credits)"
-      ],
-      "extraTexts": [
-        "header:program requirements",
-        "header:activity/experiential electives"
-      ],
-      "localIssues": [],
-      "severity": [
-        "many catalog courses missing from widget",
-        "many widget courses not found in catalog"
       ]
     },
     {
@@ -5607,12 +5464,8 @@
       "remoteCourseCount": 9,
       "localTextCount": 5,
       "remoteTextCount": 17,
-      "missingCourses": [
-        "GS 468::��civic engagement and leadership conference"
-      ],
-      "extraCourses": [
-        "GS 468::civic engagement and leadership conference"
-      ],
+      "missingCourses": [],
+      "extraCourses": [],
       "missingTexts": [
         "header:teacher education licensure program",
         "30 college level credits completed with no more than 4 credits of pass/no credit",
@@ -5692,24 +5545,24 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/communication-arts-literature-middle-level-teaching/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/3023",
-      "localCourseCount": 0,
+      "localCourseCount": 9,
       "remoteCourseCount": 11,
-      "localTextCount": 1,
+      "localTextCount": 5,
       "remoteTextCount": 13,
       "missingCourses": [
         "CMST 191::introduction to public speaking",
         "CMST 192::introduction to effective communication",
         "CMST 494::teaching and coaching oral communication (grades 5-8) (b grade or better)",
-        "ENG 222::introduction to creative writing",
         "ENG 240::teaching young adult literature (grades 5-12)",
-        "ENG 250::english grammar and usage",
         "ENG 290::literary studies (b grade or better)",
-        "ENG 323::multimodal composition and literacies",
-        "EDUC 429::secondary reading and teaching strategies",
-        "EDFD 449::middle level schools",
         "EDST 470::middle level student teaching (4 credits required)"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "CMST 494::teaching and coaching oral communication, grades 5-8",
+        "ENG 240::teaching young adult literature, grades 5-12",
+        "ENG 290::literary studies",
+        "EDST 470::middle level student teaching"
+      ],
       "missingTexts": [
         "header:teacher education licensure program",
         "30 college level credits completed with no more than 4 credits of pass/no credit",
@@ -5725,11 +5578,14 @@
         "wsu policy requires a minor contain at least one course unique to the minor and not used in major or additional requirements. see degree audit for details"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:middle level communication arts & literature minor",
+        "header:communication studies (5 cr)",
+        "choose one (3 cr): cmst 191 or cmst 192",
+        "header:english (14 cr)",
+        "header:professional education / teaching (10 cr)"
       ],
       "localIssues": [],
       "severity": [
-        "widget missing all catalog courses",
         "many catalog courses missing from widget",
         "many catalog instructions missing from widget"
       ]
@@ -5741,17 +5597,15 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/communication-arts-literature-teaching/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/3021",
-      "localCourseCount": 0,
+      "localCourseCount": 7,
       "remoteCourseCount": 41,
-      "localTextCount": 1,
+      "localTextCount": 4,
       "remoteTextCount": 20,
       "missingCourses": [
         "ENG 220::multicultural american literature",
-        "ENG 222::introduction to creative writing",
         "ENG 240::teaching young adult literature (grades 5-12)",
         "ENG 290::literary studies (b grade or better)",
         "ENG 291::history of literature in english (b grade or better)",
-        "ENG 323::multimodal composition and literacies",
         "ENG 328::english syntax",
         "ENG 350::introduction to language study",
         "ENG 402::teaching english in middle school and secondary school (b grade or better)",
@@ -5765,9 +5619,15 @@
         "ENG 366::literature in english 1642-1832: topics",
         "ENG 367::literature in english 1832-present: authors",
         "ENG 368::literature in english 1832-present: genres",
-        "ENG 369::literature in english 1832 - present: topics"
+        "ENG 369::literature in english 1832 - present: topics",
+        "CMST 282::introduction to communication studies",
+        "CMST 371::creating effective groups and teams"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "ENG 290::literary studies",
+        "CMST 380::introduction to communication research",
+        "EDST 461::secondary student teaching"
+      ],
       "missingTexts": [
         "header:admission requirements",
         "b grade or better required in a college-level writing course (eng 111), b grade or better required in a college-level speech course (cmst 191 or cmst 192), and a c grade or better required in a college-level math course before applying to the teaching program",
@@ -5783,11 +5643,13 @@
         "b grade or better in a 3-credit college level speech course (cmst 191 or cmst 192 if taken at wsu)"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:communication arts & literature (teaching) (calt) major (92 cr)",
+        "header:literature & english (32 cr)",
+        "header:communication studies (15 cr)",
+        "header:professional education core (45 cr)"
       ],
       "localIssues": [],
       "severity": [
-        "widget missing all catalog courses",
         "many catalog courses missing from widget",
         "many catalog instructions missing from widget"
       ]
@@ -6349,26 +6211,37 @@
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/3020",
       "localCourseCount": 0,
       "remoteCourseCount": 0,
-      "localTextCount": 1,
+      "localTextCount": 28,
       "remoteTextCount": 26,
       "missingCourses": [],
       "extraCourses": [],
       "missingTexts": [
         "header:goal 1: communication (7 credits)",
-        "public speaking course",
         "header:goal 2: critical thinking",
-        "this requirement is met through completion of other goal areas",
         "header:goal 3: natural sciences (7 credits)",
-        "natural science lab requirement (4 credits)",
-        "one additional natural science course requirement (3 credits)",
         "header:goal 4: mathematics/logic reasoning (3-4 credits)",
-        "requires a minimum of 3 credits",
         "header:goal 5: history & social behavioral sciences (9 credits)",
-        "requires courses from at least two different subject areas",
-        "header:goal 6: humanities & fine arts (9 credits)"
+        "header:goal 6: humanities & fine arts (9 credits)",
+        "header:goal 7: human diversity (3 credits)",
+        "header:goal 8: global perspectives (3 credits)",
+        "header:goal 9: ethical & civic responsibility (3 credits)",
+        "header:goal 10: people & the environment (3 credits)",
+        "header:physical development & wellness (2 credits)",
+        "header:additional general education credits (20 credits)"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:core requirements",
+        "goal 1: communication (7 credits)",
+        "goal 2: critical thinking",
+        "goal 3: natural sciences (7 credits)",
+        "requires one course with a lab and encourages courses from two different subject areas",
+        "goal 4: mathematics/logic reasoning (3-4 credits)",
+        "goal 5: history & social behavioral sciences (9 credits)",
+        "goal 6: humanities & fine arts (9 credits)",
+        "goal 7: human diversity (3 credits)",
+        "goal 8: global perspectives (3 credits)",
+        "goal 9: ethical & civic responsibility (3 credits)",
+        "goal 10: people & the environment (3 credits)"
       ],
       "localIssues": [],
       "severity": [
@@ -6590,14 +6463,14 @@
     },
     {
       "program_id": "womens-gender-and-sexuality-studies-minor",
-      "program_name": "Wome\\",
+      "program_name": "Women\\",
       "degree_type": "Minor",
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/womens-gender-sexuality-studies/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/2875",
       "localCourseCount": 0,
       "remoteCourseCount": 48,
-      "localTextCount": 1,
+      "localTextCount": 0,
       "remoteTextCount": 21,
       "missingCourses": [
         "WGSS 148::introduction to women’s, gender and sexuality studies",
@@ -6636,9 +6509,7 @@
         "header:communication studies",
         "header:ethnic studies"
       ],
-      "extraTexts": [
-        "header:program requirements"
-      ],
+      "extraTexts": [],
       "localIssues": [],
       "severity": [
         "widget missing all catalog courses",
@@ -6687,15 +6558,16 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/adult-gerontology-clinical-nurse-specialist-dnp/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4353",
-      "localCourseCount": 9,
+      "localCourseCount": 8,
       "remoteCourseCount": 20,
-      "localTextCount": 3,
+      "localTextCount": 4,
       "remoteTextCount": 29,
       "missingCourses": [
         "STAT 601::statistical methods for health care research",
         "NURS 604::health policy and quality health care delivery",
         "NURS 606::nursing information management & decision making",
         "NURS 608::organizational and systems leadership",
+        "NURS 612::advanced health promotion",
         "NURS 613::advanced health promotion clinical",
         "NURS 703::epidemiological approaches to population health",
         "NURS 708::professionalism in advanced nursing roles",
@@ -6703,16 +6575,24 @@
         "NURS 780::dnp project i - clinical",
         "NURS 781::dnp project ii - clinical",
         "NURS 782::dnp project iii - clinical",
+        "NURS 617::advanced clinical pharmacology",
+        "NURS 618::advanced pathophysiology",
+        "NURS 619::advanced health assessment",
         "NURS 620::adult/gerontology cns role foundations seminar (3 credits required)",
         "NURS 624::adult-gerontology cns role development seminar (3 credits required)",
         "NURS 625::adult-gerontology cns role development clinical (4 credits required)",
+        "NURS 630::adult-gerontology clinical nurse specialist role synthesis seminar",
         "NURS 631::adult-gerontology clinical nurse specialist role synthesis clinical (4 credits required)"
       ],
       "extraCourses": [
-        "NURS 620::adult/gerontology cns role foundations seminar",
-        "NURS 624::adult-gerontology cns role development seminar",
-        "NURS 625::adult-gerontology cns role development clinical",
-        "NURS 631::adult-gerontology clinical nurse specialist role synthesis clinical"
+        "STAT 701::applied biostatistics",
+        "NURS 701::dnp role & leadership",
+        "NURS 703::ebp for advanced nursing",
+        "NURS 705::policy and population health",
+        "NURS 752::advanced gerontology",
+        "NURS 754::clinical nurse specialist role",
+        "NURS 790::dnp project seminar",
+        "NURS 792::dnp project clinical"
       ],
       "missingTexts": [
         "header:description of program (dnp)",
@@ -6729,13 +6609,14 @@
         "choose any 12 credits at 600/700-level. students are encouraged to meet with their advisor for direction on appropriate options"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses",
-        "header:admission prerequisites"
+        "header:adult-gerontology clinical nurse specialist (dnp)",
+        "header:dnp science core",
+        "header:agcns specialty focus"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
+        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -6822,53 +6703,34 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/athletic-training-masters/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/3514",
-      "localCourseCount": 30,
+      "localCourseCount": 11,
       "remoteCourseCount": 24,
-      "localTextCount": 8,
+      "localTextCount": 4,
       "remoteTextCount": 36,
       "missingCourses": [
-        "HERS 560::nutrition for the physically active",
         "HERS 568::pathophysiology for the health professions",
         "HERS 571::clinical examination & diagnosis i",
         "HERS 572::clinical examination & diagnosis ii",
-        "HERS 573::therapeutic modalities",
-        "HERS 590::athletic training clinical experience i",
-        "HERS 591::athletic training clinical experience ii",
         "HERS 670::therapeutic interventions",
         "HERS 672::pharmacology for athletic training",
         "HERS 673::psychosocial issues in sports medicine",
-        "HERS 674::foundational concepts in rehabilitation",
         "HERS 675::applied return to play principles",
         "HERS 680::administration and professionalism in athletic training",
-        "HERS 681::physical rehabilitation",
         "HERS 682::advanced rehabilitation & treatment",
         "HERS 683::interprofessional health care",
         "HERS 684::applied decision making in interprofessional practice",
         "HERS 685::evidence-based practice and research design",
         "HERS 686::athletic training research",
-        "HERS 690::athletic training clinical experience iii"
+        "HERS 690::athletic training clinical experience iii",
+        "HERS 691::athletic training clinical experience iv",
+        "HERS 692::athletic training clinical experience v",
+        "HERS 693::topics in athletic training"
       ],
       "extraCourses": [
-        "HERS 205::nutrition for lifetime wellness",
-        "HERS 280::foundations of exercise science",
-        "HERS 291::prevention and care of athletic injuries",
-        "HERS 314::anatomical kinesiology",
-        "HERS 340::physiology of exercise",
-        "HERS 370::mechanical kinesiology",
-        "HERS 380::laboratory methods in exercise science",
-        "HERS 445::medical aspects of exercise",
-        "HERS 460::nutrition for the physically active",
-        "HERS 468::pathophysiology for the health professions",
-        "BIOL 211::anatomy and physiology i",
-        "BIOL 212::anatomy and physiology ii",
-        "STAT 110::fundamentals of statistics",
-        "STAT 210::statistics",
-        "BIOL 241::basics of life",
-        "CHEM 212::principles of chemistry i",
-        "PHYS 201::general physics i",
-        "PSY 210::introduction to psychological science",
-        "PSY 250::developmental psychology",
-        "SOC 150::introduction to sociology"
+        "HERS 571::clinical examination and diagnosis i",
+        "HERS 572::clinical examination and diagnosis ii",
+        "HERS 685::evidence based practice & research design",
+        "HERS 568::pathophysiology"
       ],
       "missingTexts": [
         "header:admission criteria",
@@ -6885,17 +6747,14 @@
         "winona state university has a long-standing tradition of graduates who become certified athletic trainers and make positive contributions to the allied health profession of athletic training. while some wsu graduates have secured positions with professional, semi-professional, and olympic teams, others have obtained positions as university head athletic trainers, clinic directors, physician clinics, industrial/corporate athletic trainers, military athletic trainers and high school athletic trainers"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:core requirements",
-        "header:movement science courses",
-        "medical terminology (1 credit)",
-        "header:athletic training focus",
-        "header:master of science in athletic training (msat) courses"
+        "header:master of science in athletic training (msat)",
+        "header:year one - summer",
+        "header:year one - fall",
+        "header:year one - spring"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -6957,15 +6816,16 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/adult-gerontology-acute-care-nurse-practitioner-dnp/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4348",
-      "localCourseCount": 10,
+      "localCourseCount": 7,
       "remoteCourseCount": 22,
-      "localTextCount": 2,
+      "localTextCount": 4,
       "remoteTextCount": 27,
       "missingCourses": [
         "STAT 601::statistical methods for health care research",
         "NURS 604::health policy and quality health care delivery",
         "NURS 606::nursing information management & decision making",
         "NURS 608::organizational and systems leadership",
+        "NURS 612::advanced health promotion",
         "NURS 613::advanced health promotion clinical",
         "NURS 703::epidemiological approaches to population health",
         "NURS 708::professionalism in advanced nursing roles",
@@ -6973,15 +6833,23 @@
         "NURS 780::dnp project i - clinical",
         "NURS 781::dnp project ii - clinical",
         "NURS 782::dnp project iii - clinical",
+        "NURS 617::advanced clinical pharmacology",
+        "NURS 618::advanced pathophysiology",
+        "NURS 619::advanced health assessment",
         "NURS 673::advanced diagnostics and therapeutics for adult-gerontology acute care nps (2 credits effective 5/8/2026) credit reduction to 2 credits starting summer 2026",
+        "NURS 674::acute care of adults i seminar",
         "NURS 675::acute care of adults clinical i 6 credits set to start fall 2027",
-        "NURS 677::acute care of adults clinical ii 6 credits set to start spring 2028",
-        "NURS 709::advanced diagnostics and therapeutics for adult-gerontology acute care nps clinical"
+        "NURS 676::acute care adults seminar ii",
+        "NURS 677::acute care of adults clinical ii 6 credits set to start spring 2028"
       ],
       "extraCourses": [
-        "NURS 673::advanced diagnostics and therapeutics for adult-gerontology acute care nps",
-        "NURS 675::acute care of adults clinical i",
-        "NURS 677::acute care of adults clinical ii"
+        "STAT 701::applied biostatistics",
+        "NURS 701::dnp role & leadership",
+        "NURS 703::ebp for advanced nursing",
+        "NURS 7XX::acute care management i",
+        "NURS 7YY::acute care management ii",
+        "NURS 790::dnp project seminar",
+        "NURS 792::dnp project clinical"
       ],
       "missingTexts": [
         "header:description of program (dnp)",
@@ -6998,12 +6866,14 @@
         "bs to dnp elective (2 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses"
+        "header:adult-gerontology acute care nurse practitioner (dnp)",
+        "header:dnp science core",
+        "header:agacnp specialty focus"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
+        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -7151,9 +7021,9 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/health-healthcare-leadership/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4162",
-      "localCourseCount": 16,
+      "localCourseCount": 4,
       "remoteCourseCount": 12,
-      "localTextCount": 4,
+      "localTextCount": 2,
       "remoteTextCount": 17,
       "missingCourses": [
         "HLA 510::mindful leadership",
@@ -7165,27 +7035,11 @@
         "HLA 658::research and writing for healthcare leaders",
         "HLA 660::health/healthcare leadership capstone",
         "HLA 514::healthcare policy and quality for healthcare leaders (hla 414)",
-        "HLA 552::financial resource management in healthcare (hla 452)",
-        "HLA 645::population health applications for leaders",
-        "HLA 650::enterprise risk management"
+        "HLA 552::financial resource management in healthcare (hla 452)"
       ],
       "extraCourses": [
-        "HADM 317::management of human resources in healthcare",
-        "HADM 441::healthcare law and ethics",
-        "HLA 443::leadership and team development in healthcare",
-        "HLA 444::introduction to change leadership in healthcare",
-        "HLA 449::appreciative coaching in healthcare",
-        "HLA 301::statistical thinking for healthcare",
-        "HLA 300::foundations for health professionals",
-        "HLA 311::data science applications in healthcare",
-        "HLA 325::diversity, equity, and inclusion for healthcare leaders",
-        "HLA 366::professional communication skills for health care leaders",
-        "HLA 406::healthcare information management",
-        "HLA 414::health care policy/quality healthcare delivery",
-        "HLA 435::quality improvement in healthcare",
-        "HLA 451::managing projects in healthcare",
-        "HLA 452::financial resource management in healthcare",
-        "HLA 490::healthcare professional development"
+        "HLA 514::healthcare policy and quality",
+        "HLA 552::financial resource management in healthcare"
       ],
       "missingTexts": [
         "header:program admission requirements",
@@ -7202,14 +7056,12 @@
         "students must apply to the school of graduate studies and complete the mhl program survey. eligible students will interview with program faculty. details available on the mhl website"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:hla interdisciplinary core",
-        "header:healthcare leadership & administration courses"
+        "header:healthcare leadership (ms)",
+        "includes clinical analytics, data-driven leadership, and evidence-based practice cores"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -7220,9 +7072,9 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/healthcare-leadership-administration/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4725",
-      "localCourseCount": 0,
+      "localCourseCount": 10,
       "remoteCourseCount": 16,
-      "localTextCount": 1,
+      "localTextCount": 2,
       "remoteTextCount": 9,
       "missingCourses": [
         "HADM 317::management of human resources in healthcare",
@@ -7230,19 +7082,14 @@
         "HLA 443::leadership and team development in healthcare",
         "HLA 444::introduction to change leadership in healthcare or hla 544 (see graduate catalog)",
         "HLA 449::appreciative coaching in healthcare",
-        "HLA 301::statistical thinking for healthcare",
-        "HLA 300::foundations for health professionals",
-        "HLA 311::data science applications in healthcare",
-        "HLA 325::diversity, equity, and inclusion for healthcare leaders",
-        "HLA 366::professional communication skills for health care leaders",
-        "HLA 406::healthcare information management",
         "HLA 414::health care policy/quality healthcare delivery or hla 514 (see graduate catalog)",
-        "HLA 435::quality improvement in healthcare",
-        "HLA 451::managing projects in healthcare",
         "HLA 452::financial resource management in healthcare or hla 552 (see graduate catalog)",
         "HLA 490::healthcare professional development"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "HLA 414::health care policy/quality healthcare delivery",
+        "HLA 490::healthcare professional development/capstone"
+      ],
       "missingTexts": [
         "header:hla interdisciplinary core (15 credits)",
         "header:business administration & management (5 credits)",
@@ -7255,11 +7102,11 @@
         "the program director will provide a list of approved elective options on a semester-by-semester basis"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:healthcare leadership & administration (bas)",
+        "complete 6 credits of approved 300/400-level hla electives"
       ],
       "localIssues": [],
       "severity": [
-        "widget missing all catalog courses",
         "many catalog courses missing from widget",
         "many catalog instructions missing from widget"
       ]
@@ -7271,35 +7118,34 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/movement-science/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/3462",
-      "localCourseCount": 30,
+      "localCourseCount": 5,
       "remoteCourseCount": 70,
-      "localTextCount": 9,
+      "localTextCount": 5,
       "remoteTextCount": 46,
       "missingCourses": [
         "::✽ hers 205 - nutrition for lifetime wellness",
+        "HERS 291::prevention and care of athletic injuries",
+        "HERS 370::mechanical kinesiology",
+        "HERS 380::laboratory methods in exercise science",
+        "HERS 445::medical aspects of exercise",
+        "HERS 460::nutrition for the physically active",
+        "HERS 468::pathophysiology for the health professions",
+        "BIOL 212::anatomy and physiology ii",
+        "STAT 110::fundamentals of statistics",
+        "STAT 210::statistics",
         "ENG 111::college reading and writing",
-        "HERS 364::practicum in movement science (1 credit required)",
-        "HERS 390::movement science research design",
-        "HERS 402::advanced fitness programming",
-        "HERS 412::movement science research data collection",
-        "HERS 464::winona survivors unite in exercise",
-        "PSY 420::abnormal psychology",
-        "MATH 120::precalculus",
-        "CMST 451::topics in communication studies",
-        "BIOL 307::cell biology laboratory and",
-        "BIOL 308::cell biology",
-        "PSY 303::introduction to neuroscience",
-        "BIOL 307::cell biology laboratory",
-        "BIOL 309::developmental biology",
-        "BIOL 310::genetics",
-        "BIOL 311::genetics laboratory",
-        "BIOL 319::vertebrate biology",
-        "BIOL 327::developmental biology laboratory",
-        "BIOL 409::general microbiology"
+        "PSY 210::introduction to psychological science",
+        "BIOL 241::basics of life",
+        "CHEM 212::principles of chemistry i",
+        "PHYS 201::general physics i",
+        "PSY 250::developmental psychology",
+        "SOC 150::introduction to sociology",
+        "BIOL 171::medical terminology a",
+        "BIOL 172::medical terminology b",
+        "HERS 364::practicum in movement science (1 credit required)"
       ],
       "extraCourses": [
-        "HERS 205::nutrition for lifetime wellness",
-        "HERS 204::personal & community health"
+        "CHEM 210::general chemistry i"
       ],
       "missingTexts": [
         "header:exercise and rehabilitative sciences",
@@ -7316,11 +7162,10 @@
         "hers 560 may count as hers 460 for students accepted into msat and pams programs"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:core requirements",
-        "header:movement science courses",
-        "medical terminology (1 credits)",
-        "header:master of science in athletic training (msat) courses"
+        "header:movement science (bs)",
+        "header:biology/science core (24 cr)",
+        "header:hers core (41 cr)",
+        "substantial hands-on practicum with community exercise programs required"
       ],
       "localIssues": [],
       "severity": [
@@ -7335,9 +7180,9 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/nurse-educator-dnp/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4762",
-      "localCourseCount": 4,
+      "localCourseCount": 9,
       "remoteCourseCount": 23,
-      "localTextCount": 2,
+      "localTextCount": 4,
       "remoteTextCount": 25,
       "missingCourses": [
         "STAT 601::statistical methods for health care research",
@@ -7357,10 +7202,21 @@
         "NURS 619::advanced health assessment",
         "NURS 651::strategic project management",
         "NURS 663::interprofessional leadership in community and population health practicum",
-        "NURS 707::simulation for nursing education",
-        "NURS 751::nurse educator dnp direct care clinical"
+        "NURS 669::nursing education: theory and research",
+        "NURS 670::nursing education curriculum & program design",
+        "NURS 671::nursing education: instruction and evaluation"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "STAT 701::applied biostatistics",
+        "NURS 701::dnp role & leadership",
+        "NURS 703::ebp for advanced nursing",
+        "NURS 705::policy and population health",
+        "NURS 770::simulation for nursing education",
+        "NURS 772::advanced instruction & evaluation",
+        "NURS 774::dnp nurse educator practicum",
+        "NURS 790::dnp project seminar",
+        "NURS 792::dnp project clinical"
+      ],
       "missingTexts": [
         "header:description of program (dnp)",
         "graduates of the dnp programs are prepared for a variety of advanced nursing roles such as nurse leaders, nurse practitioners, nurse educators, and clinical nurse specialists. graduates of the dnp program are prepared for the highest level of clinical nursing practice",
@@ -7376,12 +7232,14 @@
         "header:(bs to dnp) electives (6 credits)"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses"
+        "header:nurse educator (dnp)",
+        "header:post-baccalaureate (bs-to-dnp) core",
+        "header:nurse educator specialty"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
+        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -7427,25 +7285,33 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/nurse-educator-masters/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4361",
-      "localCourseCount": 4,
+      "localCourseCount": 15,
       "remoteCourseCount": 16,
-      "localTextCount": 2,
+      "localTextCount": 3,
       "remoteTextCount": 8,
       "missingCourses": [
-        "STAT 601::statistical methods for health care research",
-        "NURS 604::health policy and quality health care delivery",
-        "NURS 606::nursing information management & decision making",
-        "NURS 608::organizational and systems leadership",
-        "NURS 612::advanced health promotion",
         "NURS 613::advanced health promotion clinical",
         "NURS 615::scholarly inquiry and innovation in nursing",
         "NURS 708::professionalism in advanced nursing roles",
         "NURS 771::research and evidence-based practice for advanced nursing",
         "NURS 617::advanced clinical pharmacology",
         "NURS 618::advanced pathophysiology",
-        "NURS 619::advanced health assessment"
+        "NURS 619::advanced health assessment",
+        "NURS 670::nursing education curriculum & program design",
+        "NURS 671::nursing education: instruction and evaluation",
+        "NURS 672::nursing education: instruction and evaluation practicum/clinical"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "NURS 600::scientific and ethical foundations",
+        "NURS 614::evidence-based practice",
+        "NURS 615::scholarly inquiry paper/thesis",
+        "NURS 640::advanced health assessment",
+        "NURS 642::advanced pathophysiology",
+        "NURS 644::advanced clinical pharmacology",
+        "NURS 670::curriculum & program design",
+        "NURS 671::instruction and evaluation",
+        "NURS 672::nurse educator practicum"
+      ],
       "missingTexts": [
         "header:nursing program description",
         "graduates of the ms programs are prepared for a variety of advanced nursing roles (e.g. nurse educators andnurse leaders). these graduates also have the foundation for continued graduate studies (i.e. dnp or phd). nursing science core courses, taken by all graduate students, build on students’ baccalaureate nursing knowledge to integrate scientific underpinnings for practice, understand nursing information management and decision making, and advocate for health promotion. students develop evidence-based knowledge and skills to enhance the quality and safety of health care while demonstrating leadership and professionalism. courses within the selected programs of adult-gerontology acute care nurse practitioner, adult-gerontology clinical nurse specialist, adult-gerontology primary care nurse practitioner, family nurse practitioner, nurse educator, or nursing leadership provide specialized knowledge and practice opportunities in each advanced nursing role. a unique feature of this program is the targeted emphasis on the nurse’s use of advanced knowledge and skills of health promotion with individuals and families in diverse populations to address health care needs within complex environments",
@@ -7457,12 +7323,14 @@
         "1 clinical credit = 60 hours of contact time"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:required courses"
+        "header:nurse educator (ms)",
+        "header:nursing science core",
+        "header:nurse educator concentration"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
+        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -7518,39 +7386,30 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/nutrition-minor/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4146",
-      "localCourseCount": 36,
+      "localCourseCount": 3,
       "remoteCourseCount": 14,
-      "localTextCount": 12,
+      "localTextCount": 2,
       "remoteTextCount": 9,
       "missingCourses": [
         "::✽ hers 205 - nutrition for lifetime wellness",
         "BIOL 211::anatomy and physiology i and",
+        "BIOL 212::anatomy and physiology ii",
         "BIOL 322::human anatomy and",
-        "BIOL 323::general physiology",
+        "BIOL 323::��- general physiology",
+        "CHEM 210::general, organic, and biochemistry",
+        "CHEM 212::principles of chemistry i",
         "HERS 340::physiology of exercise",
-        "HERS 460::nutrition for the physically active or hers 560"
+        "HERS 327::global food and nutrition",
+        "HERS 330::lifespan nutrition",
+        "HERS 352::community nutrition",
+        "HERS 384::advanced nutrition",
+        "HERS 460::nutrition for the physically active or hers 560",
+        "HERS 470::contemporary topics in human nutrition"
       ],
       "extraCourses": [
-        "HERS 204::personal & community health",
-        "HERS 316::introduction to public health",
-        "HERS 317::introduction to environmental health",
-        "HERS 318::global health",
-        "HERS 319::health administration and management",
-        "HERS 328::behavioral interventions",
-        "HERS 350::program planning in health promotion",
-        "HERS 395::practicum in public health",
-        "HERS 403::epidemiology",
-        "HERS 415::grant writing",
-        "HERS 433::senior health seminar",
-        "HERS 496::internship in public health",
-        "HERS 250::mental health and society - adult",
-        "HERS 252::mental health and society - youth",
-        "PESS 214::first aid and cpr",
-        "PESS 314::cpr/aed & first aid instructor",
-        "BIOL 211::anatomy and physiology i",
-        "BIOL 116::human biology laboratory",
-        "BIOL 117::human biology",
-        "CHEM 107::chemistry in our world with lab"
+        "HERS 205::nutrition for lifetime wellness",
+        "HERS 355::community nutrition",
+        "HERS 460::nutrition for the physically active"
       ],
       "missingTexts": [
         "header:core courses (11 credits)",
@@ -7562,17 +7421,12 @@
         "wsu policy requires a minor contain at least one course unique to the minor and not used in major or additional requirements. see degree audit for details"
       ],
       "extraTexts": [
-        "header:program requirements",
-        "header:public health core",
-        "header:physical education & sport science",
-        "header:biology/chemistry",
-        "header:communication studies",
-        "header:nutrition emphasis"
+        "header:nutrition minor",
+        "select 12 additional credits from approved hers nutrition electives"
       ],
       "localIssues": [],
       "severity": [
         "many catalog courses missing from widget",
-        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -7583,9 +7437,9 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/performance-analytics/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4818",
-      "localCourseCount": 0,
+      "localCourseCount": 8,
       "remoteCourseCount": 14,
-      "localTextCount": 1,
+      "localTextCount": 4,
       "remoteTextCount": 2,
       "missingCourses": [
         "HERS 536::performance analytics practicum",
@@ -7603,18 +7457,30 @@
         "HERS 688::the science of speed, power, and agility development",
         "STAT 601::statistical methods for health care research"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "HERS 280::foundations of exercise science",
+        "HERS 314::anatomical kinesiology",
+        "HERS 340::physiology of exercise",
+        "HERS 438::measurement & evaluation in performance",
+        "HERS 450::advanced data analytics in sport",
+        "HERS 480::performance technology",
+        "HERS 5XX::graduate performance science i",
+        "HERS 5YY::graduate performance science ii"
+      ],
       "missingTexts": [
         "header:health, exercise and rehabilitative sciences (34 credits)",
         "header:statistics (3 credits)"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:performance analytics in sport science (3+2 focus)",
+        "header:sport science core (41 cr)",
+        "header:performance analytics specialty (18 cr)",
+        "header:graduate integration courses (9 cr)"
       ],
       "localIssues": [],
       "severity": [
-        "widget missing all catalog courses",
-        "many catalog courses missing from widget"
+        "many catalog courses missing from widget",
+        "many widget courses not found in catalog"
       ]
     },
     {
@@ -8206,33 +8072,35 @@
       "credential_level": "Undergraduate",
       "program_page_url": "https://www.winona.edu/academics/programs/strength-conditioning/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4315",
-      "localCourseCount": 0,
+      "localCourseCount": 21,
       "remoteCourseCount": 28,
-      "localTextCount": 1,
+      "localTextCount": 4,
       "remoteTextCount": 24,
       "missingCourses": [
         "::✽ hers 205 - nutrition for lifetime wellness",
-        "HERS 280::foundations of exercise science",
-        "HERS 291::prevention and care of athletic injuries",
-        "HERS 314::anatomical kinesiology",
-        "HERS 340::physiology of exercise",
-        "HERS 370::mechanical kinesiology",
-        "HERS 380::laboratory methods in exercise science",
-        "HERS 445::medical aspects of exercise",
-        "HERS 460::nutrition for the physically active",
-        "BIOL 211::anatomy and physiology i",
-        "BIOL 212::anatomy and physiology ii",
         "STAT 110::fundamentals of statistics",
         "STAT 210::statistics",
         "::✽ hers 204 - personal & community health",
-        "HERS 328::behavioral interventions",
         "HERS 362::practicum in strength and conditioning (2 credits total = 2x @ 1 credit/term)",
         "HERS 389::strength and conditioning principles and programming",
-        "HERS 402::advanced fitness programming",
-        "HERS 488::the science of speed, power, and agility development",
-        "NURS 361::pharmacology for non-nursing majors"
+        "NURS 361::pharmacology for non-nursing majors",
+        "PSY 210::introduction to psychological science",
+        "HERS 495::internship in strength and conditioning (min. 8 credits required)",
+        "HERS 495::internship in strength and conditioning (min. 6 credits required)",
+        "HERS 580::exercise physiology for performance analytics",
+        "HERS 581::performance analytics in biomechanics",
+        "HERS 582::innovation and new technologies in human performance",
+        "HERS 583::advanced programming for peak performance"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "HERS 205::nutrition for lifetime wellness",
+        "HERS 468::pathophysiology for the health professions",
+        "HERS 204::personal & community health",
+        "HERS 362::practicum in strength and conditioning",
+        "HERS 389::s&c principles and programming",
+        "HERS 350::program planning in health promotion",
+        "HERS 495::internship in strength and conditioning"
+      ],
       "missingTexts": [
         "header:exercise and rehabilitative sciences",
         "clinical exercise science",
@@ -8248,12 +8116,15 @@
         "hers 560 may count as hers 460 for students accepted into msat and pams programs"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:strength and conditioning (bs)",
+        "header:exercise science foundations (41 cr)",
+        "header:major core (18 cr)",
+        "header:focus area / internship (12 cr)"
       ],
       "localIssues": [],
       "severity": [
-        "widget missing all catalog courses",
         "many catalog courses missing from widget",
+        "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
     },
@@ -8638,7 +8509,7 @@
         "CHEM 444::molecular basis of disease",
         "HERS 370::mechanical kinesiology",
         "PSY 433::neuroscience",
-        "STAT 305::��- biometry"
+        "STAT 305::biometry"
       ],
       "extraCourses": [
         "CHEM 210::general, organic, and biochemistry",
@@ -8680,7 +8551,7 @@
       "remoteTextCount": 12,
       "missingCourses": [
         "CHEM 340::organic chemistry survey",
-        "CHEM 350::��principles of organic chemistry i and",
+        "CHEM 350::principles of organic chemistry i and",
         "CHEM 351::principles of organic chemistry ii (counts toward elective credit)",
         "PHYS 201::general physics i and",
         "PHYS 202::general physics ii",
@@ -8808,12 +8679,14 @@
       "localTextCount": 8,
       "remoteTextCount": 14,
       "missingCourses": [
+        "CHEM 475::��- seminar in chemistry",
         "CHEM 451::advanced inorganic chemistry ii",
         "CHEM 460::chemistry research proposal",
         "CHEM 430::individual projects in chemistry",
         "CHEM 461::chemistry research"
       ],
       "extraCourses": [
+        "CHEM 475::seminar in chemistry",
         "CHEM 407::biochemistry ii",
         "CHEM 408::biochemistry laboratory ii",
         "BIOL 241::basics of life",
@@ -8850,6 +8723,7 @@
       ],
       "localIssues": [],
       "severity": [
+        "many catalog courses missing from widget",
         "many widget courses not found in catalog",
         "many catalog instructions missing from widget"
       ]
@@ -9914,7 +9788,7 @@
       "credential_level": "Graduate",
       "program_page_url": "https://www.winona.edu/academics/programs/pre-physician-assistant-certificate/",
       "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4305",
-      "localCourseCount": 0,
+      "localCourseCount": 4,
       "remoteCourseCount": 19,
       "localTextCount": 1,
       "remoteTextCount": 9,
@@ -9928,7 +9802,6 @@
         "CHEM 340::organic chemistry survey",
         "CHEM 375::clinical biochemistry",
         "PSY 210::introduction to psychological science",
-        "BIOL 211::anatomy and physiology i",
         "BIOL 322::human anatomy",
         "BIOL 209::microbiology",
         "BIOL 409::general microbiology",
@@ -9939,7 +9812,11 @@
         "BIOL 330::biomedical ethics",
         "PHIL 330::biomedical ethics"
       ],
-      "extraCourses": [],
+      "extraCourses": [
+        "BIOL 212::anatomy and physiology ii",
+        "CHEM 210::general chemistry i",
+        "CHEM 340::organic chemistry i"
+      ],
       "missingTexts": [
         "header:admission requirements",
         "maintenance of a 3.5 gpa strongly recommended",
@@ -9948,11 +9825,10 @@
         "header:recommended courses"
       ],
       "extraTexts": [
-        "header:program requirements"
+        "header:pre-physician assistant (gc)"
       ],
       "localIssues": [],
       "severity": [
-        "widget missing all catalog courses",
         "many catalog courses missing from widget",
         "many catalog instructions missing from widget"
       ]
@@ -10080,10 +9956,12 @@
       "localTextCount": 3,
       "remoteTextCount": 2,
       "missingCourses": [
+        "CE 621::��- research design",
         "CE 680::counseling practicum (/100 clock hours)",
         "CE 690::internship (1, 2, 3 or /600 clock hours)"
       ],
       "extraCourses": [
+        "CE 621::research design",
         "CE 680::counseling practicum",
         "CE 690::internship"
       ],
@@ -10174,6 +10052,36 @@
       "severity": []
     },
     {
+      "program_id": "sport-leadership-gc",
+      "program_name": "Sports Leadership (GC)",
+      "degree_type": "GC",
+      "credential_level": "Graduate",
+      "program_page_url": "https://www.winona.edu/academics/programs/sport-management/",
+      "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/4338",
+      "localCourseCount": 6,
+      "remoteCourseCount": 6,
+      "localTextCount": 1,
+      "remoteTextCount": 1,
+      "missingCourses": [
+        "PESS 626::planning of facilities in physical education or sport",
+        "PESS 633::administrative problems in physical education or sport",
+        "PESS 660::sport leadership theory, research, and practice"
+      ],
+      "extraCourses": [
+        "PESS 626::planning of facilities in physical education/sport",
+        "PESS 633::administrative problems in physical education/sport",
+        "PESS 645::sport sales management"
+      ],
+      "missingTexts": [
+        "header:required courses (18 credits)"
+      ],
+      "extraTexts": [
+        "header:sport leadership (gc)"
+      ],
+      "localIssues": [],
+      "severity": []
+    },
+    {
       "program_id": "nursing-rn-to-bs",
       "program_name": "Nursing RN-to-BS",
       "degree_type": "BS",
@@ -10228,40 +10136,6 @@
       "missingTexts": [],
       "extraTexts": [
         "header:program requirements"
-      ],
-      "localIssues": [],
-      "severity": []
-    },
-    {
-      "program_id": "computer-science",
-      "program_name": "Computer Science",
-      "degree_type": "BS",
-      "credential_level": "Undergraduate",
-      "program_page_url": "https://www.winona.edu/academics/programs/computer-science/",
-      "resolved_catalog_url": "https://w3.winona.edu/DataServices/WSUCatalog/3450",
-      "localCourseCount": 42,
-      "remoteCourseCount": 41,
-      "localTextCount": 7,
-      "remoteTextCount": 3,
-      "missingCourses": [
-        "MATH 212::calculus i",
-        "CS 491::practicum in computer science (only 3 credits applied to major)"
-      ],
-      "extraCourses": [
-        "BIOL 242::organismal diversity",
-        "CHEM 213::principles of chemistry ii",
-        "CS 491::practicum in computer science"
-      ],
-      "missingTexts": [
-        "header:computer science core (38 credits)",
-        "header:required courses (13 credits)",
-        "header:electives (18 credits)"
-      ],
-      "extraTexts": [
-        "header:program requirements",
-        "header:computer science core",
-        "header:science requirements",
-        "header:computer science courses"
       ],
       "localIssues": [],
       "severity": []
