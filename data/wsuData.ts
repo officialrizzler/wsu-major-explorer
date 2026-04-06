@@ -866,52 +866,52 @@ export const clubs: Club[] = [
 
 export const dataSources: DataSource[] = [
     {
-        source_id: 'WSU_COURSE_CATALOG_2024_2025',
+        source_id: 'WSU_COURSE_CATALOG_2025_2026',
         source_name: 'WSU Course Catalog',
-        source_year: '2024-2025',
-        source_notes: 'The official academic catalog containing degree requirements, course descriptions, and program structures. This is the primary source for the "Course Requirements" and "Program Overview" sections.',
+        source_year: '2025-2026',
+        source_notes: 'Primary source for official program requirements, course descriptions, and degree structures. This site reformats those requirements for readability but always follows the catalog.',
         source_url: 'https://catalog.winona.edu/'
     },
     {
         source_id: 'WINONA_EDU',
         source_name: 'Winona.edu',
-        source_year: '2024-2025',
-        source_notes: 'Official Winona State University website. Institutional data including enrollment figures, degrees awarded (Fall 2022–Summer 2023), retention rate (76.8%), six-year graduation rate (60.9%), financial aid statistics, average institutional award, loan default rate, student-to-faculty ratio, class size distribution, Common Data Set, top employer pipelines, and student organizations.',
+        source_year: '2025-2026 site data',
+        source_notes: 'Official Winona State website used for program landing pages, admissions copy, student life information, and other institutional context.',
         source_url: 'https://www.winona.edu/about/'
     },
     {
         source_id: 'MN_DEED_OES_2024',
         source_name: 'Minnesota DEED Labor Market Data',
-        source_year: '2024-2025',
-        source_notes: 'Career and wage data from the Minnesota Department of Employment and Economic Development (DEED) Occupational Employment & Statistics (OES) program. Career outcomes are mapped to the most relevant Standard Occupational Classification (SOC) code. Note: This data is for the state of Minnesota, reflects median wages (not starting salaries), and the growth rate is a 10-year projection. This is not a guarantee of employment or salary.',
+        source_year: '2025',
+        source_notes: 'Minnesota Department of Employment and Economic Development (DEED) Occupational Employment & Statistics data used for salary medians and 10‑year growth rates in the career outlook section.',
         source_url: 'https://apps.deed.state.mn.us/lmi/oes/'
     },
     {
         source_id: 'RATE_MY_PROFESSOR_2025',
         source_name: 'Rate My Professors',
         source_year: '2025',
-        source_notes: 'Student-submitted reviews and ratings for university faculty. This data provides peer-to-peer perspective on instructional quality and course experience. All RMP data is aggregated from public profiles and represents subjective student opinions.',
+        source_notes: 'Public student ratings used to display basic teaching feedback (average rating, number of reviews, “would take again”) for selected faculty.',
         source_url: 'https://www.ratemyprofessors.com/school/1214'
     },
     {
         source_id: 'WSU_BUDGET_FORUM_FY2026',
         source_name: 'WSU Budget Forum Presentation',
         source_year: 'FY2026 (Nov. 2025)',
-        source_notes: 'Official university budget presentation for FY2026 covering full-year equivalent enrollment, new freshman enrollment trends, tuition comparisons across the Minnesota State university system, and financial planning data.',
+        source_notes: 'University budget and enrollment presentation used for high‑level context on enrollment trends, finances, and system comparisons.',
         source_url: 'https://www.winona.edu/about/leadership/university-finances/annual-budget/'
     },
     {
         source_id: 'NSSE_SNAPSHOT_2021',
         source_name: 'NSSE Snapshot 2021',
         source_year: '2021',
-        source_notes: 'National Survey of Student Engagement (NSSE) institutional snapshot for Winona State University. Covers student-reported measures of higher-order thinking, collaborative learning, effective writing, and overall engagement compared to peer institutions.',
+        source_notes: 'National Survey of Student Engagement (NSSE) snapshot used for student engagement benchmarks (e.g., collaborative learning, higher‑order thinking) against peer institutions.',
         source_url: 'https://www.winona.edu/assessment/nsse.asp'
     },
     {
         source_id: 'IPEDS_COLLEGE_NAVIGATOR_2024',
         source_name: 'National Center for Education Statistics (IPEDS)',
-        source_year: '2023-2024',
-        source_notes: 'Detailed institutional expense data from the College Navigator, including in-state tuition, fees, books, supplies, and on-campus living expenses. This source provides the basis for the estimated total cost of $23,962 and the average net price of $18,289.',
+        source_year: '2024-2025',
+        source_notes: 'IPEDS College Navigator profile used for tuition, fees, and estimated cost of attendance figures referenced in cost‑of‑attendance context.',
         source_url: 'https://nces.ed.gov/collegenavigator/?q=winona+state+university&s=all&id=175272#expenses'
     }
 ];

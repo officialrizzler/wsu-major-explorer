@@ -26,12 +26,9 @@ const ProfessorWidget: React.FC<ProfessorWidgetProps> = ({ departmentId, profess
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                    <Star className="text-blue-500 fill-blue-500/20" size={16} />
-                    <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">
-                        Related Faculty
-                    </h3>
-                </div>
+                <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest">
+                    Related Faculty
+                </h3>
                 <div className="flex gap-1.5">
                     <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-bold uppercase tracking-tighter">Winona.edu</span>
                     <span className="text-[8px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-bold uppercase tracking-tighter">RateMyProfessor</span>

@@ -80,6 +80,39 @@ const SnapshotRow: React.FC<{ label: string, value: string | number, trend?: 'Up
     </div>
 );
 
+const formatFitReason = (raw: string, negative = false) => {
+    const cleaned = (raw || '').trim().replace(/\s+/g, ' ');
+    if (!cleaned) return '';
+
+    const lower = cleaned.toLowerCase();
+
+    const directRewrites: Record<string, string> = {
+        'ambiguous social structures': 'You prefer clearly defined structures and expectations.',
+        'ambiguous open-ended creative work': 'You prefer projects with clear goals and expectations.',
+        'corporate finance': 'You like working with corporate finance and business decisions.',
+        'public relations': 'You enjoy communication, messaging, and public relations work.',
+        'marketing-heavy roles': 'You enjoy marketing, branding, and promotional work.',
+        'extreme solitude': 'You prefer highly independent work with limited collaboration.'
+    };
+    if (directRewrites[lower]) return directRewrites[lower];
+
+    // If it already starts like a sentence, just finish it.
+    if (/^(you|your|students who)\b/i.test(cleaned)) {
+        const sentence = /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
+        return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+    }
+
+    // Generic wrapping for fragments.
+    const phrase = cleaned.toLowerCase();
+    if (negative) {
+        const base = `You would rather avoid ${phrase}`;
+        return /[.!?]$/.test(base) ? base : `${base}.`;
+    } else {
+        const base = `You’re interested in ${phrase}`;
+        return /[.!?]$/.test(base) ? base : `${base}.`;
+    }
+};
+
 const ProgramDetailPage: React.FC = () => {
     const { programId } = useParams<{ programId: string }>();
     const { getProgramById, departments } = useData();
@@ -196,15 +229,15 @@ const ProgramDetailPage: React.FC = () => {
                     <div className="lg:col-span-2 space-y-6">
 
                         {program.you_might_like && program.you_might_like.length > 0 && (
-                            <Widget title="Is This Major Right For You?">
+                            <Widget title="Program Fit">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Why this is a great fit for you</h3>
+                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Why you might like this</h3>
                                         <ul className="space-y-3 font-body">
                                             {program.you_might_like?.map(item => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
-                                                    {item}
+                                                    {formatFitReason(item, false)}
                                                 </li>
                                             ))}
                                         </ul>
@@ -215,7 +248,7 @@ const ProgramDetailPage: React.FC = () => {
                                             {program.not_for_you?.map(item => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
-                                                    {item}
+                                                    {formatFitReason(item, true)}
                                                 </li>
                                             ))}
                                         </ul>
@@ -227,7 +260,7 @@ const ProgramDetailPage: React.FC = () => {
                         { }
                         {program.course_structure && (
                             <Widget 
-                                title="Course Requirements" 
+                                title="Courses You'll Take" 
                                 icon={<BookOpen size={24} className="text-purple-600" />} 
                                 defaultOpen={false}
                                 badges={
