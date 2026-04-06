@@ -1,17 +1,17 @@
 # Course Requirements Audit
 
-Generated: 2026-04-04T06:39:02.050Z
+Generated: 2026-04-06T18:39:30.362Z
 
 ## Summary
 
 - Site programs: 237
 - Programs with widget source data: 237
-- Authoritative catalog entries scanned: 268
+- Authoritative catalog entries scanned: 264
 - Site programs missing widgets: 0
 - Site programs unresolved to a catalog entry: 86
-- Site programs resolving outside the authoritative index pages: 150
-- Catalog entries missing from the site: 268
-- Programs flagged for likely widget/content issues: 134
+- Site programs resolving outside the authoritative index pages: 151
+- Catalog entries missing from the site: 264
+- Programs flagged for likely widget/content issues: 23
 
 ## Year Badge
 
@@ -121,118 +121,90 @@ Generated: 2026-04-04T06:39:02.050Z
 - Principal (K-12) Specialist [principle-k12-12-specialist] -> https://w3.winona.edu/DataServices/WSUCatalog/4364
 - Reading Instruction Minor [reading-instruction-minor] -> https://w3.winona.edu/DataServices/WSUCatalog/2882
 - School Counseling (MS) [school-counseling-ms] -> https://w3.winona.edu/DataServices/WSUCatalog/4347
+- Special Education Minor [special-education-minor] -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6449&returnto=4964
 - Sport Leadership [sport-leadership] -> https://w3.winona.edu/DataServices/WSUCatalog/4530
 - Sport Leadership (MS) [sport-management-ms] -> https://w3.winona.edu/DataServices/WSUCatalog/4355
 - Sports Leadership (GC) [sport-leadership-gc] -> https://w3.winona.edu/DataServices/WSUCatalog/4338
 - Superintendent (K-12) Licensure (GC) [superintendent-k-12-licensure] -> https://w3.winona.edu/DataServices/WSUCatalog/4363
 - Superintendent (K-12) Specialist [superintendent-k-12-specialist] -> https://w3.winona.edu/DataServices/WSUCatalog/4325
-- Training and Development (GC) [training-and-development-gc] -> https://w3.winona.edu/DataServices/WSUCatalog/4326
-- ...and 100 more
+- ...and 101 more
 
 ## Catalog Entries Missing From Site
 
-- Healthcare Leadership & Administration (HLA) - BAS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6453&returnto=4964
-- Healthcare Leadership & Administration: Health & Wellness Management (HWM) - BAS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6315&returnto=4964
-- Individualized Studies (INDP) - BAS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6451&returnto=4964
-- Pre-MS Healthcare Leadership (Undergraduate to Graduate Program) (PMHL) -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6282&returnto=4964
-- Art - Graphic Design (ARTG) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6128&returnto=4964
-- Art - I-Design (ARTD) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6295&returnto=4964
-- Art - Studio Art (ARTS) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6130&returnto=4964
-- Communication Studies - Applied Communication (CSG) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6167&returnto=4964
-- Communication Studies - Leadership and Advocacy (CSL) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6265&returnto=4964
-- Communication Studies - Organizational & Corporate Communication (CSO) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6264&returnto=4964
-- Economics (ECON) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6180&returnto=4964
-- English - Applied and Professional Writing (EAPW) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6312&returnto=4964
-- English - Applied Linguistics (ENGA) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6184&returnto=4964
-- English - Literature and Language (ENGL) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6182&returnto=4964
-- English - Writing (ENGW) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6183&returnto=4964
-- Film Studies (FILM) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6300&returnto=4964
-- Geoscience - Geoscience (GSCE) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6199&returnto=4964
-- Global Studies (GLBS) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6317&returnto=4964
-- History (HIST) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6206&returnto=4964
-- Individualized Studies: Option A (INDM) - BA Major (Rochester & Winona) -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6322&returnto=4964
-- Individualized Studies: Option B (INDS) - BA Major (Rochester & Winona) -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6231&returnto=4964
-- Legal Studies - Law & Society (LAWS) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6316&returnto=4964
-- Mass Communication - Advertising (MCAD) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6229&returnto=4964
-- Mass Communication - Creative Digital Media (MCDM) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6289&returnto=4964
-- Mass Communication - Public Relations (MCPR) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6230&returnto=4964
-- Mass Communication/Strategic Communication 3+2 (MC) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6446&returnto=4964
-- Music - Liberal Arts (MUSL) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6207&returnto=4964
-- Political Science (POLA) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6223&returnto=4964
-- Psychology - Option A (PSYA) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6234&returnto=4964
-- Psychology - Option B (PSYB) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6235&returnto=4964
-- Sociology (SOC) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6251&returnto=4964
-- Spanish (SPAN) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6193&returnto=4964
-- Theatre (THTR) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6169&returnto=4964
-- Music Performance (MUSP) - BMus Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6213&returnto=4964
-- Accounting (ACCT) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6126&returnto=4964
-- Biology - Allied Health (BIAH) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6140&returnto=4964
-- Biology - Cell and Molecular (BICM) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6141&returnto=4964
-- Biology - Ecology (BIEC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6142&returnto=4964
-- Biology - Environmental Science (BIES) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6143&returnto=4964
-- Biology - Radiography (BIRA) - BS Major (WSU/Mayo Clinic) -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6327&returnto=4964
-- Business Administration (BA) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6124&returnto=4964
-- Business Administration (BURC) - BS Major (Rochester) -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6135&returnto=4964
-- Business Administration - Human Resources Management (HRMT) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6145&returnto=4964
-- Business Administration - Management Information Systems (MIS) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6146&returnto=4964
-- Chemistry - ACS Biochemistry (CHBI) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6155&returnto=4964
-- Chemistry - ACS Chemistry (CHEM) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6154&returnto=4964
-- Chemistry - ACS Environmental Chemistry (CHEC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6156&returnto=4964
-- Chemistry - ACS Materials Chemistry (CHMC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6157&returnto=4964
-- Chemistry - General (CHEG) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6158&returnto=4964
-- Composite Materials Engineering (CME) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=33&poid=6170&returnto=4964
-- ...and 218 more
+- Healthcare Leadership & Administration (HLA) - BAS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7061&returnto=6727
+- Individualized Studies (INDP) - BAS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7059&returnto=6727
+- Pre-MS Healthcare Leadership (Undergraduate to Graduate Program) (PMHL) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6997&returnto=6727
+- Art - Graphic Design (ARTG) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6843&returnto=6727
+- Art - I-Design (ARTD) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7010&returnto=6727
+- Art - Studio Art (ARTS) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6845&returnto=6727
+- Communication Studies - Applied Communication (CSG) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6882&returnto=6727
+- Communication Studies - Leadership and Advocacy (CSL) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6980&returnto=6727
+- Communication Studies - Organizational & Corporate Communication (CSO) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6979&returnto=6727
+- Economics (ECON) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6895&returnto=6727
+- English (ENG) BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7157&returnto=6727
+- Film Studies (FILM) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7015&returnto=6727
+- Geoscience - Earth Science (GEEA) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6914&returnto=6727
+- Global Studies (GLBS) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7031&returnto=6727
+- History (HIST) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6921&returnto=6727
+- Individualized Studies: Option A (INDM) - BA Major (Rochester & Winona) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7035&returnto=6727
+- Individualized Studies: Option B (INDS) - BA Major (Rochester & Winona) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6946&returnto=6727
+- Legal Studies - Law & Society (LAWS) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7030&returnto=6727
+- Mass Communication - Advertising (MCAD) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6944&returnto=6727
+- Mass Communication - Creative Digital Media (MCDM) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7004&returnto=6727
+- Mass Communication - Public Relations (MCPR) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6945&returnto=6727
+- Mass Communication/Strategic Communication 3+2 (MC) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7056&returnto=6727
+- Music - Liberal Arts (MUSL) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6922&returnto=6727
+- Political Science (POLA) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6938&returnto=6727
+- Psychology - Option A (PSYA) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6949&returnto=6727
+- Psychology - Option B (PSYB) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6950&returnto=6727
+- Sociology (SOC) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6966&returnto=6727
+- Spanish (SPAN) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6908&returnto=6727
+- Theatre (THTR) - BA Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6884&returnto=6727
+- Music Performance (MUSP) - BMus Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6928&returnto=6727
+- Accounting (ACCT) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6841&returnto=6727
+- Biology - Allied Health (BIAH) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6855&returnto=6727
+- Biology - Cell and Molecular (BICM) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6856&returnto=6727
+- Biology - Ecology (BIEC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6857&returnto=6727
+- Biology - Environmental Science (BIES) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6858&returnto=6727
+- Biology - Radiography (BIRA) - BS Major (WSU/Mayo Clinic) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=7040&returnto=6727
+- Business Administration (BA) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6839&returnto=6727
+- Business Administration (BURC) - BS Major (Rochester) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6850&returnto=6727
+- Business Administration - Human Resources Management (HRMT) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6860&returnto=6727
+- Business Administration - Management Information Systems (MIS) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6861&returnto=6727
+- Chemistry - ACS Biochemistry (CHBI) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6870&returnto=6727
+- Chemistry - ACS Chemistry (CHEM) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6869&returnto=6727
+- Chemistry - ACS Environmental Chemistry (CHEC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6871&returnto=6727
+- Chemistry - ACS Materials Chemistry (CHMC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6872&returnto=6727
+- Chemistry - General (CHEG) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6873&returnto=6727
+- Composite Materials Engineering (CME) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6885&returnto=6727
+- Computer Science - Applied Computer Science (Bioinformatics) (CSRB) - BS Major (Rochester) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6852&returnto=6727
+- Computer Science - Applied Computer Science (Computer Information Systems) (CIRC) - BS Major (Rochester) -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6851&returnto=6727
+- Computer Science - Applied Computer Science (CSAC) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6888&returnto=6727
+- Computer Science - Computer Science (CSCS) - BS Major -> https://catalog.winona.edu/preview_program.php?catoid=38&poid=6886&returnto=6727
+- ...and 214 more
 
 ## Likely Content Mismatches
 
-- Accounting [accounting-bs] (many catalog instructions missing from widget)
-- Accounting Minor [accounting-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- Business Administration [business-administration] (many catalog instructions missing from widget) Missing courses: MIS 300::/400-level course | MATH 110::finite mathematics or higher.
-- Business Administration Minor [business-administration-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- Business Analysis Minor [business-analysis-minor] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ECON 202::principles of macroeconomics - complete both courses. | ACCT 301::data analytics for accountants (acct 212 ) | DSCI 210::data science (math 140 , math 212 , or cs 234 ).
-- Business Law Minor [business-law-minor] (many catalog instructions missing from widget) Missing courses: BUSA 376::topics in business (requires prior written approval from dept. chair).
-- Business Management Minor [business-management-minor] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- Economics [economics] (many catalog instructions missing from widget) Missing courses: ECON 498::seminar in economics i and.
-- Economics Minor [economics-minor] (many catalog instructions missing from widget) Missing courses: ECON 302::intermediate microeconomics | ECON 303::intermediate macroeconomics | ECON 304::money and banking.
-- Finance [finance] (many catalog instructions missing from widget) Missing courses: MATH 110::finite mathematics (b grade or higher) | MATH 112::applied precalculus (b grade or higher) | MATH 115::college algebra (b grade or higher).
-- Finance Minor [finance-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- International Business Minor [international-business-minor] (many catalog instructions missing from widget) Missing courses: ECON 404::international economics or | GS 355::asian international relations | HIST 434::modern russia and the ussr since 1905.
-- Investments Minor [investments-minor] (many catalog instructions missing from widget) Missing courses: ECON 202::principles of macroeconomics (both econ 201 & 202 required) | FIN 399::internship problem (dept. approval required) | FIN 480::independent studies in finance (dept. approval required).
-- Marketing [marketing] (many catalog instructions missing from widget)
-- Marketing Minor [marketing-minor] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- Professional Selling Minor [professional-selling-minor] (many catalog instructions missing from widget)
-- Academic and Behavioral Strategist (BT) [academic-and-behavioral-strategist-bt] (many catalog instructions missing from widget) Missing courses: ::✽ hers 204 - personal & community health | EDFD 401::and 461 must be taken concurrently | EDFD 421::and 441 must be taken concurrently.
-- Adapted Physical Education (Teaching) Minor [adapted-physical-education-minor] (many catalog instructions missing from widget)
-- Adventure Tourism Minor [adventure-tourism-minor] (many catalog instructions missing from widget) Missing courses: ::✽ rttr 239 - outdoor pursuits.
-- Adventure Education Minor [adventure-education-education-minor] (many catalog instructions missing from widget) Missing courses: PESS 310::adventure education teacher education practicum (1 credit required) | ::✽ pess 144 - contemporary activities.
-- Business Education (Teaching) [business-education-teaching] (many catalog instructions missing from widget) Missing courses: ::✽ hers 204 - personal & community health | EDFD 401::and 461 must be taken concurrently | EDFD 421::and 441 must be taken concurrently.
-- Child Advocacy Studies Minor [child-advocacy-studies-minor] (many catalog instructions missing from widget) Missing courses: NURS 443::professional practice iii ( practicum) | NURS 454::immersion in nursing practice: senior capstone ( practicum) | LGLS 381::legal studies topics and issues (family law).
-- Coaching Minor [coaching-minor] (many catalog instructions missing from widget) Missing courses: PESS 300::motor learning and control (waived for pe majors).
-- Developmental Disabilities (Teaching) [developmental-disabilities-teaching] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing (b grade or better required) | CMST 191::introduction to public speaking (b grade or better required) | STAT 110::fundamentals of statistics (recommended).
-- Director of Special Education [director-of-special-education] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: LDRS 614::change leadership | EL 604::curriculum planning, development, and diverse learners | EL 610::school law.
-- Early Childhood Education (Birth-Grade 3) [early-childhood-education-birth-3] (many catalog instructions missing from widget) Missing courses: ::✽ hers 204 - personal & community health | EDFD 400::and 460 must be taken concurrently | EDFD 420::and 440 must be taken concurrently.
-- Early Childhood Elementary Education [early-childhood-elementary-education] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- Education (DNP) [education-doc] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: EDUO 800::academic residency (taken 2 consecutive summers for 3 credits each) | EDUO 801::current trends and issues | EDUO 802::transforming education through technology.
-- Educational Leadership (K-12) [educational-leadership-ms] (many catalog instructions missing from widget) Missing courses: LDRS 699::master’s thesis.
-- Elementary Education (K-6) [elementary-education-k-6-education] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | CMST 192::introduction to effective communication.
-- Human Services Professional (MS) [human-services-professional-ms] (many catalog instructions missing from widget)
-- Mental Health In Schools & Organizations [mental-health-in-schools-and-organizations] (many catalog instructions missing from widget)
-- Organizational Leadership (MS) [organizational-leadership-ms] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: LDRS 614::change leadership | LDRS 615::communication | LDRS 618::research design.
-- Principal (K-12) Licensure (GC) [principle-k12-12-licensure] (many catalog instructions missing from widget)
-- Principal (K-12) Specialist [principle-k12-12-specialist] (many catalog instructions missing from widget) Missing courses: EL 799::specialist degree thesis/field study | EDUO 808::program evaluation.
-- Reading Instruction Minor [reading-instruction-minor] (many catalog instructions missing from widget)
-- School Counseling (MS) [school-counseling-ms] (many catalog instructions missing from widget) Missing courses: CE 680::counseling practicum (/100 clock hours) | CE 690::internship (1, 2, 3 or /600 clock hours) (6 credits required).
-- Special Education Minor [special-education-minor] (many widget courses not found in catalog) Missing courses: SPED 432::assessment/methods for moderate/severe developmental disabilities | SPED 490::seminar/ workshop.
-- Sport Leadership [sport-leadership] (many catalog instructions missing from widget) Missing courses: ::✽ athl 100 - athletics health and wellness | ::✽ pess 134 - downhill skiing | ::✽ pess 144 - contemporary activities.
-- Sport Leadership (MS) [sport-management-ms] (many catalog instructions missing from widget) Missing courses: LDRS 619::leadership capstone experience | LDRS 699::master’s thesis | PESS 626::planning of facilities in physical education or sport.
-- Superintendent (K-12) Licensure (GC) [superintendent-k-12-licensure] (many catalog instructions missing from widget)
-- Superintendent (K-12) Specialist [superintendent-k-12-specialist] (many catalog instructions missing from widget) Missing courses: EL 799::specialist degree thesis/field study | EDUO 808::program evaluation.
-- Training and Development (GC) [training-and-development-gc] (many widget courses not found in catalog) Missing courses: BUED 610::training & leadership relations | BUED 640::training theory and application | BUED 641::training design and workplace wellness.
-- Advertising [advertising] (many catalog instructions missing from widget)
-- Advertising Minor [advertising-minor] (many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: MCOM 300::/400-level.
-- Applied and Professional Writing Minor [applied-and-professional-writing-minor] (many catalog instructions missing from widget)
-- Applied Communication Studies [applied-communication-studies] (many catalog courses missing from widget; many catalog instructions missing from widget) Missing courses: CMST 357::social media, communication, and influence | CMST 380::communication research methods | CMST 485::senior seminar in communication studies.
-- Art (Teaching) [art-teaching] (many catalog courses missing from widget; many widget courses not found in catalog; many catalog instructions missing from widget) Missing courses: ENG 111::college reading and writing | CMST 191::introduction to public speaking | ::✽ hers 204 - personal & community health.
-- Arts Administration Minor [arts-administration-minor] (many catalog instructions missing from widget)
-- Bilingual/Bicultural Education Minor [bilingual-bicultural-education-minor] (many catalog instructions missing from widget)
-- ...and 84 more
+- Business Administration [business-administration] (legibility issues in widget source) Source issues: placeholder credits for MIS 300.
+- Academic and Behavioral Strategist (BT) [academic-and-behavioral-strategist-bt] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Business Education (Teaching) [business-education-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Developmental Disabilities (Teaching) [developmental-disabilities-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Early Childhood Education (Birth-Grade 3) [early-childhood-education-birth-3] (legibility issues in widget source) Source issues: placeholder credits for EDFD 400 | placeholder credits for EDFD 420.
+- Early Childhood Elementary Education [early-childhood-elementary-education] (legibility issues in widget source) Source issues: placeholder credits for EDFD 400 | placeholder credits for EDFD 420.
+- Elementary Education (K-6) [elementary-education-k-6-education] (legibility issues in widget source) Source issues: placeholder credits for EDFD 400 | placeholder credits for EDFD 420.
+- Advertising Minor [advertising-minor] (legibility issues in widget source) Source issues: placeholder credits for MCOM 300.
+- Art (Teaching) [art-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Communication Arts & Literature (Teaching) [communication-arts-and-literature-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Creative Digital Media Minor [creative-digital-media-minor] (legibility issues in widget source) Source issues: placeholder credits for ENG 200.
+- Creative Writing Minor [creative-writing-minor] (legibility issues in widget source) Source issues: placeholder credits for ENG 200.
+- Instrumental Music Education (Teaching) [instrumental-music-education-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- School Health (Teaching) [school-health-teaching] (legibility issues in widget source) Source issues: placeholder credits for HERS 322 | placeholder credits for EDFD 401.
+- Bioinformatics [bioinformatics] (legibility issues in widget source) Source issues: placeholder credits for COMP 1150 | blank title for COMP 1150.
+- Chemistry (Teaching) (ACS) [chemistry-teaching-acs] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Chemistry & Physical Science (Teaching) [chemistry-and-physical-science-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Computer Information Systems [computer-information-systems] (legibility issues in widget source) Source issues: placeholder credits for ACCT 2217 | blank title for ACCT 2217.
+- Data Science Minor [data-science-minor] (legibility issues in widget source) Source issues: placeholder credits for ECON 322 | placeholder credits for DSCI 325.
+- Earth Science (Teaching) [earth-science-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Life Science - Teaching [life-science-teaching] (legibility issues in widget source) Source issues: placeholder credits for EDFD 401 | placeholder credits for EDFD 421.
+- Math (Secondary Teaching) [mathematics-secondary-teaching] (legibility issues in widget source) Source issues: placeholder credits for MATH 313 | placeholder credits for STAT 320.
+- Radiography [radiography] (legibility issues in widget source) Source issues: placeholder credits for MATH 112.

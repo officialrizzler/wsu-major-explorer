@@ -999,7 +999,8 @@
                 {
                   "type": "course",
                   "course_id": "MIS 300",
-                  "course_title": "/400-level course"
+                  "course_title": "/400-level course",
+                  "credits": "?"
                 }
               ]
             },
@@ -7182,17 +7183,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -7209,17 +7213,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -7710,17 +7717,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             }
@@ -8402,17 +8412,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 400",
-                  "course_title": "and 460 must be taken concurrently"
+                  "course_title": "and 460 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 420",
-                  "course_title": "and 440 must be taken concurrently"
+                  "course_title": "and 440 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -9009,17 +9022,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 400",
-                  "course_title": "and 460 must be taken concurrently"
+                  "course_title": "and 460 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 420",
-                  "course_title": "and 440 must be taken concurrently"
+                  "course_title": "and 440 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             }
@@ -10625,7 +10641,8 @@
             {
               "type": "course",
               "course_id": "MCOM 300",
-              "course_title": "/400-level"
+              "course_title": "/400-level",
+              "credits": "?"
             },
             {
               "type": "text",
@@ -12478,17 +12495,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -12505,17 +12525,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -12972,7 +12995,8 @@
             {
               "type": "course",
               "course_id": "ENG 200",
-              "course_title": "level and above"
+              "course_title": "level and above",
+              "credits": "?"
             }
           ]
         },
@@ -13098,7 +13122,8 @@
             {
               "type": "course",
               "course_id": "ENG 200",
-              "course_title": "level and above"
+              "course_title": "level and above",
+              "credits": "?"
             }
           ]
         },
@@ -17446,17 +17471,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -17473,17 +17501,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -32319,7 +32350,8 @@
                 {
                   "type": "course",
                   "course_id": "HERS 322",
-                  "course_title": "is taken a total of 3 times."
+                  "course_title": "is taken a total of 3 times.",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
@@ -32508,17 +32540,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             }
@@ -34070,27 +34105,32 @@
                 {
                   "type": "course",
                   "course_id": "COMP 1150",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "COMP 2243",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "COMP 2247",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MATH 2218",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MATH 2350",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 }
               ]
             }
@@ -36654,7 +36694,7 @@
                 {
                   "type": "course",
                   "course_id": "CHEM 425",
-                  "course_title": "Analytical Chemistry I",
+                  "course_title": "��Analytical Chemistry I",
                   "credits": "4 credits"
                 },
                 {
@@ -36883,17 +36923,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -36910,17 +36953,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -38421,7 +38467,8 @@
                 {
                   "type": "course",
                   "course_id": "ECON 322",
-                  "course_title": "may be substituted for STAT 310"
+                  "course_title": "may be substituted for STAT 310",
+                  "credits": "?"
                 }
               ]
             },
@@ -38476,7 +38523,8 @@
             {
               "type": "course",
               "course_id": "DSCI 325",
-              "course_title": "or higher"
+              "course_title": "or higher",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -39219,17 +39267,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -39246,17 +39297,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -42100,17 +42154,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -42127,17 +42184,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -44021,12 +44081,14 @@
                 {
                   "type": "course",
                   "course_id": "MATH 313",
-                  "course_title": "Differential Equations or above"
+                  "course_title": "Differential Equations or above",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "STAT 320",
-                  "course_title": "Statistical Quality Control or above"
+                  "course_title": "Statistical Quality Control or above",
+                  "credits": "?"
                 }
               ]
             },
@@ -44109,17 +44171,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -44136,17 +44201,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -47756,7 +47824,8 @@
                 {
                   "type": "course",
                   "course_id": "MATH 112",
-                  "course_title": "or higher - up to MATH 247"
+                  "course_title": "or higher - up to MATH 247",
+                  "credits": "?"
                 },
                 {
                   "type": "text",
@@ -51406,17 +51475,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             }
@@ -51974,17 +52046,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 400",
-                  "course_title": "and 460 must be taken concurrently"
+                  "course_title": "and 460 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 420",
-                  "course_title": "and 440 must be taken concurrently"
+                  "course_title": "and 440 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             }
@@ -54913,32 +54988,38 @@
                 {
                   "type": "course",
                   "course_id": "ACCT 2217",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "COMP 1150",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "COMP 2243",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "COMP 2247",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MATH 2218",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MATH 2350",
-                  "course_title": ""
+                  "course_title": "",
+                  "credits": "?"
                 }
               ]
             }
@@ -55022,37 +55103,44 @@
                 {
                   "type": "course",
                   "course_id": "ACCT 300",
-                  "course_title": "/400-level"
+                  "course_title": "/400-level",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "BUSA 300",
-                  "course_title": "/400-level (not BUSA 398)"
+                  "course_title": "/400-level (not BUSA 398)",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "ECON 300",
-                  "course_title": "/400-level"
+                  "course_title": "/400-level",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "FIN 300",
-                  "course_title": "/400-level"
+                  "course_title": "/400-level",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MGMT 300",
-                  "course_title": "/400-level"
+                  "course_title": "/400-level",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MIS 300",
-                  "course_title": "/400-level"
+                  "course_title": "/400-level",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "MKTG 300",
-                  "course_title": "/400-level"
+                  "course_title": "/400-level",
+                  "credits": "?"
                 }
               ]
             }
@@ -55593,17 +55681,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -55620,17 +55711,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },
@@ -56100,17 +56194,20 @@
             {
               "type": "course",
               "course_id": "EDFD 401",
-              "course_title": "and 461 must be taken concurrently"
+              "course_title": "and 461 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 421",
-              "course_title": "and 441 must be taken concurrently"
+              "course_title": "and 441 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
               "course_id": "EDFD 459",
-              "course_title": "and 462 must be taken concurrently"
+              "course_title": "and 462 must be taken concurrently",
+              "credits": "?"
             },
             {
               "type": "course",
@@ -56127,17 +56224,20 @@
                 {
                   "type": "course",
                   "course_id": "EDFD 401",
-                  "course_title": "and 461 must be taken concurrently"
+                  "course_title": "and 461 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 421",
-                  "course_title": "and 441 must be taken concurrently"
+                  "course_title": "and 441 must be taken concurrently",
+                  "credits": "?"
                 },
                 {
                   "type": "course",
                   "course_id": "EDFD 459",
-                  "course_title": "and 462 must be taken concurrently"
+                  "course_title": "and 462 must be taken concurrently",
+                  "credits": "?"
                 }
               ]
             },

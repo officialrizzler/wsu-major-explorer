@@ -34068,29 +34068,24 @@
               "display_type": "list",
               "items": [
                 {
-                  "type": "course",
-                  "course_id": "COMP 1150",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "COMP 1150"
                 },
                 {
-                  "type": "course",
-                  "course_id": "COMP 2243",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "COMP 2243"
                 },
                 {
-                  "type": "course",
-                  "course_id": "COMP 2247",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "COMP 2247"
                 },
                 {
-                  "type": "course",
-                  "course_id": "MATH 2218",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "MATH 2218"
                 },
                 {
-                  "type": "course",
-                  "course_id": "MATH 2350",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "MATH 2350"
                 }
               ]
             }
@@ -54911,34 +54906,28 @@
               "display_type": "list",
               "items": [
                 {
-                  "type": "course",
-                  "course_id": "ACCT 2217",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "ACCT 2217"
                 },
                 {
-                  "type": "course",
-                  "course_id": "COMP 1150",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "COMP 1150"
                 },
                 {
-                  "type": "course",
-                  "course_id": "COMP 2243",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "COMP 2243"
                 },
                 {
-                  "type": "course",
-                  "course_id": "COMP 2247",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "COMP 2247"
                 },
                 {
-                  "type": "course",
-                  "course_id": "MATH 2218",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "MATH 2218"
                 },
                 {
-                  "type": "course",
-                  "course_id": "MATH 2350",
-                  "course_title": ""
+                  "type": "text",
+                  "content": "MATH 2350"
                 }
               ]
             }
