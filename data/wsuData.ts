@@ -875,7 +875,7 @@ export const dataSources: DataSource[] = [
     {
         source_id: 'WINONA_EDU',
         source_name: 'Winona.edu',
-        source_year: '2025-2026 site data',
+        source_year: '2025-2026',
         source_notes: 'Official Winona State website used for program landing pages, admissions copy, student life information, and other institutional context.',
         source_url: 'https://www.winona.edu/about/'
     },
