@@ -1,11 +1,11 @@
 import { Program } from '../types';
 
 export type FitTraits = {
-  choose: string[];
-  avoid: string[];
+  you_might_like: string[];
+  not_for_you: string[];
 };
 
-const programFitTraits: Record<string, FitTraits> = {
+const rawProgramFitTraits: Record<string, { choose: string[]; avoid: string[] }> = {
   "accounting-bs": {
     "choose": [
       "You enjoy financial records, reporting, and accuracy.",
@@ -2852,7 +2852,7 @@ const programFitTraits: Record<string, FitTraits> = {
   }
 } as const;
 
-const defaultTraits: FitTraits = {
+const defaultTraits = {
   choose: [
     'You enjoy a mix of ideas, people, and practical work.',
     'You like learning through a program with clear goals.',
@@ -2866,5 +2866,9 @@ const defaultTraits: FitTraits = {
 };
 
 export const buildProgramFitTraits = (program: Program) => {
-  return programFitTraits[program.program_id] ?? defaultTraits;
+  const traits = rawProgramFitTraits[program.program_id] ?? defaultTraits;
+  return {
+    you_might_like: traits.choose,
+    not_for_you: traits.avoid
+  };
 };
