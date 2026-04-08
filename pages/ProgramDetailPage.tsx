@@ -9,6 +9,7 @@ import { CareerOutcome } from '../types';
 import CourseRequirementWidget from '../components/CourseRequirementWidget';
 import ProfessorWidget from '../components/ProfessorWidget';
 import professorsData from '../data/professors_data.json';
+import { buildProgramFitTraits } from '../utils/programFit';
 
 
 const Widget: React.FC<{ title: string, icon?: React.ReactNode, children: React.ReactNode, year?: string, badges?: React.ReactNode }> = ({ title, icon, children, year, badges }) => {
@@ -116,6 +117,11 @@ const ProgramDetailPage: React.FC = () => {
         return <div className="text-center py-20 font-body text-white">Program not found.</div>;
     }
 
+    const generatedFitTraits = buildProgramFitTraits(program);
+    const fitTraits = {
+        you_might_like: program.you_might_like?.length ? program.you_might_like : generatedFitTraits.you_might_like,
+        not_for_you: program.not_for_you?.length ? program.not_for_you : generatedFitTraits.not_for_you,
+    };
     const isAddedToCompare = isComparing(program.program_id);
     const totalDepartments = departments.filter(d => d.total_enrollment_fall_2021 != null).length;
 
@@ -202,13 +208,13 @@ const ProgramDetailPage: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-6">
 
-                        {program.you_might_like && program.you_might_like.length > 0 && (
+                        {fitTraits.you_might_like.length > 0 && (
                             <Widget title="Program Fit">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div>
                                         <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Choose this if:</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.you_might_like?.map(item => (
+                                            {fitTraits.you_might_like.map(item => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
                                                     {formatTrait(item)}
@@ -219,7 +225,7 @@ const ProgramDetailPage: React.FC = () => {
                                     <div>
                                         <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Avoid this if:</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.not_for_you?.map(item => (
+                                            {fitTraits.not_for_you.map(item => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
                                                     {formatTrait(item)}
