@@ -208,34 +208,32 @@ const ProgramDetailPage: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-6">
 
-                        {Array.isArray(fitTraits.you_might_like) && fitTraits.you_might_like.length > 0 && (
-                            <Widget title="Program Fit">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Choose this if:</h3>
-                                        <ul className="space-y-3 font-body">
-                                            {fitTraits.you_might_like.map(item => (
-                                                <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
-                                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
-                                                    {formatTrait(item)}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Avoid this if:</h3>
-                                        <ul className="space-y-3 font-body">
-                                            {fitTraits.not_for_you.map(item => (
-                                                <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
-                                                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
-                                                    {formatTrait(item)}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
+                        <Widget title="Program Fit">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Choose this if:</h3>
+                                    <ul className="space-y-3 font-body">
+                                        {fitTraits.you_might_like.map(item => (
+                                            <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
+                                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
+                                                {formatTrait(item)}
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                            </Widget>
-                        )}
+                                <div>
+                                    <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Avoid this if:</h3>
+                                    <ul className="space-y-3 font-body">
+                                        {fitTraits.not_for_you.map(item => (
+                                            <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
+                                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
+                                                {formatTrait(item)}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </Widget>
                         {program.course_structure && (
                             <Widget 
                                 title="Courses You'll Take" 
