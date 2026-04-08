@@ -2956,6 +2956,42 @@ const avoidTraitRewrites: Record<string, string> = {
 };
 
 const programFitOverrides: Record<string, { choose?: string[]; avoid?: string[] }> = {
+  'adult-gerontology-acute-care-nurse-practitioner-gc-gradcert': {
+    choose: [
+      'You enjoy high-acuity patient care and advanced clinical decisions.',
+      'You are comfortable with fast-moving, high-stakes medical settings.',
+      'You want hands-on healthcare work with significant responsibility.'
+    ],
+    avoid: [
+      'You prefer lower-pressure settings with fewer urgent decisions.',
+      'You want work with limited direct patient care.',
+      'You are uncomfortable with intense clinical responsibility or invasive care.'
+    ]
+  },
+  'adult-gerontology-clincal-nurse-specialist-doc': {
+    choose: [
+      'You enjoy advanced nursing practice with direct patient care.',
+      'You like combining clinical expertise with leadership and case coordination.',
+      'You are comfortable making high-level care decisions in complex settings.'
+    ],
+    avoid: [
+      'You prefer work with less clinical responsibility.',
+      'You want a role with limited patient contact or acute care demands.',
+      'You dislike high-stakes care decisions, coordination, or advanced practice work.'
+    ]
+  },
+  'adult-gerontology-clinical-nurse-specialist-gc': {
+    choose: [
+      'You enjoy advanced nursing practice with direct patient care.',
+      'You like combining clinical expertise with leadership and case coordination.',
+      'You are comfortable making high-level care decisions in complex settings.'
+    ],
+    avoid: [
+      'You prefer work with less clinical responsibility.',
+      'You want a role with limited patient contact or acute care demands.',
+      'You dislike high-stakes care decisions, coordination, or advanced practice work.'
+    ]
+  },
   'educational-leadership-ms': {
     choose: [
       'You enjoy leading teams and improving school systems.',
