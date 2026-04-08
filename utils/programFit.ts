@@ -2865,10 +2865,300 @@ const defaultTraits = {
   ]
 };
 
+const avoidTraitRewrites: Record<string, string> = {
+  'You would rather avoid open-ended creative work.': 'You want open-ended creative work.',
+  'You would rather avoid tasks that ignore accuracy.': 'You are comfortable in settings where precision matters less.',
+  'You do not want work that feels vague or subjective.': 'You prefer work that feels more interpretive or subjective.',
+  'You would rather avoid narrow technical specialization.': 'You want a more specialized technical path.',
+  'You prefer to avoid work that stays purely creative.': 'You prefer work that leans more creative than operational.',
+  'You would rather avoid isolated technical settings.': 'You want a more isolated technical setting.',
+  'You do not enjoy repetitive routine work.': 'You are comfortable with more routine and repetition.',
+  'You would rather avoid vague projects with no clear outcome.': 'You are comfortable with projects that stay open-ended for longer.',
+  'You prefer to avoid isolated lab research.': 'You prefer research-heavy or lab-focused work.',
+  'You would rather avoid jobs with no process improvement or problem solving.': 'You are fine with work that involves less problem solving or process improvement.',
+  'You would rather avoid lab work or pure number-crunching.': 'You want lab-heavy or highly quantitative work.',
+  'You would rather avoid repetitive technical routines.': 'You are comfortable with more technical routine and procedure.',
+  'You do not enjoy pure number-crunching.': 'You are comfortable with heavily quantitative work.',
+  'You would rather avoid purely routine hands-on work.': 'You prefer practical hands-on work over theory.',
+  'You would rather avoid purely routine production work.': 'You are comfortable with more production-style, repetitive work.',
+  'You do not enjoy highly repetitive tasks.': 'You are comfortable with highly repetitive tasks.',
+  'You prefer to avoid work that never asks you to think broadly.': 'You are fine with work that stays more focused and repetitive.',
+  'You would rather avoid work far from numbers or money.': 'You want work that stays far from numbers or finance.',
+  'You would rather avoid a role with little connection to finance.': 'You want work with little connection to finance or investing.',
+  'You do not enjoy work that stays far from numbers.': 'You prefer work with less emphasis on numbers.',
+  'You prefer to avoid routines with no analysis.': 'You are fine with routine work that involves less analysis.',
+  'You would rather avoid isolated technical work.': 'You prefer solo technical work over people-facing responsibilities.',
+  'You do not enjoy solitary technical work.': 'You are comfortable spending long stretches working independently.',
+  'You prefer to avoid work with very little human interaction.': 'You prefer work with minimal day-to-day human interaction.',
+  'You would rather avoid highly technical coding tasks.': 'You prefer work with less coding and fewer technical systems.',
+  'You would rather avoid purely technical or lab-based work.': 'You prefer technical or lab-based work over audience-facing work.',
+  'You do not enjoy highly technical or lab-based work.': 'You are comfortable with highly technical or lab-based work.',
+  'You prefer to avoid back-room work with little communication.': 'You prefer quieter work with less communication and persuasion.',
+  'You would rather avoid repetitive data entry.': 'You are comfortable with more repetitive clerical or tracking work.',
+  'You would rather avoid a very narrow track.': 'You want a highly specialized path from the start.',
+  'You would rather avoid a path that feels too rigid.': 'You prefer a path with tighter structure and fewer electives.',
+  'You do not enjoy programs with little room to explore.': 'You want a program with less exploration and more direction built in.',
+  'You would rather avoid sedentary office work.': 'You prefer a more desk-based or office-centered role.',
+  'You would rather avoid purely abstract theory.': 'You enjoy abstract ideas and theory-heavy work.',
+  'You do not enjoy low-movement or sedentary jobs.': 'You are comfortable in lower-movement, desk-based settings.',
+  'You would rather avoid detached solo work with little human contact.': 'You prefer work with more independence and less daily interaction.',
+  'You do not enjoy only one-on-one clinical care.': 'You are most interested in one-on-one care or counseling work.',
+  'You prefer to avoid health work with no policy or systems component.': 'You want direct service work without much policy or systems thinking.',
+  'You prefer to avoid work with little direct human interaction.': 'You prefer quieter work with less direct interaction.',
+  'You prefer to avoid work that feels disconnected from your interests.': 'You want a program that feels practical even if it is not a deep personal passion.',
+  'You would rather avoid highly isolated technical research.': 'You prefer independent research or highly technical investigation.',
+  'You would rather avoid quiet solo work with little people management.': 'You prefer roles with less leadership, supervision, or team oversight.',
+  'You would rather avoid roles that stay far from teaching or mentoring.': 'You prefer work away from teaching, coaching, or mentoring.',
+  'You do not enjoy repetition and classroom routines.': 'You are comfortable with routines, schedules, and classroom structure.',
+  'You prefer to avoid work with little student interaction.': 'You prefer work with little day-to-day student contact.',
+  'You would rather avoid a path that stays far from classrooms or students.': 'You prefer a path away from school or student-facing settings.',
+  'You would rather avoid a path that is too technical or rigid.': 'You want a path that is more technical and tightly structured.',
+  'You do not enjoy pure math or engineering-style problem solving.': 'You are comfortable with math-heavy or engineering-style problem solving.',
+  'You prefer to avoid highly repetitive procedures.': 'You are comfortable with repeated procedures and technical process work.',
+  'You would rather avoid rigid or highly technical work.': 'You want work that is more technical, structured, and rule-driven.',
+  'You would rather avoid work with little room for creativity.': 'You are comfortable with work that leaves less room for creativity.',
+  'You do not enjoy repetitive data-heavy work.': 'You are comfortable with repetitive, data-heavy tasks.',
+  'You would rather avoid work with very little reading or writing.': 'You prefer lighter reading and writing demands.',
+  'You would rather avoid work with little communication or culture.': 'You prefer quieter work with less communication or cultural focus.',
+  'You prefer to avoid repetitive work with little communication.': 'You are comfortable with repetitive work that involves limited communication.',
+  'You would rather avoid settings with no cultural or global connection.': 'You are fine with work that stays local or has less cultural focus.',
+  'You prefer to avoid purely technical problem solving.': 'You prefer work that is more technical and less people-centered.',
+  'You would rather avoid lab-based technical work.': 'You prefer lab-heavy or technical scientific work.',
+  'You prefer to avoid work with very little reading or writing.': 'You prefer hands-on work with less reading and writing.',
+  'You would rather avoid people-only work with no technical problem solving.': 'You prefer people-centered work over technical problem solving.',
+  'You prefer to avoid repetitive manual work.': 'You are comfortable with repetitive hands-on or manual tasks.',
+  'You would rather avoid work that changes very little from day to day.': 'You prefer highly predictable day-to-day work.',
+  'You would rather avoid a very rigid track.': 'You want a tightly prescribed track with few deviations.',
+  'You do not enjoy lack of flexibility or customization.': 'You are fine with a program that offers limited flexibility.',
+  'You prefer to avoid following one narrow track end to end.': 'You prefer to stay on one clear track from start to finish.',
+  'You would rather avoid a program with no room for individual direction.': 'You want a program with more fixed requirements and less self-direction.',
+  'You do not enjoy heavy technical or lab-based work.': 'You are comfortable with heavier technical or lab-based work.',
+  'You would rather avoid low-contact desk work.': 'You prefer desk-based work with less constant patient contact.',
+  'You would rather avoid work with little patient contact.': 'You prefer work with limited patient contact.',
+  'You do not enjoy stressful or emotional situations.': 'You are comfortable in stressful, emotional, or high-stakes situations.',
+  'You prefer to avoid squeamish or invasive tasks.': 'You are comfortable with invasive, messy, or squeamish tasks.',
+  'You would rather avoid only one-on-one clinical care.': 'You prefer one-on-one care over broader systems or population work.',
+  'You would rather avoid work with no clear method.': 'You are comfortable with work that has less structure or fewer fixed methods.',
+  'You prefer to avoid highly subjective assignments.': 'You are comfortable with subjective or interpretive work.',
+  'You would rather avoid too much public-facing persuasion work.': 'You prefer work that involves more persuasion, outreach, or public-facing communication.',
+  'You do not enjoy people-only roles with little technical problem solving.': 'You are comfortable in people-centered roles that use less technical problem solving.',
+  'You do not enjoy jobs that stay far from science and evidence.': 'You are comfortable in work that is less driven by science or evidence.',
+  'You would rather avoid abstract theory without application.': 'You enjoy theory-heavy work even when it feels less applied.',
+  'You do not enjoy work that ignores math and measurement.': 'You are comfortable in work with less math and measurement.',
+  'You prefer to avoid open-ended creative writing.': 'You prefer more open-ended writing or creative interpretation.',
+  'You would rather avoid pure desk work with no technical component.': 'You prefer general desk work over technical or field-based work.',
+  'You would rather avoid subjective or unstructured work.': 'You prefer work that is more open-ended or less structured.',
+  'You prefer to avoid highly unstructured projects.': 'You are comfortable with unstructured projects and loose direction.',
+  'You would rather avoid work with little to no numbers.': 'You prefer work with fewer numbers and less quantitative analysis.',
+  'You do not enjoy repeated writing-heavy assignments.': 'You are comfortable with frequent writing-heavy assignments.',
+  'You would rather avoid work that is far from patient care or health science.': 'You prefer work outside direct patient care or health science.',
+  'You would rather avoid work that is far from law or policy.': 'You prefer work outside law, policy, or regulatory questions.'
+};
+
+const programFitOverrides: Record<string, { choose?: string[]; avoid?: string[] }> = {
+  'educational-leadership-ms': {
+    choose: [
+      'You enjoy leading teams and improving school systems.',
+      'You are comfortable making decisions that affect staff and students.',
+      'You like mentoring educators and managing school operations.'
+    ],
+    avoid: [
+      'You prefer a role with very little leadership responsibility.',
+      'You want work that stays away from schools or student support.',
+      'You dislike coordinating people, schedules, and school-wide priorities.'
+    ]
+  },
+  'organizational-leadership-gc': {
+    choose: [
+      'You enjoy leading teams and keeping people aligned.',
+      'You are comfortable guiding staff through change and planning.',
+      'You like people management more than solo specialist work.'
+    ],
+    avoid: [
+      'You prefer work with almost no team leadership.',
+      'You want a role with minimal coordination or supervision.',
+      'You dislike making decisions that affect groups or operations.'
+    ]
+  },
+  'organizational-leadership-ms': {
+    choose: [
+      'You enjoy leading teams and improving how organizations run.',
+      'You are comfortable managing people, communication, and priorities.',
+      'You like practical leadership more than narrow specialist work.'
+    ],
+    avoid: [
+      'You prefer work with almost no team leadership.',
+      'You want a role with minimal coordination or supervision.',
+      'You dislike being responsible for people, planning, or group outcomes.'
+    ]
+  },
+  'healthcare-leadership-ms': {
+    choose: [
+      'You enjoy leading healthcare teams and improving operations.',
+      'You are comfortable with policy, staffing, and system-level decisions.',
+      'You like healthcare work that mixes people management with administration.'
+    ],
+    avoid: [
+      'You want a role focused only on direct patient care.',
+      'You prefer work with little leadership or operational responsibility.',
+      'You dislike planning, coordination, and healthcare systems work.'
+    ]
+  },
+  'healthcare-leadership-and-administration': {
+    choose: [
+      'You enjoy improving healthcare systems, teams, and operations.',
+      'You are comfortable with policy, budgets, and people management.',
+      'You like healthcare work that is more administrative than clinical.'
+    ],
+    avoid: [
+      'You want a role focused only on direct patient care.',
+      'You prefer work with little leadership or operational responsibility.',
+      'You dislike healthcare administration, coordination, or process improvement.'
+    ]
+  },
+  'doctoral-adult-gerontology-acute-care-nurse-practitioner-doc': {
+    choose: [
+      'You enjoy high-acuity patient care and advanced clinical decisions.',
+      'You are comfortable with fast-moving, high-stakes medical settings.',
+      'You want hands-on healthcare work with significant responsibility.'
+    ],
+    avoid: [
+      'You prefer lower-pressure settings with fewer urgent decisions.',
+      'You want work with limited direct patient care.',
+      'You are uncomfortable with intense clinical responsibility or invasive care.'
+    ]
+  },
+  'family-nurse-practitioner-doc': {
+    choose: [
+      'You enjoy direct patient care across different ages and needs.',
+      'You are comfortable making clinical decisions and building patient trust.',
+      'You like healthcare work that mixes diagnosis, treatment, and education.'
+    ],
+    avoid: [
+      'You prefer work with limited patient interaction.',
+      'You want a role with less clinical responsibility.',
+      'You are uncomfortable with routine exams, procedures, or emotionally heavy care.'
+    ]
+  },
+  'family-nurse-practitioner-gc': {
+    choose: [
+      'You enjoy direct patient care across different ages and needs.',
+      'You are comfortable making clinical decisions and explaining care plans.',
+      'You like healthcare work that blends autonomy with patient relationships.'
+    ],
+    avoid: [
+      'You prefer work with limited patient interaction.',
+      'You want a role with less clinical responsibility.',
+      'You are uncomfortable with routine exams, procedures, or emotionally heavy care.'
+    ]
+  },
+  'nurse-educator-doc': {
+    choose: [
+      'You enjoy teaching future nurses and explaining complex material clearly.',
+      'You like combining clinical knowledge with mentoring and curriculum work.',
+      'You are comfortable leading classrooms, training, or professional development.'
+    ],
+    avoid: [
+      'You prefer work that stays away from teaching or training.',
+      'You want a role with little public speaking or mentoring.',
+      'You dislike lesson planning, evaluation, or structured learning environments.'
+    ]
+  },
+  'nurse-educator-gc': {
+    choose: [
+      'You enjoy teaching future nurses and explaining complex material clearly.',
+      'You like combining clinical knowledge with mentoring and curriculum work.',
+      'You are comfortable leading classrooms, training, or professional development.'
+    ],
+    avoid: [
+      'You prefer work that stays away from teaching or training.',
+      'You want a role with little public speaking or mentoring.',
+      'You dislike lesson planning, evaluation, or structured learning environments.'
+    ]
+  },
+  'nurse-educator-ms': {
+    choose: [
+      'You enjoy teaching future nurses and explaining complex material clearly.',
+      'You like combining clinical knowledge with mentoring and curriculum work.',
+      'You are comfortable leading classrooms, training, or professional development.'
+    ],
+    avoid: [
+      'You prefer work that stays away from teaching or training.',
+      'You want a role with little public speaking or mentoring.',
+      'You dislike lesson planning, evaluation, or structured learning environments.'
+    ]
+  },
+  'nursing-leadership-dnp': {
+    choose: [
+      'You enjoy improving nursing teams, systems, and patient care operations.',
+      'You are comfortable leading staff and making high-level clinical decisions.',
+      'You like healthcare work that mixes leadership with nursing expertise.'
+    ],
+    avoid: [
+      'You prefer a role with little staff leadership or systems responsibility.',
+      'You want work focused only on bedside tasks without broader coordination.',
+      'You dislike planning, oversight, or leading change in healthcare settings.'
+    ]
+  },
+  'nursing-leadership-ms': {
+    choose: [
+      'You enjoy improving nursing teams, systems, and patient care operations.',
+      'You are comfortable leading staff and making high-level clinical decisions.',
+      'You like healthcare work that mixes leadership with nursing expertise.'
+    ],
+    avoid: [
+      'You prefer a role with little staff leadership or systems responsibility.',
+      'You want work focused only on bedside tasks without broader coordination.',
+      'You dislike planning, oversight, or leading change in healthcare settings.'
+    ]
+  },
+  'performance-analytics-in-sport-science': {
+    choose: [
+      'You enjoy sports performance, measurement, and data-informed training.',
+      'You like using numbers and observation to improve athletic performance.',
+      'You are comfortable mixing exercise science with analysis and technology.'
+    ],
+    avoid: [
+      'You prefer creative communication work over sports data and performance metrics.',
+      'You want a field with less measurement, tracking, or technical analysis.',
+      'You dislike structured training environments or evidence-based performance work.'
+    ]
+  },
+  'sport-leadership-gc': {
+    choose: [
+      'You enjoy leading programs, teams, or athletic organizations.',
+      'You like coordinating people, events, and sports operations.',
+      'You are comfortable making practical decisions in active team settings.'
+    ],
+    avoid: [
+      'You prefer work with little coordination or team oversight.',
+      'You want a role far from athletics, events, or group leadership.',
+      'You dislike managing logistics, people, or program operations.'
+    ]
+  }
+};
+
+const normalizeAvoidTrait = (trait: string) => {
+  const cleaned = trait.trim();
+  if (!cleaned) return cleaned;
+  return avoidTraitRewrites[cleaned] ?? cleaned
+    .replace(/^You would rather avoid\s+/i, 'You prefer ')
+    .replace(/^You prefer to avoid\s+/i, 'You prefer ')
+    .replace(/^You do not enjoy\s+/i, 'You are comfortable with ')
+    .replace(/^You do not want\s+/i, 'You are comfortable with ')
+    .replace(/^You are not interested in\s+/i, 'You prefer ')
+    .replace(/^You don't enjoy\s+/i, 'You are comfortable with ')
+    .replace(/^You don't like\s+/i, 'You are comfortable with ');
+};
+
 export const buildProgramFitTraits = (program: Program) => {
   const traits = rawProgramFitTraits[program.program_id] ?? defaultTraits;
+  const overrides = programFitOverrides[program.program_id];
+  const choose = overrides?.choose ?? traits.choose;
+  const avoid = overrides?.avoid ?? traits.avoid;
+
   return {
-    you_might_like: traits.choose,
-    not_for_you: traits.avoid
+    you_might_like: choose,
+    not_for_you: avoid.map(normalizeAvoidTrait)
   };
 };
