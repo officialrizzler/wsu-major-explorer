@@ -2,7 +2,6 @@
 import { Program, Department } from '../types';
 import { departments, programsRaw, programEnrollments, programGraduates, careerOutcomes, clubs, dataSources } from '../data/wsuData';
 import { expandDegreeType } from '../utils/formatters';
-import { buildProgramFitTraits } from '../utils/programFit';
 
 let fullProgramData: Program[] | null = null;
 let rankedDepartments: Department[] | null = null;
@@ -54,9 +53,7 @@ const joinData = (): Program[] => {
         const enrollment = enrollmentsMap.get(p.program_id);
         const graduates = graduatesMap.get(p.program_id);
         const outcomes = outcomesByProgram.get(p.program_id) || [];
-        const fitTraits = buildProgramFitTraits(p, department);
 
-        
         const collegeClubs = department ? clubsByCollege.get(department.college_name) || [] : [];
         const programNameWords = p.program_name.toLowerCase().split(/[\s,/-]+/).filter(w => w.length > 2);
         const stopWords = ['club', 'association', 'society', 'winona', 'state', 'wsu', 'the', 'and', 'for', 'international', 'student', 'professional'];
@@ -87,8 +84,6 @@ const joinData = (): Program[] => {
             career_outcomes: outcomes,
             clubs: relatedClubs,
             data_coverage_score: score,
-            you_might_like: fitTraits.you_might_like,
-            not_for_you: fitTraits.not_for_you,
         };
     }).sort((a, b) => a.program_name.localeCompare(b.program_name));
 };
