@@ -3151,6 +3151,100 @@ const normalizeAvoidTrait = (trait: string) => {
     .replace(/^You don't like\s+/i, 'You are comfortable with ');
 };
 
+const getTraitBucket = (trait: string) => {
+  const text = trait.toLowerCase();
+
+  if (
+    text.includes('desk-based') ||
+    text.includes('desk work') ||
+    text.includes('office-centered') ||
+    text.includes('sedentary') ||
+    text.includes('lower-movement')
+  ) return 'desk-based';
+
+  if (text.includes('patient contact') || text.includes('direct patient care')) return 'patient-contact';
+
+  if (
+    text.includes('leadership') ||
+    text.includes('team oversight') ||
+    text.includes('supervision') ||
+    text.includes('people management')
+  ) return 'leadership';
+
+  if (
+    text.includes('teaching') ||
+    text.includes('mentoring') ||
+    text.includes('student') ||
+    text.includes('classroom')
+  ) return 'teaching-students';
+
+  if (
+    text.includes('creative') ||
+    text.includes('interpretive') ||
+    text.includes('subjective') ||
+    text.includes('open-ended writing')
+  ) return 'creative-subjective';
+
+  if (
+    text.includes('technical') ||
+    text.includes('coding') ||
+    text.includes('lab') ||
+    text.includes('engineering-style')
+  ) return 'technical-lab';
+
+  if (
+    text.includes('routine') ||
+    text.includes('repetitive') ||
+    text.includes('procedure') ||
+    text.includes('manual')
+  ) return 'routine-repetition';
+
+  if (
+    text.includes('numbers') ||
+    text.includes('quantitative') ||
+    text.includes('finance') ||
+    text.includes('measurement') ||
+    text.includes('data-heavy')
+  ) return 'numbers-data';
+
+  if (
+    text.includes('policy') ||
+    text.includes('systems') ||
+    text.includes('population')
+  ) return 'policy-systems';
+
+  if (
+    text.includes('human interaction') ||
+    text.includes('human contact') ||
+    text.includes('people-centered') ||
+    text.includes('communication')
+  ) return 'human-interaction';
+
+  if (
+    text.includes('science') ||
+    text.includes('evidence') ||
+    text.includes('method')
+  ) return 'science-evidence';
+
+  return text;
+};
+
+const distinctTraits = (traits: string[]) => {
+  const seen = new Set<string>();
+
+  return traits.filter((trait) => {
+    const cleaned = trait.trim();
+    if (!cleaned) return false;
+
+    const bucket = getTraitBucket(cleaned);
+
+    if (seen.has(bucket)) return false;
+
+    seen.add(bucket);
+    return true;
+  });
+};
+
 export const buildProgramFitTraits = (program: Program) => {
   const traits = rawProgramFitTraits[program.program_id] ?? defaultTraits;
   const overrides = programFitOverrides[program.program_id];
@@ -3158,7 +3252,7 @@ export const buildProgramFitTraits = (program: Program) => {
   const avoid = overrides?.avoid ?? traits.avoid;
 
   return {
-    you_might_like: choose,
-    not_for_you: avoid.map(normalizeAvoidTrait)
+    you_might_like: distinctTraits(choose),
+    not_for_you: distinctTraits(avoid.map(normalizeAvoidTrait))
   };
 };
