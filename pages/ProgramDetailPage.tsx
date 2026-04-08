@@ -80,7 +80,25 @@ const SnapshotRow: React.FC<{ label: string, value: string | number, trend?: 'Up
     </div>
 );
 
-const formatFitReason = (raw: string, negative = false) => {
+const positiveStarters = [
+    'You like',
+    "You're interested in",
+    "You're good at",
+    'You have strong skills in',
+    "You're motivated by",
+    'You enjoy'
+];
+
+const negativeStarters = [
+    "You don't like",
+    "You're not very interested in",
+    'You struggle with',
+    'You prefer to avoid',
+    'You dislike',
+    "You're not drawn to"
+];
+
+const formatFitReason = (raw: string, negative = false, index = 0) => {
     const cleaned = (raw || '').trim().replace(/\s+/g, ' ');
     if (!cleaned) return '';
 
@@ -105,10 +123,12 @@ const formatFitReason = (raw: string, negative = false) => {
     // Generic wrapping for fragments.
     const phrase = cleaned.toLowerCase();
     if (negative) {
-        const base = `You would rather avoid ${phrase}`;
+        const starter = negativeStarters[index % negativeStarters.length];
+        const base = `${starter} ${phrase}`;
         return /[.!?]$/.test(base) ? base : `${base}.`;
     } else {
-        const base = `You’re interested in ${phrase}`;
+        const starter = positiveStarters[index % positiveStarters.length];
+        const base = `${starter} ${phrase}`;
         return /[.!?]$/.test(base) ? base : `${base}.`;
     }
 };
@@ -234,10 +254,10 @@ const ProgramDetailPage: React.FC = () => {
                                     <div>
                                         <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Why you might like this</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.you_might_like?.map(item => (
+                                            {program.you_might_like?.map((item, index) => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
-                                                    {formatFitReason(item, false)}
+                                                    {formatFitReason(item, false, index)}
                                                 </li>
                                             ))}
                                         </ul>
@@ -245,10 +265,10 @@ const ProgramDetailPage: React.FC = () => {
                                     <div>
                                         <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Why this might not be for you</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.not_for_you?.map(item => (
+                                            {program.not_for_you?.map((item, index) => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
-                                                    {formatFitReason(item, true)}
+                                                    {formatFitReason(item, true, index)}
                                                 </li>
                                             ))}
                                         </ul>
