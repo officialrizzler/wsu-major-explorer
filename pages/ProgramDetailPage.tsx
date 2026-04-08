@@ -80,10 +80,63 @@ const SnapshotRow: React.FC<{ label: string, value: string | number, trend?: 'Up
     </div>
 );
 
-const formatTrait = (raw: string) => {
+const positiveStarters = [
+    'You enjoy',
+    'You like',
+    "You're good with",
+    "You're comfortable with",
+    'You work well with',
+    'You can handle'
+];
+
+const negativeStarters = [
+    "You'd rather avoid",
+    "You're not into",
+    "You struggle with",
+    'You prefer to avoid',
+    'You do not enjoy',
+    "You're not comfortable with"
+];
+
+const pickStarter = (options: string[], index: number) => options[index % options.length];
+
+const formatTrait = (raw: string, negative = false, index = 0) => {
     const cleaned = (raw || '').trim().replace(/\s+/g, ' ');
     if (!cleaned) return '';
-    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+
+    if (/^(you|youre|you're|your)\b/i.test(cleaned)) {
+        const sentence = /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
+        return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+    }
+
+    const lower = cleaned.toLowerCase();
+    const isDeadlineOrStructure =
+        /deadline|deadlines|detail|details|organized|organization|structure|structured|planning|project|projects|schedule|precision|routine/.test(lower);
+    const isPeopleOrCommunication =
+        /people|team|teams|collaboration|client|clients|customer|customers|community|leadership|mentoring|teaching|public speaking|communication|relationship/.test(lower);
+    const isAnalytical =
+        /analysis|analyzing|problem solving|problem-solving|critical thinking|data|research|evidence|logic|statistics|math|numbers|finance|accounting|quantitative/.test(lower);
+    const isCreative =
+        /creative|design|storytelling|art|writing|media|content|branding|marketing/.test(lower);
+
+    const starter = negative
+        ? (
+            isPeopleOrCommunication ? pickStarter(["You prefer to avoid", "You're not comfortable with"], index) :
+            isDeadlineOrStructure ? pickStarter(["You struggle with", "You'd rather avoid"], index) :
+            isAnalytical ? pickStarter(["You're not into", "You prefer to avoid"], index) :
+            isCreative ? pickStarter(["You'd rather avoid", "You do not enjoy"], index) :
+            pickStarter(negativeStarters, index)
+        )
+        : (
+            isAnalytical ? pickStarter(['You enjoy', 'You like', "You're good with"], index) :
+            isDeadlineOrStructure ? pickStarter(["You're good with", "You can handle", 'You work well with'], index) :
+            isPeopleOrCommunication ? pickStarter(['You work well with', 'You enjoy', "You're comfortable with"], index) :
+            isCreative ? pickStarter(['You enjoy', 'You like'], index) :
+            pickStarter(positiveStarters, index)
+        );
+
+    const base = `${starter} ${cleaned}`;
+    return /[.!?]$/.test(base) ? base : `${base}.`;
 };
 
 const ProgramDetailPage: React.FC = () => {
@@ -205,23 +258,23 @@ const ProgramDetailPage: React.FC = () => {
                             <Widget title="Program Fit">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Good fit traits</h3>
+                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Choose this if:</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.you_might_like?.map(item => (
+                                            {program.you_might_like?.map((item, index) => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
-                                                    {formatTrait(item)}
+                                                    {formatTrait(item, false, index)}
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Traits to avoid</h3>
+                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Avoid this if:</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.not_for_you?.map(item => (
+                                            {program.not_for_you?.map((item, index) => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
-                                                    {formatTrait(item)}
+                                                    {formatTrait(item, true, index)}
                                                 </li>
                                             ))}
                                         </ul>
