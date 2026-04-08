@@ -232,7 +232,7 @@ const RecursiveSection: React.FC<{ group: CourseGroup; depth: number }> = ({ gro
 };
 
 const CourseRequirementWidget: React.FC<{ courseStructure: CourseGroup[] }> = ({ courseStructure }) => {
-    if (!courseStructure || courseStructure.length === 0) return null;
+    if (!Array.isArray(courseStructure) || courseStructure.length === 0) return null;
 
     return (
         <div className="font-body w-full max-w-5xl mx-auto -mt-2">
@@ -247,4 +247,3 @@ const CourseRequirementWidget: React.FC<{ courseStructure: CourseGroup[] }> = ({
 };
 
 export default CourseRequirementWidget;
-

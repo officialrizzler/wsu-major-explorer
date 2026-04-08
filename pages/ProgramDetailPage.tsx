@@ -119,8 +119,8 @@ const ProgramDetailPage: React.FC = () => {
 
     const generatedFitTraits = buildProgramFitTraits(program);
     const fitTraits = {
-        you_might_like: program.you_might_like?.length ? program.you_might_like : generatedFitTraits.you_might_like,
-        not_for_you: program.not_for_you?.length ? program.not_for_you : generatedFitTraits.not_for_you,
+        you_might_like: Array.isArray(program.you_might_like) && program.you_might_like.length > 0 ? program.you_might_like : generatedFitTraits.you_might_like,
+        not_for_you: Array.isArray(program.not_for_you) && program.not_for_you.length > 0 ? program.not_for_you : generatedFitTraits.not_for_you,
     };
     const isAddedToCompare = isComparing(program.program_id);
     const totalDepartments = departments.filter(d => d.total_enrollment_fall_2021 != null).length;
@@ -208,7 +208,7 @@ const ProgramDetailPage: React.FC = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 space-y-6">
 
-                        {fitTraits.you_might_like.length > 0 && (
+                        {Array.isArray(fitTraits.you_might_like) && fitTraits.you_might_like.length > 0 && (
                             <Widget title="Program Fit">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div>
@@ -251,7 +251,7 @@ const ProgramDetailPage: React.FC = () => {
                             </Widget>
                         )}
 
-                        {program.career_outcomes && program.career_outcomes.length > 0 && (
+                        {Array.isArray(program.career_outcomes) && program.career_outcomes.length > 0 && (
                             <>
                                 <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
                                     <div className="space-y-6">
@@ -260,7 +260,7 @@ const ProgramDetailPage: React.FC = () => {
                                         ))}
                                     </div>
 
-                                    {program.related_job_titles && program.related_job_titles.length > 0 && (
+                                    {Array.isArray(program.related_job_titles) && program.related_job_titles.length > 0 && (
                                         <div className="mt-6 pt-4 border-t border-gray-100">
                                             <h3 className="text-xs font-bold mb-2 text-gray-900 uppercase tracking-wider">Other Common Roles</h3>
                                             <p className="text-sm text-gray-500 font-body">
@@ -323,7 +323,7 @@ const ProgramDetailPage: React.FC = () => {
                             />
                         )}
 
-                        {program.recommended_minors && program.recommended_minors.length > 0 && (
+                        {Array.isArray(program.recommended_minors) && program.recommended_minors.length > 0 && (
                             <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
                                 <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest mb-4">Minors pair well with</h3>
                                 <div className="flex flex-wrap gap-2">
@@ -332,7 +332,7 @@ const ProgramDetailPage: React.FC = () => {
                             </div>
                         )}
 
-                        {program.clubs && program.clubs.length > 0 && (
+                        {Array.isArray(program.clubs) && program.clubs.length > 0 && (
                             <div className="p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
                                 <h3 className="text-xs font-black text-gray-900 uppercase tracking-widest mb-4">Related Clubs</h3>
                                 <div className="space-y-2">

@@ -17,7 +17,7 @@ interface ProfessorWidgetProps {
 }
 
 const ProfessorWidget: React.FC<ProfessorWidgetProps> = ({ departmentId, professorsData }) => {
-    const professors = professorsData[departmentId] || [];
+    const professors = Array.isArray(professorsData[departmentId]) ? professorsData[departmentId] : [];
 
     if (professors.length === 0) {
         return null;
