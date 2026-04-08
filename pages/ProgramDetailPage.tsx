@@ -80,57 +80,10 @@ const SnapshotRow: React.FC<{ label: string, value: string | number, trend?: 'Up
     </div>
 );
 
-const positiveStarters = [
-    'You like',
-    "You're interested in",
-    "You're good at",
-    'You have strong skills in',
-    "You're motivated by",
-    'You enjoy'
-];
-
-const negativeStarters = [
-    "You don't like",
-    "You're not very interested in",
-    'You struggle with',
-    'You prefer to avoid',
-    'You dislike',
-    "You're not drawn to"
-];
-
-const formatFitReason = (raw: string, negative = false, index = 0) => {
+const formatTrait = (raw: string) => {
     const cleaned = (raw || '').trim().replace(/\s+/g, ' ');
     if (!cleaned) return '';
-
-    const lower = cleaned.toLowerCase();
-
-    const directRewrites: Record<string, string> = {
-        'ambiguous social structures': 'You prefer clearly defined structures and expectations.',
-        'ambiguous open-ended creative work': 'You prefer projects with clear goals and expectations.',
-        'corporate finance': 'You like working with corporate finance and business decisions.',
-        'public relations': 'You enjoy communication, messaging, and public relations work.',
-        'marketing-heavy roles': 'You enjoy marketing, branding, and promotional work.',
-        'extreme solitude': 'You prefer highly independent work with limited collaboration.'
-    };
-    if (directRewrites[lower]) return directRewrites[lower];
-
-    // If it already starts like a sentence, just finish it.
-    if (/^(you|your|students who)\b/i.test(cleaned)) {
-        const sentence = /[.!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
-        return sentence.charAt(0).toUpperCase() + sentence.slice(1);
-    }
-
-    // Generic wrapping for fragments.
-    const phrase = cleaned.toLowerCase();
-    if (negative) {
-        const starter = negativeStarters[index % negativeStarters.length];
-        const base = `${starter} ${phrase}`;
-        return /[.!?]$/.test(base) ? base : `${base}.`;
-    } else {
-        const starter = positiveStarters[index % positiveStarters.length];
-        const base = `${starter} ${phrase}`;
-        return /[.!?]$/.test(base) ? base : `${base}.`;
-    }
+    return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
 };
 
 const ProgramDetailPage: React.FC = () => {
@@ -252,23 +205,23 @@ const ProgramDetailPage: React.FC = () => {
                             <Widget title="Program Fit">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Why you might like this</h3>
+                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-emerald-600 uppercase tracking-wider"><CheckCircle size={18} /> Good fit traits</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.you_might_like?.map((item, index) => (
+                                            {program.you_might_like?.map(item => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500"></span>
-                                                    {formatFitReason(item, false, index)}
+                                                    {formatTrait(item)}
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
                                     <div>
-                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Why this might not be for you</h3>
+                                        <h3 className="text-sm font-bold mb-4 flex items-center gap-2 text-rose-600 uppercase tracking-wider"><XCircle size={18} /> Traits to avoid</h3>
                                         <ul className="space-y-3 font-body">
-                                            {program.not_for_you?.map((item, index) => (
+                                            {program.not_for_you?.map(item => (
                                                 <li key={item} className="flex items-start gap-2 text-gray-600 text-sm">
                                                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-rose-500"></span>
-                                                    {formatFitReason(item, true, index)}
+                                                    {formatTrait(item)}
                                                 </li>
                                             ))}
                                         </ul>
