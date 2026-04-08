@@ -98,7 +98,24 @@ const negativeStarters = [
     "You're not comfortable with"
 ];
 
+const legacyPrefixRules: Array<{ pattern: RegExp; starter: string }> = [
+    { pattern: /^(?:you(?:'re|re)?\s+)?(?:don't like|do not like|dislike)\b\s*/i, starter: 'You dislike' },
+    { pattern: /^(?:you(?:'re|re)?\s+)?(?:don't enjoy|do not enjoy)\b\s*/i, starter: 'You do not enjoy' },
+    { pattern: /^(?:you(?:'re|re)?\s+)?(?:prefer to avoid|avoid)\b\s*/i, starter: 'You prefer to avoid' },
+    { pattern: /^(?:you(?:'re|re)?\s+)?prefer\b\s*/i, starter: 'You prefer' },
+    { pattern: /^(?:you(?:'re|re)?\s+)?(?:not into|not interested in|interested in)\b\s*/i, starter: "You're interested in" },
+    { pattern: /^(?:you(?:'re|re)?\s+)?(?:good with|strong in|strong at|motivated by)\b\s*/i, starter: "You're good with" },
+    { pattern: /^(?:you(?:'re|re)?\s+)?(?:enjoy|like)\b\s*/i, starter: 'You enjoy' },
+];
+
 const pickStarter = (options: string[], index: number) => options[index % options.length];
+
+const normalizeFragment = (fragment: string) => {
+    const trimmed = fragment.trim().replace(/\s+/g, ' ');
+    if (!trimmed) return '';
+    if (/^[A-Z]{2,}\b/.test(trimmed)) return trimmed;
+    return trimmed.charAt(0).toLowerCase() + trimmed.slice(1);
+};
 
 const formatTrait = (raw: string, negative = false, index = 0) => {
     const cleaned = (raw || '').trim().replace(/\s+/g, ' ');
@@ -109,7 +126,21 @@ const formatTrait = (raw: string, negative = false, index = 0) => {
         return sentence.charAt(0).toUpperCase() + sentence.slice(1);
     }
 
-    const lower = cleaned.toLowerCase();
+    let fragment = cleaned;
+    let starter: string | null = null;
+
+    for (const rule of legacyPrefixRules) {
+        if (rule.pattern.test(fragment)) {
+            fragment = fragment.replace(rule.pattern, '');
+            starter = rule.starter;
+            break;
+        }
+    }
+
+    const normalizedFragment = normalizeFragment(fragment);
+    if (!normalizedFragment) return '';
+
+    const lower = normalizedFragment.toLowerCase();
     const isDeadlineOrStructure =
         /deadline|deadlines|detail|details|organized|organization|structure|structured|planning|project|projects|schedule|precision|routine/.test(lower);
     const isPeopleOrCommunication =
@@ -119,23 +150,25 @@ const formatTrait = (raw: string, negative = false, index = 0) => {
     const isCreative =
         /creative|design|storytelling|art|writing|media|content|branding|marketing/.test(lower);
 
-    const starter = negative
-        ? (
-            isPeopleOrCommunication ? pickStarter(["You prefer to avoid", "You're not comfortable with"], index) :
-            isDeadlineOrStructure ? pickStarter(["You struggle with", "You'd rather avoid"], index) :
-            isAnalytical ? pickStarter(["You're not into", "You prefer to avoid"], index) :
-            isCreative ? pickStarter(["You'd rather avoid", "You do not enjoy"], index) :
-            pickStarter(negativeStarters, index)
-        )
-        : (
-            isAnalytical ? pickStarter(['You enjoy', 'You like', "You're good with"], index) :
-            isDeadlineOrStructure ? pickStarter(["You're good with", "You can handle", 'You work well with'], index) :
-            isPeopleOrCommunication ? pickStarter(['You work well with', 'You enjoy', "You're comfortable with"], index) :
-            isCreative ? pickStarter(['You enjoy', 'You like'], index) :
-            pickStarter(positiveStarters, index)
-        );
+    if (!starter) {
+        starter = negative
+            ? (
+                isPeopleOrCommunication ? pickStarter(["You prefer to avoid", "You're not comfortable with"], index) :
+                isDeadlineOrStructure ? pickStarter(["You struggle with", "You'd rather avoid"], index) :
+                isAnalytical ? pickStarter(["You're not into", "You prefer to avoid"], index) :
+                isCreative ? pickStarter(["You'd rather avoid", "You do not enjoy"], index) :
+                pickStarter(negativeStarters, index)
+            )
+            : (
+                isAnalytical ? pickStarter(['You enjoy', 'You like', "You're good with"], index) :
+                isDeadlineOrStructure ? pickStarter(["You're good with", "You can handle", 'You work well with'], index) :
+                isPeopleOrCommunication ? pickStarter(['You work well with', 'You enjoy', "You're comfortable with"], index) :
+                isCreative ? pickStarter(['You enjoy', 'You like'], index) :
+                pickStarter(positiveStarters, index)
+            );
+    }
 
-    const base = `${starter} ${cleaned}`;
+    const base = `${starter} ${normalizedFragment}`;
     return /[.!?]$/.test(base) ? base : `${base}.`;
 };
 
