@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getAdvisorResponse } from '../services/advisorService';
 import { Send, Bot, ChevronDown, GraduationCap } from 'lucide-react';
@@ -164,6 +165,11 @@ const AdvisorPage: React.FC = () => {
 
     return (
         <div className={`relative flex h-[calc(100dvh-4rem)] min-h-0 flex-col overflow-hidden bg-[#f6f7fb] ${compareList.length > 0 ? 'pb-20 sm:pb-0' : ''}`}>
+            <Helmet>
+                <title>AI Academic Advisor | Winona State University</title>
+                <meta name="description" content="Get instant AI-powered advice on Winona State University programs, majors, and career paths. Ask questions and find your perfect academic fit." />
+                <link rel="canonical" href="https://explorewsu.com/advisor" />
+            </Helmet>
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-white via-[#f8f8fb] to-transparent" />
                 <div className="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(34,91,255,0.10),_transparent_65%)]" />

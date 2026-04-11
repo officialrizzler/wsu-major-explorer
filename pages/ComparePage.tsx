@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useCompare } from '../contexts/CompareContext';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { Program } from '../types';
@@ -292,8 +292,21 @@ const ComparePage: React.FC = () => {
         </DynamicBackground>
     );
 
+    const seoTitle = compareList.length > 0 
+        ? `${compareList.map(p => p.program_name).join(' vs ')} | Winona State Explorer`
+        : 'Compare Programs | Winona State University';
+        
+    const seoDescription = compareList.length > 0
+        ? `Compare ${compareList.map(p => p.program_name).join(' and ')} programs at Winona State University. View outcome differences, credit requirements, and more.`
+        : 'Select up to 4 programs to compare credits, enrollment, and outcomes side-by-side at Winona State University.';
+
     return (
         <>
+            <Helmet>
+                <title>{seoTitle}</title>
+                <meta name="description" content={seoDescription} />
+                <link rel="canonical" href="https://explorewsu.com/compare" />
+            </Helmet>
             {compareList.length === 0 ? renderEmptyState() : renderTableView()}
             {isAddModalOpen && <AddProgramModal onClose={() => setAddModalOpen(false)} />}
 

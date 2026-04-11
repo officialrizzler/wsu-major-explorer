@@ -230,8 +230,27 @@ const ProgramDetailPage: React.FC = () => {
     const program = getProgramById(programId);
 
 
-    const siteUrl = "https://explorewsu.vercel.app";
+    const siteUrl = "https://explorewsu.com";
     const canonicalUrl = program ? `${siteUrl}/program/${program.program_id}` : siteUrl;
+
+    const breadcrumbLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Explore Majors",
+                "item": `${siteUrl}/explore`
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": program?.program_name,
+                "item": canonicalUrl
+            }
+        ]
+    };
 
     const jsonLd = program ? {
         "@context": "https://schema.org",
@@ -286,11 +305,21 @@ const ProgramDetailPage: React.FC = () => {
     return (
         <div className="bg-[#f5f5f7] min-h-screen">
             <Helmet>
-                <title>{`${program.program_name} | WSU Explorer`}</title>
-                <meta name="description" content={program.overview ? program.overview.substring(0, 160) + '...' : `Explore the ${program.program_name} program at Winona State University.`} />
+                <title>{`${program.program_name} - Winona State Degree & Careers | WSU Explorer`}</title>
+                <meta name="description" content={program.overview ? program.overview.substring(0, 160).trim() + '...' : `Become a ${program.program_name} expert at Winona State. View required courses, MN salary rankings, and local career opportunities.`} />
                 <link rel="canonical" href={canonicalUrl} />
+                
+                {/* Social Meta Tags */}
+                <meta property="og:title" content={`${program.program_name} | Winona State University`} />
+                <meta property="og:description" content={`Explore coursework, salaries, and top employers for the ${program.program_name} program at Winona State.`} />
+                <meta property="og:url" content={canonicalUrl} />
+                <meta property="og:type" content="article" />
+                
                 <script type="application/ld+json">
                     {JSON.stringify(jsonLd)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbLd)}
                 </script>
             </Helmet>
             <div className={`pt-10 pb-20 border-b border-gray-200 shadow-md ${headerGradientClass}`}>

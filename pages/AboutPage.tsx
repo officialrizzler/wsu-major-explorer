@@ -1,5 +1,5 @@
-
 import React, { useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { AlertTriangle, ArrowRight, User, LineChart, Landmark, MessageSquareText, BarChart3, Globe2, ExternalLink } from 'lucide-react';
 import DynamicBackground from '../components/DynamicBackground';
 import { dataSources } from '../data/wsuData';
@@ -85,6 +85,11 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="bg-[#f5f5f7] min-h-screen">
+      <Helmet>
+        <title>About WSU Explorer | Transparency & Methodology</title>
+        <meta name="description" content="Learn about the methodology and data sources behind WSU Explorer. Discover how we aggregate Winona State University academic and career data." />
+        <link rel="canonical" href="https://explorewsu.com/about" />
+      </Helmet>
       <DynamicBackground className="relative isolate py-24 sm:py-32">
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="mx-auto max-w-4xl">

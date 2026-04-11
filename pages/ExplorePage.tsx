@@ -1,5 +1,6 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useData } from '../contexts/DataContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Search, ChevronDown, ArrowUp } from 'lucide-react';
@@ -102,18 +103,20 @@ const ExplorePage: React.FC = () => {
     const interestId = searchParams.get('interest');
 
 
+    const [seoTitle, setSeoTitle] = useState('Explore Majors | Winona State University');
+    
     useEffect(() => {
-        let title = 'Program Catalog | WSU Explorer';
+        let title = 'Explore Majors | Winona State University';
         if (searchTerm) {
-            title = `Search: "${searchTerm}" | WSU Explorer`;
+            title = `Search: "${searchTerm}" | Winona State Explorer`;
         } else if (interestId) {
             const interestEntry = Object.entries(interestMappings).find(([_, value]) => value.id === interestId);
             if (interestEntry) {
                 const interestName = interestEntry[0].charAt(0).toUpperCase() + interestEntry[0].slice(1);
-                title = `${interestName} Programs | WSU Explorer`;
+                title = `${interestName} Programs | Winona State Explorer`;
             }
         }
-        document.title = title;
+        setSeoTitle(title);
     }, [searchTerm, interestId]);
 
     const filterOptions = useMemo(() => ({
@@ -196,6 +199,11 @@ const ExplorePage: React.FC = () => {
 
     return (
         <DynamicBackground className="bg-[#f5f5f7] min-h-full">
+            <Helmet>
+                <title>{seoTitle}</title>
+                <meta name="description" content="Search and filter through 230+ Winona State University majors and minors. Filter by degree type, college, or interest area." />
+                <link rel="canonical" href={`https://explorewsu.com/explore${interestId ? '?interest=' + interestId : ''}`} />
+            </Helmet>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="text-center mb-8 relative z-10">
                     <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-gray-900 animate-fade-in-up">Explore Programs</h1>

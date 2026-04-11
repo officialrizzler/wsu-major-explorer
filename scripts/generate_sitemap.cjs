@@ -3,7 +3,7 @@ const path = require('path');
 
 const WSU_DATA_PATH = path.join(__dirname, '../data/wsuData.ts');
 const SITEMAP_PATH = path.join(__dirname, '../public/sitemap.xml');
-const BASE_URL = 'https://explorewsu.vercel.app';
+const BASE_URL = 'https://explorewsu.com';
 
 function extractProgramsFromTs() {
   try {
