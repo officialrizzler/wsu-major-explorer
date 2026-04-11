@@ -2,8 +2,8 @@
 import { Program, Department } from '../types';
 import { departments, programsRaw, programEnrollments, programGraduates, careerOutcomes, clubs, dataSources } from '../data/wsuData';
 import { expandDegreeType } from '../utils/formatters';
+import { getCareerContext } from '../data/careerLibrary';
 import { buildProgramFitTraits } from '../utils/programFit';
-
 let fullProgramData: Program[] | null = null;
 let rankedDepartments: Department[] | null = null;
 
@@ -38,7 +38,8 @@ const joinData = (): Program[] => {
         if (!outcomesByProgram.has(outcome.program_id)) {
             outcomesByProgram.set(outcome.program_id, []);
         }
-        outcomesByProgram.get(outcome.program_id)?.push(outcome);
+        const context = getCareerContext(outcome.occupation_code);
+        outcomesByProgram.get(outcome.program_id)?.push({ ...outcome, context });
     });
 
     const clubsByCollege = new Map<string, any[]>();
@@ -53,7 +54,31 @@ const joinData = (): Program[] => {
         const department = departmentsMap.get(p.department_id);
         const enrollment = enrollmentsMap.get(p.program_id);
         const graduates = graduatesMap.get(p.program_id);
-        const outcomes = outcomesByProgram.get(p.program_id) || [];
+        let outcomes = outcomesByProgram.get(p.program_id) || [];
+        
+        // Intelligent Fallback for Minors and Certificates
+        const isMinorOrCert = p.degree_type === 'Minor' || p.credential_level === 'Minor' || p.degree_type.includes('Cert');
+        if (outcomes.length === 0 && isMinorOrCert) {
+            const baseName = p.program_id.replace('-minor', '').replace('-certificate', '').replace('-cert', '');
+            
+            // Try common major forms
+            let fallbackOutcomes = outcomesByProgram.get(`${baseName}-bs`) || 
+                                   outcomesByProgram.get(`${baseName}-ba`) || 
+                                   outcomesByProgram.get(baseName) || [];
+                                   
+            if (fallbackOutcomes.length === 0) {
+                // Try fuzzy match
+                const potentialMatch = Array.from(outcomesByProgram.keys()).find(k => k.startsWith(baseName));
+                if (potentialMatch) {
+                    fallbackOutcomes = outcomesByProgram.get(potentialMatch) || [];
+                }
+            }
+            
+            if (fallbackOutcomes.length > 0) {
+                outcomes = fallbackOutcomes.map(o => ({ ...o, program_id: p.program_id }));
+            }
+        }
+
         const fitTraits = buildProgramFitTraits(p);
 
         const collegeClubs = department ? clubsByCollege.get(department.college_name) || [] : [];

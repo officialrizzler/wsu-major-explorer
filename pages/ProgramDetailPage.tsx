@@ -32,39 +32,173 @@ const Widget: React.FC<{ title: string, icon?: React.ReactNode, children: React.
     );
 };
 
-const CareerOutlookCard: React.FC<{ outcome: CareerOutcome }> = ({ outcome }) => {
+const CareerIntelligenceExplorer: React.FC<{ program: any }> = ({ program }) => {
+    const isMinor = program.credential_level === 'Minor' || program.degree_type === 'Minor' || program.degree_type === 'Certificate' || program.degree_type === 'Certificicate';
+    const outcomes = program.career_outcomes || [];
+
+    if (!outcomes.length) return null;
+
+    if (isMinor) {
+        return (
+            <Widget title="Career Pairings" icon={<Briefcase size={24} className="text-blue-400" />}>
+                <p className="text-sm text-gray-500 mb-6 font-body">Adding this minor provides specific skills that enhance your primary major and open up roles across these fields:</p>
+                <div className="space-y-4">
+                    {outcomes.map((outcome: any) => (
+                        <div key={outcome.occupation_code} className="p-4 bg-gray-50/50 rounded-lg border border-gray-200">
+                            <h4 className="font-bold text-lg text-gray-900 mb-2">{outcome.occupation_title}</h4>
+                            {outcome.context && (
+                                <div className="space-y-2">
+                                    <div className="flex flex-wrap gap-1.5">
+                                        <span className="text-[10px] uppercase font-bold text-gray-500 tracking-wider mr-1 mt-1">Key Skills:</span>
+                                        {outcome.context.technical_skills.map((skill: string) => (
+                                            <span key={skill} className="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-full border border-blue-100">{skill}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </Widget>
+        );
+    }
+
     return (
-        <div className="p-4 bg-gray-50/50 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
-            <h4 className="font-bold text-lg text-gray-900">{outcome.occupation_title}</h4>
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <p className="text-sm text-gray-500 font-body uppercase tracking-wider text-[10px] font-bold">Median Salary (MN)</p>
-                    <p className="text-xl font-semibold text-primary-600">${outcome.median_salary_mn?.toLocaleString() ?? 'N/A'}</p>
-                </div>
-                <div>
-                    <p className="text-sm text-gray-500 font-body uppercase tracking-wider text-[10px] font-bold">10-Year Growth (MN)</p>
-                    <p className="text-xl font-semibold text-primary-600">{outcome.growth_rate_10yr_mn ?? 'N/A'}</p>
-                </div>
+        <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
+            <div className="space-y-8">
+                {outcomes.map((outcome: any, index: number) => (
+                    <div key={outcome.occupation_code} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="p-5 bg-white rounded-xl border border-gray-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
+                                <h4 className="text-[11px] font-black text-gray-900 uppercase tracking-widest mb-4 flex justify-between items-start gap-4">
+                                    <span className="leading-snug">{outcome.occupation_title}</span>
+                                    <span className="text-[8px] font-bold px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 uppercase shrink-0">MN DEED</span>
+                                </h4>
+                                <div className="space-y-4">
+                                    <div className="flex items-end justify-between">
+                                        {(() => {
+                                            const baseSalary = outcome.median_salary_mn || (outcome.median_wage_mn ? Math.round(outcome.median_wage_mn * 2080 / 1000) * 1000 : null);
+                                            return (
+                                                <>
+                                                    <div>
+                                                        <p className="text-xs text-gray-500 font-bold uppercase tracking-wide">Median Salary (MN)</p>
+                                                        <div className="flex items-end gap-2">
+                                                            <p className="text-2xl font-black text-emerald-600 leading-none">${baseSalary ? baseSalary.toLocaleString() : 'N/A'}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">10-Yr Growth</p>
+                                                        <p className="text-sm font-black text-gray-800 leading-none mt-1">{outcome.growth_rate_10yr_mn ?? 'N/A'}</p>
+                                                    </div>
+                                                </>
+                                            );
+                                        })()}
+                                    </div>
+                                    
+                                    {/* Visual Bar */}
+                                    {(() => {
+                                        const baseSalary = outcome.median_salary_mn || (outcome.median_wage_mn ? Math.round(outcome.median_wage_mn * 2080 / 1000) * 1000 : null);
+                                        if (!baseSalary) return null;
+                                        
+                                        const hasExplicitBounds = outcome.wage_10th_mn && outcome.wage_90th_mn;
+                                        
+                                        const parseBound = (boundVal: number) => {
+                                            return boundVal < 500 ? Math.round(boundVal * 2080 / 1000) * 1000 : Math.round(boundVal / 1000) * 1000;
+                                        };
+                                        
+                                        const lowRange = hasExplicitBounds ? parseBound(outcome.wage_10th_mn!) : Math.round(baseSalary * 0.65 / 1000) * 1000;
+                                        const highRange = hasExplicitBounds ? parseBound(outcome.wage_90th_mn!) : Math.round(baseSalary * 1.5 / 1000) * 1000;
+
+                                        return (
+                                            <div className="mt-4 pt-4 border-t border-gray-100">
+                                                <p className="text-[10px] text-gray-500 font-body mb-2 flex justify-between">
+                                                    <span>Entry / Low Range</span>
+                                                    <span>Experienced / High</span>
+                                                </p>
+                                                <div className="relative w-full h-3 bg-gray-100 rounded-full overflow-hidden shadow-inner">
+                                                    <div 
+                                                        className="absolute top-0 bottom-0 left-[15%] right-[15%] bg-gradient-to-r from-emerald-200 via-emerald-400 to-emerald-300 opacity-30 rounded-full"
+                                                    ></div>
+                                                    <div 
+                                                        className="absolute top-0 bottom-0 left-[50%] w-1.5 bg-emerald-600 rounded-full shadow border border-white z-10"
+                                                        style={{ transform: 'translateX(-50%)' }}
+                                                    ></div>
+                                                </div>
+                                                <p className="text-[10px] text-gray-400 font-body mt-2 flex justify-between font-semibold">
+                                                    <span>${lowRange.toLocaleString()}</span>
+                                                    <span className="text-emerald-700">${baseSalary.toLocaleString()}</span>
+                                                    <span>${highRange.toLocaleString()}</span>
+                                                </p>
+                                            </div>
+                                        );
+                                    })()}
+
+                                    <a href={outcome.occupation_data_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-primary-600 hover:text-primary-500 transition-colors uppercase tracking-wider">
+                                        View Full DEED Data <ExternalLink size={10} />
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            {outcome.context && (
+                                <div className="space-y-4">
+                                    <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                        <h4 className="text-[10px] font-black text-gray-900 uppercase tracking-widest mb-2">Technical Skills You'll Need</h4>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {outcome.context.technical_skills.map((skill: string) => (
+                                                <span key={skill} className="px-2.5 py-1 bg-white text-gray-800 text-xs font-bold rounded-md border border-gray-200 shadow-sm">{skill}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                        <h4 className="text-[10px] font-black text-gray-900 uppercase tracking-widest mb-2">Human Skills To Master</h4>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {outcome.context.human_skills.map((skill: string) => (
+                                                <span key={skill} className="px-2.5 py-1 bg-primary-50 text-primary-700 text-xs font-bold rounded-md border border-primary-100">{skill}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {outcome.context && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <h4 className="text-xs font-black text-gray-900 uppercase tracking-widest mb-3 flex items-center gap-2"><CheckCircle size={14} className="text-emerald-500"/> The Day-to-Day</h4>
+                                    <ul className="space-y-2 mb-4">
+                                        {outcome.context.top_tasks.map((task: string) => (
+                                            <li key={task} className="flex items-start gap-2 text-sm text-gray-600 font-body">
+                                                <span className="mt-1.5 w-1 h-1 rounded-full bg-gray-400 shrink-0"></span>
+                                                {task}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    {index === outcomes.length - 1 && Array.isArray(program.related_job_titles) && program.related_job_titles.length > 0 && (
+                                        <div className="pt-3 mt-3 border-t border-gray-100/60">
+                                            <h4 className="text-[10px] font-black text-gray-900 uppercase tracking-widest mb-1">Other Common Roles</h4>
+                                            <p className="text-xs text-gray-500 font-body">
+                                                {program.related_job_titles.slice(0, 4).join(', ')}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="p-4 bg-amber-50 rounded-lg border border-amber-100 flex flex-col justify-start self-start">
+                                    <h4 className="text-xs font-black text-amber-900 uppercase tracking-widest mb-2 flex items-center gap-2"><MapPin size={14} /> Regional Employers</h4>
+                                    <p className="text-xs text-amber-700 font-body mb-3 leading-relaxed">Graduates in this field often find opportunities with these employers in southeast Minnesota:</p>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {outcome.context.regional_employers.map((employer: string) => (
+                                            <span key={employer} className="px-2 py-0.5 bg-white text-amber-800 text-xs font-bold rounded shadow-sm flex items-center gap-1"><Building size={10} className="opacity-50"/> {employer}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
             </div>
-            <a href={outcome.occupation_data_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-primary-600 hover:text-primary-500 transition-colors font-body">
-                View on MN DEED <ExternalLink size={14} />
-            </a>
-        </div>
+        </Widget>
     );
 };
-
-const JobLinkCard: React.FC<{ icon: React.ReactElement<{ size?: number }>, title: string, subtitle: string, href: string }> = ({ icon, title, subtitle, href }) => (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="group p-4 bg-white rounded-xl border border-gray-200 flex items-center gap-4 hover:border-primary-500 hover:bg-gray-50 transition-all shadow-sm">
-        <div className="flex-shrink-0 h-10 w-10 rounded-lg flex items-center justify-center bg-primary-100 text-primary-600">
-            {React.cloneElement(icon, { size: 20 })}
-        </div>
-        <div className="flex-grow min-w-0">
-            <h4 className="font-semibold text-gray-900 truncate text-sm">{title}</h4>
-            <p className="text-[11px] text-gray-500 font-body truncate">{subtitle}</p>
-        </div>
-        <ExternalLink className="text-gray-400 group-hover:text-primary-500 transition" size={16} />
-    </a>
-);
 
 const TrendIcon = ({ trend }: { trend: 'Up' | 'Down' | 'Stable' | null | undefined }) => {
     if (trend === 'Up') return <TrendingUp size={14} className="text-emerald-500" />;
@@ -251,32 +385,7 @@ const ProgramDetailPage: React.FC = () => {
 
                         {Array.isArray(program.career_outcomes) && program.career_outcomes.length > 0 && (
                             <>
-                                <Widget title="Career Outlook" icon={<Briefcase size={24} className="text-blue-400" />}>
-                                    <div className="space-y-6">
-                                        {program.career_outcomes.map(outcome => (
-                                            <CareerOutlookCard key={outcome.occupation_code} outcome={outcome} />
-                                        ))}
-                                    </div>
-
-                                    {Array.isArray(program.related_job_titles) && program.related_job_titles.length > 0 && (
-                                        <div className="mt-6 pt-4 border-t border-gray-100">
-                                            <h3 className="text-xs font-bold mb-2 text-gray-900 uppercase tracking-wider">Other Common Roles</h3>
-                                            <p className="text-sm text-gray-500 font-body">
-                                                {program.related_job_titles.slice(0, 4).join(', ')}
-                                            </p>
-                                        </div>
-                                    )}
-                                </Widget>
-
-                                <Widget title="Explore Job Opportunities" icon={<Building size={24} className="text-amber-400" />}>
-                                    <p className="text-sm text-gray-500 mb-6 font-body">Find jobs related to this major in the Winona area and beyond</p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <JobLinkCard icon={<Building />} title="Indeed" subtitle="Jobs in Winona, MN area" href={`https://www.indeed.com/q-${program.program_name}-jobs.html`} />
-                                        <JobLinkCard icon={<Briefcase />} title="LinkedIn" subtitle="Professional network" href={`https://www.linkedin.com/jobs/search/?keywords=${program.program_name}`} />
-                                        <JobLinkCard icon={<MapPin />} title="Minnesota Works" subtitle="State job bank" href="https://www.minnesotaworks.net/" />
-                                        <JobLinkCard icon={<Handshake />} title="Handshake" subtitle="WSU career platform" href="https://winona.joinhandshake.com/" />
-                                    </div>
-                                </Widget>
+                                <CareerIntelligenceExplorer program={program} />
                             </>
                         )}
 

@@ -60,4 +60,17 @@ Test rate limiting locally:
 for i in {1..16}; do curl -X POST http://localhost:3001/api/chat -H "Content-Type: application/json" -d '{"chatHistory": [], "userQuery": "test"}'; done
 ```
 
-16th request should return 429 error.
+## Data Layer & Fit Traits
+
+The application uses a two-tier data system for program insights ("Why this is/isn't for you"):
+
+1. **Primary Data (`data/wsuData.ts`)**: Contains core program metadata. Generic traits have been removed to prioritize specialized insights.
+2. **Specialized Insights (`utils/programFit.ts`)**: Contains unique `choose` and `avoid` traits for all 237 programs. This file acts as the source of truth for the "Fit" widgets.
+
+### Maintenance
+- **Overrides**: Use `programFitOverrides` in `utils/programFit.ts` for manual corrections.
+- **Deduplication**: The `rawProgramFitTraits` object should contain one unique key per `program_id`.
+- **Fallbacks**: If a program is missing from `programFit.ts`, the system falls back to `defaultTraits`.
+
+## Testing
+... (existing content)

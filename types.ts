@@ -68,10 +68,21 @@ export interface CareerOutcome {
     occupation_code: string;
     occupation_title: string;
     median_wage_mn: number | null;
+    wage_10th_mn?: number | null;
+    wage_90th_mn?: number | null;
     median_salary_mn: number | null;
     growth_rate_10yr_mn: string | null;
     source_id: string;
     occupation_data_url: string;
+    context?: CareerContext; // Hydrated from the Career Library
+}
+
+export interface CareerContext {
+    soc_code: string;
+    top_tasks: string[];
+    technical_skills: string[];
+    human_skills: string[];
+    regional_employers: string[];
 }
 
 export interface Club {
