@@ -12,14 +12,14 @@ const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
 const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 500);
-const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 1000);
-const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 180);
+const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 2000);
+const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 400);
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 4);
-const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 700);
+const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1500);
 const MAX_PROGRAM_CONTEXT_ITEMS = Number(process.env.MAX_PROGRAM_CONTEXT_ITEMS ?? 3);
 const MAX_PROFESSOR_CONTEXT_ITEMS = Number(process.env.MAX_PROFESSOR_CONTEXT_ITEMS ?? 2);
 const TAVILY_MAX_RESULTS = Number(process.env.TAVILY_MAX_RESULTS ?? 3);
-const TAVILY_SNIPPET_CHARS = Number(process.env.TAVILY_SNIPPET_CHARS ?? 280);
+const TAVILY_SNIPPET_CHARS = Number(process.env.TAVILY_SNIPPET_CHARS ?? 2000);
 const DAILY_LIMIT_MESSAGE = "You've reached the 15-message daily limit for Warrior Bot. Please come back tomorrow, or contact Winona State directly if you need immediate help.";
 
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY }) : null;
@@ -470,7 +470,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const shouldEnableToolSearch = !preFetchedSearchContext && !!TAVILY_API_KEY;
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       messages: [
         { role: "system", content: systemInstruction },
         ...trimmedHistory,
@@ -503,7 +503,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
               // Make a second API call with the search results
               const followUp = await openai.chat.completions.create({
-                model: "gpt-4o-mini",
+                model: "gpt-4o",
                 messages: [
                   { role: "system", content: systemInstruction },
                   ...trimmedHistory,
@@ -533,7 +533,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } else if (!responseText && preFetchedSearchContext) {
       const followUp = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         messages: [
           { role: "system", content: systemInstruction },
           ...trimmedHistory,

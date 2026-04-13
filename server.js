@@ -218,7 +218,7 @@ async function runTavilySearch(query) {
       .map((result, index) => {
         const title = result.title || `Result ${index + 1}`;
         const url = result.url || "No URL provided";
-        const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, 280);
+        const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, 2000);
         return `${index + 1}. ${title}\nSource: ${url}\nSnippet: ${content}`;
       })
       .join("\n\n");
@@ -290,7 +290,7 @@ app.post("/api/chat", async (req, res) => {
     const trimmedHistory = chatHistory.slice(-4).map((msg) => {
       const text = msg?.parts?.[0]?.text ?? "";
       const role = msg?.role === "model" ? "assistant" : "user";
-      return { role, content: String(text).slice(0, 700) };
+      return { role, content: String(text).slice(0, 1500) };
     });
 
     // --- Tavily Web Search ---
@@ -308,7 +308,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
@@ -318,7 +318,7 @@ app.post("/api/chat", async (req, res) => {
         ...trimmedHistory,
         { role: "user", content: userQuery.slice(0, 1500) },
       ],
-      max_tokens: 180,
+      max_tokens: 400,
       temperature: 0.7,
     });
 
