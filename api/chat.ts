@@ -11,7 +11,7 @@ const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
-const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
+const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 500);
 const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 1000);
 const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 180);
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 4);
@@ -555,9 +555,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       responseText = "I'm sorry, I couldn't process that.";
     }
 
-    if (requiresHighAccuracy && !preFetchedSearchContext) {
-      responseText = "I couldn't verify that clearly from current official WSU sources. Please check [winona.edu](https://www.winona.edu/) for the most current information.";
-    }
 
     // Smart cache storage with longer TTL for common patterns
     if (redis && responseText) {
