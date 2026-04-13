@@ -10,6 +10,29 @@ import AddProgramModal from '../components/AddProgramModal';
 import ReactMarkdown from 'react-markdown';
 import { getCompareInsights } from '../services/advisorService';
 
+function primaryCareerOutcome(program: Program) {
+    const o = program.career_outcomes?.[0];
+    if (!o) return { amount: null as number | null, occupationTitle: null as string | null };
+    const amount =
+        o.median_salary_mn ??
+        (o.median_wage_mn != null ? Math.round((o.median_wage_mn * 2080) / 1000) * 1000 : null);
+    const occupationTitle = typeof o.occupation_title === "string" ? o.occupation_title.trim() : null;
+    return { amount, occupationTitle: occupationTitle || null };
+}
+
+type CompareMetric = {
+    label: string;
+    getValue: (p: Program) => string | number | null | undefined;
+    higherIsBetter?: boolean;
+    isNumeric?: boolean;
+    isCurrency?: boolean;
+    renderCell?: (args: {
+        program: Program;
+        value: string | number | null | undefined;
+        isBest: boolean;
+    }) => React.ReactNode;
+};
+
 const collegeColorHexMap: Record<string, string> = {
     'College of Business': '#06b6d4',
     'College of Education': '#f59e0b',
@@ -95,7 +118,7 @@ const ComparePage: React.FC = () => {
 
     const totalDepartments = departments.filter(d => d.total_enrollment_fall_2021 != null).length;
 
-    const metrics = [
+    const metrics: CompareMetric[] = [
         { label: "College", getValue: (p: Program) => p.department?.college_name, isNumeric: false },
         { label: "Department", getValue: (p: Program) => p.department?.department_name, isNumeric: false },
         { label: "Department Enrollment & Rank", getValue: (p: Program) => p.department?.total_enrollment_fall_2021 ? `${p.department.total_enrollment_fall_2021} (Rank ${p.department.rank} of ${totalDepartments})` : 'N/A', isNumeric: false },
@@ -105,10 +128,33 @@ const ComparePage: React.FC = () => {
         { label: "Total Credits", getValue: (p: Program) => p.total_credits, higherIsBetter: false, isNumeric: true },
         { label: "Enrollment (Fall 2021)", getValue: (p: Program) => p.enrollment_fall_2021, higherIsBetter: true, isNumeric: true },
         { label: "Graduates (FY 2021)", getValue: (p: Program) => p.graduates_total, higherIsBetter: true, isNumeric: true },
-        { label: "Median Salary (MN 24-25)", getValue: (p: Program) => p.career_outcomes && p.career_outcomes.length > 0 ? p.career_outcomes[0].median_salary_mn : null, higherIsBetter: true, isCurrency: true, isNumeric: true },
+        {
+            label: "Median Salary (MN 24-25)",
+            getValue: (p: Program) => primaryCareerOutcome(p).amount,
+            higherIsBetter: true,
+            isCurrency: true,
+            isNumeric: true,
+            renderCell: ({ program, value, isBest }) => {
+                const { occupationTitle } = primaryCareerOutcome(program);
+                if (value === null || value === undefined) {
+                    return <span className="text-gray-500 italic">N/A</span>;
+                }
+                const amountClass = isBest ? "text-green-600 font-bold" : "text-gray-700";
+                return (
+                    <div className="space-y-1">
+                        <div className={amountClass}>${Number(value).toLocaleString()}</div>
+                        {occupationTitle ? (
+                            <p className="text-xs text-gray-500 font-normal leading-snug">
+                                MN median wage data for: <span className="text-gray-600">{occupationTitle}</span>
+                            </p>
+                        ) : null}
+                    </div>
+                );
+            },
+        },
     ];
 
-    const getBestValue = (metric: any) => {
+    const getBestValue = (metric: CompareMetric) => {
         if (metric.higherIsBetter === undefined) return null;
         const numericValues = compareList.map(p => metric.getValue(p)).filter(v => typeof v === 'number') as number[];
         if (numericValues.length < 2) return null;
@@ -222,17 +268,31 @@ const ComparePage: React.FC = () => {
                                             {compareList.map(p => {
                                                 const value = metric.getValue(p);
                                                 const isBest = value === bestValue && bestValue !== null && typeof value === 'number';
-                                                const displayValue = value === null || value === undefined
-                                                    ? <span className="text-gray-500 italic">N/A</span>
-                                                    : metric.isCurrency ? `$${Number(value).toLocaleString()}` : String(value);
+                                                const displayValue =
+                                                    value === null || value === undefined ? (
+                                                        <span className="text-gray-500 italic">N/A</span>
+                                                    ) : metric.isCurrency && !metric.renderCell ? (
+                                                        `$${Number(value).toLocaleString()}`
+                                                    ) : (
+                                                        String(value)
+                                                    );
 
-                                                const alignClass = metric.isNumeric ? 'text-center' : 'text-left';
+                                                const tdTone = metric.renderCell
+                                                    ? "text-gray-700"
+                                                    : isBest
+                                                      ? "text-green-600 font-bold"
+                                                      : "text-gray-700";
 
                                                 return (
-                                                    <td key={p.program_id} className={`min-w-[220px] p-2 sm:p-4 text-xs sm:text-sm font-body align-middle bg-white border-b border-gray-200 break-words ${alignClass} ${isBest ? 'text-green-600 font-bold' : 'text-gray-700'} transition-colors hover:bg-gray-50`}>
-                                                        {displayValue}
+                                                    <td
+                                                        key={p.program_id}
+                                                        className={`min-w-[220px] p-2 sm:p-4 text-xs sm:text-sm font-body text-left align-top bg-white border-b border-gray-200 break-words ${tdTone} transition-colors hover:bg-gray-50`}
+                                                    >
+                                                        {metric.renderCell
+                                                            ? metric.renderCell({ program: p, value, isBest })
+                                                            : displayValue}
                                                     </td>
-                                                )
+                                                );
                                             })}
                                         </tr>
                                     )

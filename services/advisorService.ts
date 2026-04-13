@@ -155,13 +155,14 @@ export const getCompareInsights = async (programs: any[]): Promise<string> => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-                programs: programs.map(p => ({
+            body: JSON.stringify({
+                programs: programs.map((p) => ({
+                    program_id: p.program_id,
                     program_name: p.program_name,
                     degree_type: p.degree_type,
                     program_credits: p.program_credits,
-                    short_description: p.short_description || ''
-                })) 
+                    short_description: p.short_description || "",
+                })),
             }),
         });
 

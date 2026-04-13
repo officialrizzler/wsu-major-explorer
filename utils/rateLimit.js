@@ -12,6 +12,10 @@ const BURST_WINDOW_SEC = 600;
 const MAX_CHARS = 6000;
 const DAILY_LIMIT_MESSAGE = "You've reached the 15-message daily limit for Warrior Bot. Please come back tomorrow, or contact Winona State directly if you need immediate help.";
 
+const COMPARE_DAILY_LIMIT = 20;
+const COMPARE_DAILY_LIMIT_MESSAGE =
+  "You've reached the daily limit of 20 AI program comparisons. Please try again tomorrow.";
+
 export const redis = (REDIS_URL && REDIS_TOKEN) ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN }) : null;
 if (!redis) console.warn("Rate limiting disabled: Redis environment variables are missing.");
 
@@ -27,6 +31,41 @@ function todayKey() {
   const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
   const dd = String(d.getUTCDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
+}
+
+/**
+ * Limits fresh AI comparison generations (not cache hits). Uses client IP as identity.
+ * @returns {Promise<boolean>} false if response was already sent (429/503)
+ */
+export async function enforceCompareDailyLimit(req, res) {
+  const ip = getClientIp(req);
+  const day = todayKey();
+
+  if (!redis) {
+    console.warn("[rateLimit] Compare daily limit skipped: Redis environment variables are missing.");
+    return true;
+  }
+
+  try {
+    const dailyKey = `ai_compare:quota:${ip}:${day}`;
+    const dailyCount = await redis.incr(dailyKey);
+    if (dailyCount === 1) await redis.expire(dailyKey, 36 * 60 * 60);
+
+    if (dailyCount > COMPARE_DAILY_LIMIT) {
+      res.status(429).json({
+        error: COMPARE_DAILY_LIMIT_MESSAGE,
+        limit: COMPARE_DAILY_LIMIT,
+        used: dailyCount,
+      });
+      return false;
+    }
+
+    return true;
+  } catch (err) {
+    console.error("[rateLimit] compare quota error:", err?.message || err);
+    res.status(503).json({ error: "Rate limiter unavailable", detail: err?.message || String(err) });
+    return false;
+  }
 }
 
 export async function enforceAiLimits(req, res) {
