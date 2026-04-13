@@ -557,7 +557,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
     // Smart cache storage with longer TTL for common patterns
-    if (redis && responseText) {
+    const isBadResponse = /I['’]?m sorry|I couldn['’]?t|I was(?:n['’]t| not) able to|I recommend checking the official|I cannot process/i.test(responseText);
+
+    if (redis && responseText && !isBadResponse) {
       try {
         const normalizedQuery = normalizeQuery(userQuery);
         const cacheKey = `chat_cache:${Buffer.from(normalizedQuery).toString('base64').slice(0, 40)}`;

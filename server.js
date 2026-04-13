@@ -327,9 +327,10 @@ app.post("/api/chat", async (req, res) => {
       completion.choices[0]?.finish_reason === "length"
     );
 
-    // Store in cache for 1 hour
+    // Store in cache
+    const isBadResponse = /I['’]?m sorry|I couldn['’]?t|I was(?:n['’]t| not) able to|I recommend checking the official|I cannot process/i.test(responseText);
     try {
-      if (redis) {
+      if (redis && responseText && !isBadResponse) {
         await redis.set(cacheKey, responseText, { ex: 60 * 60 * 24 * 3 }); // 3 days for base server cache
       }
     } catch (e) { }
