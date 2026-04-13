@@ -223,6 +223,11 @@ async function runTavilySearch(query: string): Promise<string> {
       .sort((a, b) => b.score - a.score)
       .map(({ result }) => result)
       .slice(0, searchMode === "high_accuracy" ? 5 : TAVILY_MAX_RESULTS);
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.error("Tavily search execution error:", error);
+    return "";
+  }
 
   const summarizedResults = filteredResults
     .map((result, index) => {

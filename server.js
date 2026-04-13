@@ -213,6 +213,11 @@ async function runTavilySearch(query) {
       .sort((a, b) => b.score - a.score)
       .map(({ result }) => result)
       .slice(0, searchMode === "high_accuracy" ? 5 : 3);
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.error("[Tavily] search execution error:", error);
+    return "";
+  }
 
   const snippets = filteredResults
     .map((result, index) => {
