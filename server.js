@@ -213,34 +213,34 @@ async function runTavilySearch(query) {
       .sort((a, b) => b.score - a.score)
       .map(({ result }) => result)
       .slice(0, searchMode === "high_accuracy" ? 5 : 3);
+
+    const snippets = filteredResults
+      .map((result, index) => {
+        const title = result.title || `Result ${index + 1}`;
+        const url = result.url || "No URL provided";
+        const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, 280);
+        return `${index + 1}. ${title}\nSource: ${url}\nSnippet: ${content}`;
+      })
+      .join("\n\n");
+
+    const formatted = [
+      "Web search results for context. Prefer official Winona State University pages and cite the source URL briefly when used.",
+      searchMode === "high_accuracy" && tavilyData.answer ? `Answer summary: ${tavilyData.answer}` : "",
+      snippets,
+    ].filter(Boolean).join("\n\n");
+
+    try {
+      if (redis && formatted) {
+        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
+      }
+    } catch (e) { }
+
+    return formatted;
   } catch (error) {
     clearTimeout(timeoutId);
     console.error("[Tavily] search execution error:", error);
     return "";
   }
-
-  const snippets = filteredResults
-    .map((result, index) => {
-      const title = result.title || `Result ${index + 1}`;
-      const url = result.url || "No URL provided";
-      const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, 280);
-      return `${index + 1}. ${title}\nSource: ${url}\nSnippet: ${content}`;
-    })
-    .join("\n\n");
-
-  const formatted = [
-    "Web search results for context. Prefer official Winona State University pages and cite the source URL briefly when used.",
-    searchMode === "high_accuracy" && tavilyData.answer ? `Answer summary: ${tavilyData.answer}` : "",
-    snippets,
-  ].filter(Boolean).join("\n\n");
-
-  try {
-    if (redis && formatted) {
-      await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
-    }
-  } catch (e) { }
-
-  return formatted;
 }
 
 app.post("/api/chat", async (req, res) => {

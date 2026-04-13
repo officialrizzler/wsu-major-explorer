@@ -223,40 +223,40 @@ async function runTavilySearch(query: string): Promise<string> {
       .sort((a, b) => b.score - a.score)
       .map(({ result }) => result)
       .slice(0, searchMode === "high_accuracy" ? 5 : TAVILY_MAX_RESULTS);
+
+    const summarizedResults = filteredResults
+      .map((result, index) => {
+        const title = result.title || `Result ${index + 1}`;
+        const url = result.url || "No URL provided";
+        const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, TAVILY_SNIPPET_CHARS);
+        return `${index + 1}. ${title}\nURL: ${url}\nSnippet: ${content}`;
+      })
+      .join("\n\n");
+
+    if (!searchResults.answer && !summarizedResults) {
+      return "";
+    }
+
+    const formatted = [
+      "Web search results for context. Prefer official Winona State University pages and cite them with markdown links when used.",
+      searchMode === "high_accuracy" && searchResults.answer ? `Answer summary: ${searchResults.answer}` : "",
+      summarizedResults
+    ].filter(Boolean).join("\n\n");
+
+    if (redis && formatted) {
+      try {
+        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
+      } catch (error) {
+        console.error("Tavily cache set error:", error);
+      }
+    }
+
+    return formatted;
   } catch (error) {
     clearTimeout(timeoutId);
     console.error("Tavily search execution error:", error);
     return "";
   }
-
-  const summarizedResults = filteredResults
-    .map((result, index) => {
-      const title = result.title || `Result ${index + 1}`;
-      const url = result.url || "No URL provided";
-      const content = (result.content || "").replace(/\s+/g, " ").trim().slice(0, TAVILY_SNIPPET_CHARS);
-      return `${index + 1}. ${title}\nURL: ${url}\nSnippet: ${content}`;
-    })
-    .join("\n\n");
-
-  if (!searchResults.answer && !summarizedResults) {
-    return "";
-  }
-
-  const formatted = [
-    "Web search results for context. Prefer official Winona State University pages and cite them with markdown links when used.",
-    searchMode === "high_accuracy" && searchResults.answer ? `Answer summary: ${searchResults.answer}` : "",
-    summarizedResults
-  ].filter(Boolean).join("\n\n");
-
-  if (redis && formatted) {
-    try {
-      await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
-    } catch (error) {
-      console.error("Tavily cache set error:", error);
-    }
-  }
-
-  return formatted;
 }
 
 /**
