@@ -113,7 +113,9 @@ function scoreSearchResult(result, queryTerms) {
 }
 
 function shouldUseWebSearch(query) {
-  return isTimeSensitiveQuery(query) || /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(query);
+  const q = query.toLowerCase();
+  const trigger = isTimeSensitiveQuery(query) || /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(q);
+  return trigger;
 }
 
 async function verifyTurnstileToken(token, remoteIp) {
@@ -158,35 +160,59 @@ async function runTavilySearch(query) {
     }
   } catch (e) { }
 
-  const tavilyRes = await fetch("https://api.tavily.com/search", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      api_key: TAVILY_API_KEY,
-      query: normalizedQuery,
-      search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
-      max_results: searchMode === "high_accuracy" ? 5 : 3,
-      include_answer: searchMode === "high_accuracy",
-      include_domains: ["winona.edu"],
-    }),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-  if (!tavilyRes.ok) {
-    throw new Error(`Tavily responded with status ${tavilyRes.status}`);
-  }
+  try {
+    const tavilyRes = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        api_key: TAVILY_API_KEY,
+        apiKey: TAVILY_API_KEY,
+        query: normalizedQuery,
+        search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
+        max_results: searchMode === "high_accuracy" ? 6 : 4,
+        include_answer: searchMode === "high_accuracy",
+        include_domains: ["winona.edu", "winonastate.edu", "catalog.winona.edu", "blogs.winona.edu"],
+      }),
+    });
 
-  const tavilyData = await tavilyRes.json();
-  const queryTerms = extractQueryTerms(query);
-  const filteredResults = (tavilyData.results || [])
-    .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
-    .filter(({ score, result }) => {
-      if (/winona\.edu/i.test(result.url || "") === false) return false;
-      if (queryTerms.length === 0) return true;
-      return score >= (searchMode === "high_accuracy" ? 3 : 2);
-    })
-    .sort((a, b) => b.score - a.score)
-    .map(({ result }) => result)
-    .slice(0, searchMode === "high_accuracy" ? 5 : 3);
+    clearTimeout(timeoutId);
+
+    if (!tavilyRes.ok) {
+      let errorDetail = "";
+      try {
+        const errJson = await tavilyRes.json();
+        errorDetail = errJson.detail || errJson.message || JSON.stringify(errJson);
+      } catch (e) {}
+      console.error(`[Tavily] API Error [${tavilyRes.status}]: ${errorDetail}`);
+      return "";
+    }
+
+    const tavilyData = await tavilyRes.json();
+    const queryTerms = extractQueryTerms(query);
+    
+    const rawResults = tavilyData.results || [];
+    if (rawResults.length === 0 && !tavilyData.answer) {
+      console.log(`[Tavily] 0 results for: ${normalizedQuery}`);
+      return "";
+    }
+
+    const filteredResults = rawResults
+      .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
+      .filter(({ score, result }) => {
+        const url = (result.url || "").toLowerCase();
+        const isOfficial = url.includes("winona.edu") || url.includes("winonastate.edu");
+        if (!isOfficial) return false;
+        
+        if (queryTerms.length === 0) return true;
+        return score >= (searchMode === "high_accuracy" ? 2 : 1);
+      })
+      .sort((a, b) => b.score - a.score)
+      .map(({ result }) => result)
+      .slice(0, searchMode === "high_accuracy" ? 5 : 3);
 
   const snippets = filteredResults
     .map((result, index) => {

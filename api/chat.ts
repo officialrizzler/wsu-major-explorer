@@ -105,7 +105,7 @@ function extractQueryTerms(query: string): string[] {
         .replace(/[^\w\s]/g, " ")
         .split(/\s+/)
         .filter((term) => term.length >= 4)
-        .filter((term) => !["winona", "state", "university", "with", "from", "what", "when", "where", "which", "about", "that", "this", "have", "does"].includes(term))
+        .filter((term) => !["winona", "state", "university", "with", "from", "what", "when", "where", "which", "about", "that", "this", "have", "does", "been", "were", "many", "much"].includes(term))
     )
   ).slice(0, 8);
 }
@@ -140,7 +140,7 @@ function shouldUseWebSearch(
     return true;
   }
 
-  return factualQuestionPattern.test(query) && !hasProgramMatches && !hasProfessorMatches;
+  return factualQuestionPattern.test(query) || isTimeSensitiveQuery(userQuery);
 }
 
 async function runTavilySearch(query: string): Promise<string> {
@@ -167,37 +167,62 @@ async function runTavilySearch(query: string): Promise<string> {
     }
   }
 
-  const tavilyResponse = await fetch("https://api.tavily.com/search", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      api_key: TAVILY_API_KEY,
-      query: normalizedQuery,
-      search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
-      include_answer: searchMode === "high_accuracy",
-      max_results: searchMode === "high_accuracy" ? Math.max(TAVILY_MAX_RESULTS, 5) : TAVILY_MAX_RESULTS,
-      include_domains: ["winona.edu"]
-    })
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-  if (!tavilyResponse.ok) {
-    throw new Error(`Tavily responded with status ${tavilyResponse.status}`);
-  }
+  try {
+    const tavilyResponse = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        api_key: TAVILY_API_KEY,
+        apiKey: TAVILY_API_KEY, // Modern Tavily uses apiKey
+        query: normalizedQuery,
+        search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
+        include_answer: searchMode === "high_accuracy",
+        max_results: searchMode === "high_accuracy" ? 6 : 4,
+        include_domains: ["winona.edu", "winonastate.edu", "catalog.winona.edu", "blogs.winona.edu"]
+      })
+    });
 
-  const searchResults = await tavilyResponse.json() as TavilySearchResponse;
-  const queryTerms = extractQueryTerms(query);
-  const filteredResults = (searchResults.results || [])
-    .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
-    .filter(({ score, result }) => {
-      if (/winona\.edu/i.test(result.url || "") === false) return false;
-      if (queryTerms.length === 0) return true;
-      return score >= (searchMode === "high_accuracy" ? 3 : 2);
-    })
-    .sort((a, b) => b.score - a.score)
-    .map(({ result }) => result)
-    .slice(0, searchMode === "high_accuracy" ? 5 : TAVILY_MAX_RESULTS);
+    clearTimeout(timeoutId);
+
+    if (!tavilyResponse.ok) {
+      let errorDetail = "";
+      try {
+        const errJson = await tavilyResponse.json() as any;
+        errorDetail = errJson.detail || errJson.message || JSON.stringify(errJson);
+      } catch (e) {}
+      console.error(`Tavily API Error [${tavilyResponse.status}]: ${errorDetail}`);
+      return "";
+    }
+
+    const searchResults = await tavilyResponse.json() as TavilySearchResponse;
+    const queryTerms = extractQueryTerms(query);
+    
+    const rawResults = searchResults.results || [];
+    if (rawResults.length === 0 && !searchResults.answer) {
+      console.log(`Tavily returned 0 results for: ${normalizedQuery}`);
+      return "";
+    }
+
+    const filteredResults = rawResults
+      .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
+      .filter(({ score, result }) => {
+        const url = (result.url || "").toLowerCase();
+        const isOfficial = url.includes("winona.edu") || url.includes("winonastate.edu");
+        if (!isOfficial) return false;
+        
+        if (queryTerms.length === 0) return true;
+        // Moderate threshold: 2 for any official site match + some content overlap
+        return score >= (searchMode === "high_accuracy" ? 2 : 1);
+      })
+      .sort((a, b) => b.score - a.score)
+      .map(({ result }) => result)
+      .slice(0, searchMode === "high_accuracy" ? 5 : TAVILY_MAX_RESULTS);
 
   const summarizedResults = filteredResults
     .map((result, index) => {
