@@ -6,11 +6,11 @@ dotenv.config({ path: ".env.local" });
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-const DAILY_LIMIT = 500;
-const BURST_LIMIT = 100;
+const DAILY_LIMIT = 15;
+const BURST_LIMIT = 20;
 const BURST_WINDOW_SEC = 600;
 const MAX_CHARS = 6000;
-const DAILY_LIMIT_MESSAGE = "You've reached the 500-message daily limit for Warrior Bot. Please come back tomorrow.";
+const DAILY_LIMIT_MESSAGE = "You've reached the 15-message daily limit for Warrior Bot. Please come back tomorrow, or contact Winona State directly if you need immediate help.";
 
 export const redis = (REDIS_URL && REDIS_TOKEN) ? new Redis({ url: REDIS_URL, token: REDIS_TOKEN }) : null;
 if (!redis) console.warn("Rate limiting disabled: Redis environment variables are missing.");

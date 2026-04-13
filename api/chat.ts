@@ -11,7 +11,7 @@ const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
-const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 500);
+const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
 const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 2000);
 const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 400);
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 4);
