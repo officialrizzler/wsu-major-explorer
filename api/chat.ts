@@ -245,7 +245,7 @@ async function runTavilySearch(query: string): Promise<string> {
 
     if (redis && formatted) {
       try {
-        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
+        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 60 * 3 : searchMode === "high_accuracy" ? 60 * 60 * 24 : 60 * 60 * 24 * 7 });
       } catch (error) {
         console.error("Tavily cache set error:", error);
       }
@@ -565,10 +565,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Longer cache for common question patterns (24 hours vs 1 hour)
         const isCommonQuestion = /cost|tuition|fees|admission|deadline|program|major|housing|financial aid/i.test(normalizedQuery);
         const ttl = isTimeSensitive
-          ? 60 * 30
+          ? 60 * 60 * 3 // 3 hours
           : isCommonQuestion
-            ? 60 * 60 * 24
-            : 60 * 60;
+            ? 60 * 60 * 24 * 7 // 7 days
+            : 60 * 60 * 24; // 24 hours
 
         await redis.set(cacheKey, responseText, { ex: ttl });
         console.log(`Cached response for: ${normalizedQuery} (TTL: ${ttl}s)`);

@@ -231,7 +231,7 @@ async function runTavilySearch(query) {
 
     try {
       if (redis && formatted) {
-        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 30 : searchMode === "high_accuracy" ? 60 * 60 : 60 * 60 * 12 });
+        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 60 * 3 : searchMode === "high_accuracy" ? 60 * 60 * 24 : 60 * 60 * 24 * 7 });
       }
     } catch (e) { }
 
@@ -330,7 +330,7 @@ app.post("/api/chat", async (req, res) => {
     // Store in cache for 1 hour
     try {
       if (redis) {
-        await redis.set(cacheKey, responseText, { ex: 3600 });
+        await redis.set(cacheKey, responseText, { ex: 60 * 60 * 24 * 3 }); // 3 days for base server cache
       }
     } catch (e) { }
 
