@@ -1,5 +1,18 @@
 import { systemInstruction } from "./utils/ai_config.js";
 import { enforceAiLimits, redis } from "./utils/rateLimit.js";
+import {
+  buildWsuSearchQuery,
+  chatResponseCacheKey,
+  extractQueryTerms,
+  getChatResponseCacheTtlSec,
+  getTavilyCacheTtlSec,
+  isLikelyUniversitySpecificQuestion,
+  isTimeSensitiveQuery,
+  normalizeChatCacheQuery,
+  pickOfficialTavilyResults,
+  shouldPrefetchWebSearch,
+  tavilyResponseCacheKey,
+} from "./utils/advisorSearch.js";
 import cors from "cors";
 import express from "express";
 import OpenAI from "openai";
@@ -69,55 +82,6 @@ function trimToNaturalEnding(text, wasTruncated) {
   return `${normalized}...`;
 }
 
-function buildWsuSearchQuery(query) {
-  if (/winona state|wsu|winona\.edu/i.test(query)) {
-    return query.trim();
-  }
-
-  return `Winona State University site:winona.edu ${query}`.trim();
-}
-
-function isTimeSensitiveQuery(query) {
-  return /\b(latest|current|currently|today|now|right now|this year|this semester|this fall|this spring|up to date|updated|as of|2025|2026|deadline|deadlines|tuition|cost|fees|housing|admission|admissions|requirements|application|calendar|event|events|start date|semester|fafsa|scholarship|financial aid)\b/i.test(query);
-}
-
-function isLikelyUniversitySpecificQuestion(query) {
-  return /\b(wsu|winona state|university|campus|department|program|major|minor|housing|residence|admission|admissions|financial aid|tuition|fees|deadline|requirements|advisor|professor|faculty|student services|dorm|meal plan|visit|tour)\b/i.test(query);
-}
-
-function extractQueryTerms(query) {
-  return Array.from(
-    new Set(
-      query
-        .toLowerCase()
-        .replace(/[^\w\s]/g, " ")
-        .split(/\s+/)
-        .filter((term) => term.length >= 4)
-        .filter((term) => !["winona", "state", "university", "with", "from", "what", "when", "where", "which", "about", "that", "this", "have", "does"].includes(term))
-    )
-  ).slice(0, 8);
-}
-
-function scoreSearchResult(result, queryTerms) {
-  const haystack = `${result.title || ""} ${result.url || ""} ${result.content || ""}`.toLowerCase();
-  let score = 0;
-
-  for (const term of queryTerms) {
-    if (haystack.includes(term)) score += 2;
-  }
-
-  if (/winona\.edu/i.test(result.url || "")) score += 2;
-  if (/housing|residence|admission|tuition|financial aid|program|department|student/i.test(result.title || "")) score += 1;
-
-  return score;
-}
-
-function shouldUseWebSearch(query) {
-  const q = query.toLowerCase();
-  const trigger = isTimeSensitiveQuery(query) || /advisor|advising|tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i.test(q);
-  return trigger;
-}
-
 async function verifyTurnstileToken(token, remoteIp) {
   if (!TURNSTILE_SECRET_KEY) return true;
   if (!token) return false;
@@ -151,7 +115,7 @@ async function runTavilySearch(query) {
     : "standard";
 
   const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
-  const searchCacheKey = `tavily_cache:${searchMode}:${Buffer.from(normalizedQuery).toString("base64").slice(0, 40)}`;
+  const searchCacheKey = tavilyResponseCacheKey(searchMode, normalizedQuery);
 
   try {
     if (redis) {
@@ -175,7 +139,13 @@ async function runTavilySearch(query) {
         search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
         max_results: searchMode === "high_accuracy" ? 6 : 4,
         include_answer: searchMode === "high_accuracy",
-        include_domains: ["winona.edu", "winonastate.edu", "catalog.winona.edu", "blogs.winona.edu"],
+        include_domains: [
+          "winona.edu",
+          "winonastate.edu",
+          "catalog.winona.edu",
+          "blogs.winona.edu",
+          "library.winona.edu",
+        ],
       }),
     });
 
@@ -200,19 +170,10 @@ async function runTavilySearch(query) {
       return "";
     }
 
-    const filteredResults = rawResults
-      .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
-      .filter(({ score, result }) => {
-        const url = (result.url || "").toLowerCase();
-        const isOfficial = url.includes("winona.edu") || url.includes("winonastate.edu");
-        if (!isOfficial) return false;
-        
-        if (queryTerms.length === 0) return true;
-        return score >= (searchMode === "high_accuracy" ? 2 : 1);
-      })
-      .sort((a, b) => b.score - a.score)
-      .map(({ result }) => result)
-      .slice(0, searchMode === "high_accuracy" ? 5 : 3);
+    const filteredResults = pickOfficialTavilyResults(rawResults, queryTerms, searchMode).slice(
+      0,
+      searchMode === "high_accuracy" ? 5 : 3,
+    );
 
     const snippets = filteredResults
       .map((result, index) => {
@@ -231,7 +192,7 @@ async function runTavilySearch(query) {
 
     try {
       if (redis && formatted) {
-        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 60 * 3 : searchMode === "high_accuracy" ? 60 * 60 * 24 : 60 * 60 * 24 * 7 });
+        await redis.set(searchCacheKey, formatted, { ex: getTavilyCacheTtlSec(query, searchMode) });
       }
     } catch (e) { }
 
@@ -267,10 +228,11 @@ app.post("/api/chat", async (req, res) => {
       return res.status(403).json({ error: "Security check failed. Please refresh and try again." });
     }
 
-    // --- Backend Cache (Redis) ---
-    const cacheKey = `ai:cache:${Buffer.from(userQuery).toString('base64').slice(0, 32)}`;
+    const isTimeSensitive = isTimeSensitiveQuery(userQuery);
+    const normalizedForCache = normalizeChatCacheQuery(userQuery);
+    const cacheKey = chatResponseCacheKey(normalizedForCache);
     try {
-      if (redis && !isTimeSensitiveQuery(userQuery)) {
+      if (redis && !isTimeSensitive) {
         const cached = await redis.get(cacheKey);
         if (cached) return res.json({ text: cached });
       }
@@ -295,7 +257,7 @@ app.post("/api/chat", async (req, res) => {
 
     // --- Tavily Web Search ---
     let tavilyContext = "";
-    if (TAVILY_API_KEY && shouldUseWebSearch(userQuery)) {
+    if (TAVILY_API_KEY && shouldPrefetchWebSearch(userQuery, undefined, undefined)) {
       try {
         tavilyContext = await runTavilySearch(userQuery);
         if (tavilyContext) {
@@ -331,7 +293,9 @@ app.post("/api/chat", async (req, res) => {
     const isBadResponse = /I['’]?m sorry|I couldn['’]?t|I was(?:n['’]t| not) able to|I recommend checking the official|I cannot process/i.test(responseText);
     try {
       if (redis && responseText && !isBadResponse) {
-        await redis.set(cacheKey, responseText, { ex: 60 * 60 * 24 * 3 }); // 3 days for base server cache
+        await redis.set(cacheKey, responseText, {
+          ex: getChatResponseCacheTtlSec(userQuery, normalizedForCache, isTimeSensitive),
+        });
       }
     } catch (e) { }
 

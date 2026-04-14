@@ -34,13 +34,20 @@ Get from: https://tavily.com
 - Stored in Redis (persists across server restarts)
 - Resets daily at midnight UTC
 
-Current settings in `/api/chat.ts`:
-```typescript
-RATE_LIMIT_MAX_REQUESTS = 15  // Max messages per day
-MAX_HISTORY_MESSAGES = 5      // Conversation memory (last 5 exchanges)
-MAX_INPUT_CHARS = 1000        // Max question length
-MAX_OUTPUT_TOKENS = 300       // Max response length
-```
+Current defaults in `/api/chat.ts` (override with env vars):
+- `RATE_LIMIT_MAX_REQUESTS` — 15 messages/day per IP
+- `MAX_HISTORY_MESSAGES` — 4
+- `MAX_INPUT_CHARS` — 2000
+- `MAX_OUTPUT_TOKENS` — 512
+
+### Cache invalidation (after prompt or search changes)
+
+Redis keys are **versioned** so old answers are not reused after you improve the AI:
+
+- Set in Vercel: `AI_CACHE_VERSION=4` (increment any time you change Warrior Bot instructions, Tavily filtering, or cache TTL logic).
+- Default in code is `3` until you bump it.
+
+Chat responses cache for **4–8 hours** (not days). Tavily snippets cache **90 minutes–12 hours** depending on query type.
 
 ## How Web Search Works
 

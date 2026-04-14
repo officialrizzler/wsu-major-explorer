@@ -3,6 +3,19 @@
 import OpenAI from "openai";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Redis } from "@upstash/redis";
+import {
+  buildWsuSearchQuery,
+  chatResponseCacheKey,
+  extractQueryTerms,
+  getChatResponseCacheTtlSec,
+  getTavilyCacheTtlSec,
+  isLikelyUniversitySpecificQuestion,
+  isTimeSensitiveQuery,
+  normalizeChatCacheQuery,
+  pickOfficialTavilyResults,
+  shouldPrefetchWebSearch,
+  tavilyResponseCacheKey,
+} from "../utils/advisorSearch.js";
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const UPSTASH_REDIS_REST_URL = process.env.UPSTASH_REDIS_REST_URL;
@@ -11,9 +24,9 @@ const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
-const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
+const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 150);
 const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 2000);
-const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 400);
+const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 512);
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 4);
 const MAX_HISTORY_MSG_CHARS = Number(process.env.MAX_HISTORY_MSG_CHARS ?? 1500);
 const MAX_PROGRAM_CONTEXT_ITEMS = Number(process.env.MAX_PROGRAM_CONTEXT_ITEMS ?? 3);
@@ -81,68 +94,6 @@ function trimToNaturalEnding(text: string, wasTruncated: boolean): string {
   return `${normalized}...`;
 }
 
-function buildWsuSearchQuery(query: string): string {
-  if (/winona state|wsu|winona\.edu/i.test(query)) {
-    return query.trim();
-  }
-
-  return `Winona State University site:winona.edu ${query}`.trim();
-}
-
-function isTimeSensitiveQuery(query: string): boolean {
-  return /\b(latest|current|currently|today|now|right now|this year|this semester|this fall|this spring|up to date|updated|as of|2025|2026|deadline|deadlines|tuition|cost|fees|housing|admission|admissions|requirements|application|calendar|event|events|start date|semester|fafsa|scholarship|financial aid)\b/i.test(query);
-}
-
-function isLikelyUniversitySpecificQuestion(query: string): boolean {
-  return /\b(wsu|winona state|university|campus|department|program|major|minor|housing|residence|admission|admissions|financial aid|tuition|fees|deadline|requirements|advisor|professor|faculty|student services|dorm|meal plan|visit|tour)\b/i.test(query);
-}
-
-function extractQueryTerms(query: string): string[] {
-  return Array.from(
-    new Set(
-      query
-        .toLowerCase()
-        .replace(/[^\w\s]/g, " ")
-        .split(/\s+/)
-        .filter((term) => term.length >= 4)
-        .filter((term) => !["winona", "state", "university", "with", "from", "what", "when", "where", "which", "about", "that", "this", "have", "does", "been", "were", "many", "much"].includes(term))
-    )
-  ).slice(0, 8);
-}
-
-function scoreSearchResult(result: TavilyResult, queryTerms: string[]): number {
-  const haystack = `${result.title || ""} ${result.url || ""} ${result.content || ""}`.toLowerCase();
-  let score = 0;
-
-  for (const term of queryTerms) {
-    if (haystack.includes(term)) score += 2;
-  }
-
-  if (/winona\.edu/i.test(result.url || "")) score += 2;
-  if (/housing|residence|admission|tuition|financial aid|program|department|student/i.test(result.title || "")) score += 1;
-
-  return score;
-}
-
-function shouldUseWebSearch(
-  userQuery: string,
-  programContext: unknown,
-  professorContext: unknown
-): boolean {
-  const query = userQuery.toLowerCase();
-  const hasProgramMatches = Array.isArray(programContext) && programContext.length > 0;
-  const hasProfessorMatches = Array.isArray(professorContext) && professorContext.length > 0;
-
-  const currentInfoPattern = /tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event/i;
-  const factualQuestionPattern = /\b(what|when|where|how much|how many|can i|do they|is there|are there)\b/i;
-
-  if (isTimeSensitiveQuery(userQuery) || currentInfoPattern.test(query)) {
-    return true;
-  }
-
-  return factualQuestionPattern.test(query) || isTimeSensitiveQuery(userQuery);
-}
-
 async function runTavilySearch(query: string): Promise<string> {
   if (!TAVILY_API_KEY) {
     return "";
@@ -154,7 +105,7 @@ async function runTavilySearch(query: string): Promise<string> {
       : "standard";
 
   const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
-  const searchCacheKey = `tavily_cache:${searchMode}:${Buffer.from(normalizedQuery).toString("base64").slice(0, 40)}`;
+  const searchCacheKey = tavilyResponseCacheKey(searchMode, normalizedQuery);
 
   if (redis) {
     try {
@@ -184,7 +135,13 @@ async function runTavilySearch(query: string): Promise<string> {
         search_depth: searchMode === "high_accuracy" ? "advanced" : "basic",
         include_answer: searchMode === "high_accuracy",
         max_results: searchMode === "high_accuracy" ? 6 : 4,
-        include_domains: ["winona.edu", "winonastate.edu", "catalog.winona.edu", "blogs.winona.edu"]
+        include_domains: [
+          "winona.edu",
+          "winonastate.edu",
+          "catalog.winona.edu",
+          "blogs.winona.edu",
+          "library.winona.edu",
+        ],
       })
     });
 
@@ -209,20 +166,10 @@ async function runTavilySearch(query: string): Promise<string> {
       return "";
     }
 
-    const filteredResults = rawResults
-      .map((result) => ({ result, score: scoreSearchResult(result, queryTerms) }))
-      .filter(({ score, result }) => {
-        const url = (result.url || "").toLowerCase();
-        const isOfficial = url.includes("winona.edu") || url.includes("winonastate.edu");
-        if (!isOfficial) return false;
-        
-        if (queryTerms.length === 0) return true;
-        // Moderate threshold: 2 for any official site match + some content overlap
-        return score >= (searchMode === "high_accuracy" ? 2 : 1);
-      })
-      .sort((a, b) => b.score - a.score)
-      .map(({ result }) => result)
-      .slice(0, searchMode === "high_accuracy" ? 5 : TAVILY_MAX_RESULTS);
+    const filteredResults = pickOfficialTavilyResults(rawResults, queryTerms, searchMode).slice(
+      0,
+      searchMode === "high_accuracy" ? 5 : TAVILY_MAX_RESULTS,
+    );
 
     const summarizedResults = filteredResults
       .map((result, index) => {
@@ -245,7 +192,7 @@ async function runTavilySearch(query: string): Promise<string> {
 
     if (redis && formatted) {
       try {
-        await redis.set(searchCacheKey, formatted, { ex: isTimeSensitiveQuery(query) ? 60 * 60 * 3 : searchMode === "high_accuracy" ? 60 * 60 * 24 : 60 * 60 * 24 * 7 });
+        await redis.set(searchCacheKey, formatted, { ex: getTavilyCacheTtlSec(query, searchMode) });
       } catch (error) {
         console.error("Tavily cache set error:", error);
       }
@@ -351,28 +298,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(403).json({ error: "Security check failed. Please refresh and try again." });
     }
 
-    // Smart cache: Normalize queries to catch common variations
-    const normalizeQuery = (query: string): string => {
-      return query
-        .toLowerCase()
-        .replace(/[^\w\s]/g, '') // Remove punctuation
-        .replace(/\s+/g, ' ')     // Normalize spaces
-        .trim()
-        .replace(/winona state university|wsu|winona state/gi, 'wsu') // Normalize school name
-        .replace(/how much does|what does|whats the cost|what is the cost/gi, 'cost')
-        .replace(/tuition|fees|price/gi, 'cost');
-    };
-
-    // Check cache with normalized query
     const isTimeSensitive = isTimeSensitiveQuery(userQuery);
 
     if (redis && !isTimeSensitive) {
       try {
-        const normalizedQuery = normalizeQuery(userQuery);
-        const cacheKey = `chat_cache:${Buffer.from(normalizedQuery).toString('base64').slice(0, 40)}`;
+        const normalizedForCache = normalizeChatCacheQuery(userQuery);
+        const cacheKey = chatResponseCacheKey(normalizedForCache);
         const cached = await redis.get<string>(cacheKey);
         if (cached) {
-          console.log(`Cache hit for: ${normalizedQuery}`);
+          console.log(`Chat cache hit: ${cacheKey.slice(0, 24)}…`);
           return res.status(200).json({ text: cached });
         }
       } catch (e) {
@@ -419,20 +353,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return { role, content: String(text).slice(0, MAX_HISTORY_MSG_CHARS) };
       });
 
-    const requiresHighAccuracy = shouldUseWebSearch(userQuery, programContext, professorContext) &&
-      (isTimeSensitiveQuery(userQuery) || isLikelyUniversitySpecificQuestion(userQuery));
-
     const baseSystemInstruction =
       `You are Warrior Bot, WSU's AI advisor. Help students explore programs using the provided WSU data first. ` +
-      `For current website information not covered by the provided context, use the available web search context or web_search tool before answering. ` +
-      `Answer directly without narrating searches. Prefer official winona.edu sources and include markdown links when they help. ` +
-      `Keep responses concise by default while still being helpful. Use exact program details from context, and prioritize giving a helpful answer. ` +
-      `For university-specific questions, answer directly using the provided search evidence. Even if the evidence is not perfectly complete, provide the information you have. Do not refuse to answer or say you could not verify unless absolutely no information was found. ` +
-      `If timing matters, briefly note the relevant date or timeframe. ` +
+      `For anything factual about Winona State (policies, dates, costs, requirements, offerings) that is not explicitly in the provided context, you MUST rely on the web search context below and/or call the web_search tool — do not guess from general knowledge. ` +
+      `Answer directly without narrating that you searched. Prefer official winona.edu / catalog links and cite them briefly in markdown when you use them. ` +
+      `If web snippets are incomplete, say what you can confirm from them and what students should double-check on the linked page. Only refuse if there is truly no relevant WSU information. ` +
+      `If timing matters, note the timeframe or suggest confirming on the live site. ` +
       contextSnippet;
 
     let preFetchedSearchContext = "";
-    if (shouldUseWebSearch(userQuery, programContext, professorContext) && TAVILY_API_KEY) {
+    if (shouldPrefetchWebSearch(userQuery, programContext, professorContext) && TAVILY_API_KEY) {
       try {
         preFetchedSearchContext = await runTavilySearch(userQuery);
         if (preFetchedSearchContext) {
@@ -452,7 +382,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         type: "function" as const,
         function: {
           name: "web_search",
-          description: "Searches the web for current information about Winona State University. Use this when asked about information not in the provided WSU data, such as tuition costs, admission requirements, campus events, deadlines, etc.",
+          description:
+            "Search the official WSU web presence (winona.edu) for current, specific facts. Call this whenever the user asks for Winona State details that are not fully in the provided context (costs, deadlines, requirements, policies, contacts, dates, programs). Prefer queries that include 'Winona State' or 'WSU'.",
           parameters: {
             type: "object",
             properties: {
@@ -467,7 +398,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     ];
 
-    const shouldEnableToolSearch = !preFetchedSearchContext && !!TAVILY_API_KEY;
+    const shouldEnableToolSearch =
+      !!TAVILY_API_KEY &&
+      (!preFetchedSearchContext || preFetchedSearchContext.trim().length < 140);
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -561,19 +494,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (redis && responseText && !isBadResponse) {
       try {
-        const normalizedQuery = normalizeQuery(userQuery);
-        const cacheKey = `chat_cache:${Buffer.from(normalizedQuery).toString('base64').slice(0, 40)}`;
-
-        // Longer cache for common question patterns (24 hours vs 1 hour)
-        const isCommonQuestion = /cost|tuition|fees|admission|deadline|program|major|housing|financial aid/i.test(normalizedQuery);
-        const ttl = isTimeSensitive
-          ? 60 * 60 * 3 // 3 hours
-          : isCommonQuestion
-            ? 60 * 60 * 24 * 7 // 7 days
-            : 60 * 60 * 24; // 24 hours
+        const normalizedForCache = normalizeChatCacheQuery(userQuery);
+        const cacheKey = chatResponseCacheKey(normalizedForCache);
+        const ttl = getChatResponseCacheTtlSec(userQuery, normalizedForCache, isTimeSensitive);
 
         await redis.set(cacheKey, responseText, { ex: ttl });
-        console.log(`Cached response for: ${normalizedQuery} (TTL: ${ttl}s)`);
+        console.log(`Cached response ${cacheKey.slice(0, 28)}… TTL ${ttl}s`);
       } catch (e) {
         console.error("Cache set error:", e);
       }
