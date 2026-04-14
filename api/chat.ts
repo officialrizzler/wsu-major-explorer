@@ -4,7 +4,7 @@ import OpenAI from "openai";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Redis } from "@upstash/redis";
 import {
-  buildWsuSearchQuery,
+  buildTavilySearchQuery,
   chatResponseCacheKey,
   extractQueryTerms,
   getChatResponseCacheTtlSec,
@@ -24,7 +24,7 @@ const TAVILY_API_KEY = process.env.TAVILY_API_KEY;
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 const AI_ENABLED = process.env.AI_ENABLED ?? "true";
 
-const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 150);
+const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS ?? 15);
 const MAX_INPUT_CHARS = Number(process.env.MAX_INPUT_CHARS ?? 2000);
 const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS ?? 512);
 const MAX_HISTORY_MESSAGES = Number(process.env.MAX_HISTORY_MESSAGES ?? 4);
@@ -104,7 +104,7 @@ async function runTavilySearch(query: string): Promise<string> {
       ? "high_accuracy"
       : "standard";
 
-  const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
+  const normalizedQuery = buildTavilySearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
   const searchCacheKey = tavilyResponseCacheKey(searchMode, normalizedQuery);
 
   if (redis) {
@@ -355,7 +355,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const baseSystemInstruction =
       `You are Warrior Bot, WSU's AI advisor. Help students explore programs using the provided WSU data first. ` +
-      `For anything factual about Winona State (policies, dates, costs, requirements, offerings) that is not explicitly in the provided context, you MUST rely on the web search context below and/or call the web_search tool — do not guess from general knowledge. ` +
+      `For anything factual about Winona State (policies, dates, costs, requirements, offerings, advising contacts) that is not explicitly in the provided context, you MUST rely on the web search context below and/or call the web_search tool — do not guess from general knowledge. ` +
+      `When snippets include advising coordinators, faculty names, emails, phone numbers, or office locations, state them clearly and link to the page. Do not say the information is not specified if those details appear in the snippets (even briefly). ` +
       `Answer directly without narrating that you searched. Prefer official winona.edu / catalog links and cite them briefly in markdown when you use them. ` +
       `If web snippets are incomplete, say what you can confirm from them and what students should double-check on the linked page. Only refuse if there is truly no relevant WSU information. ` +
       `If timing matters, note the timeframe or suggest confirming on the live site. ` +

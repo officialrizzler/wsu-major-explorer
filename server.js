@@ -1,7 +1,7 @@
 import { systemInstruction } from "./utils/ai_config.js";
 import { enforceAiLimits, redis } from "./utils/rateLimit.js";
 import {
-  buildWsuSearchQuery,
+  buildTavilySearchQuery,
   chatResponseCacheKey,
   extractQueryTerms,
   getChatResponseCacheTtlSec,
@@ -114,7 +114,7 @@ async function runTavilySearch(query) {
     ? "high_accuracy"
     : "standard";
 
-  const normalizedQuery = buildWsuSearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
+  const normalizedQuery = buildTavilySearchQuery(query).toLowerCase().replace(/\s+/g, " ").trim();
   const searchCacheKey = tavilyResponseCacheKey(searchMode, normalizedQuery);
 
   try {

@@ -44,8 +44,8 @@ Current defaults in `/api/chat.ts` (override with env vars):
 
 Redis keys are **versioned** so old answers are not reused after you improve the AI:
 
-- Set in Vercel: `AI_CACHE_VERSION=4` (increment any time you change Warrior Bot instructions, Tavily filtering, or cache TTL logic).
-- Default in code is `3` until you bump it.
+- Set in Vercel: `AI_CACHE_VERSION` to a new value (e.g. `6`) any time you change Warrior Bot instructions, Tavily query shaping, or cache TTL logic.
+- Default in code is `5` until you bump it again after future changes.
 
 Chat responses cache for **4–8 hours** (not days). Tavily snippets cache **90 minutes–12 hours** depending on query type.
 

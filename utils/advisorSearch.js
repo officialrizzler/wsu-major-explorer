@@ -3,7 +3,26 @@
  * Bump AI_CACHE_VERSION (or set env AI_CACHE_VERSION) after prompt or search-logic changes to invalidate Redis.
  */
 
-export const AI_CACHE_VERSION = String(process.env.AI_CACHE_VERSION || "3").replace(/[^a-zA-Z0-9._-]/g, "") || "3";
+export const AI_CACHE_VERSION = String(process.env.AI_CACHE_VERSION || "5").replace(/[^a-zA-Z0-9._-]/g, "") || "5";
+
+/**
+ * Plain "who is the X advisor" often ranks poorly vs. how WSU titles pages ("Academic advising", "Department contacts").
+ * Expand with generic page-intent words — not specific names or hardcoded advisors.
+ */
+export function buildTavilySearchQuery(userQuery) {
+  const raw = String(userQuery || "").trim();
+  let q = buildWsuSearchQuery(raw);
+
+  const advisorIntent =
+    /\b(advisor|advisors|advising|advise|who\s+is|who\s+are|who\s+should|who\s+do\s+i\s+(talk|speak|see|ask|contact)|whom\s+should|assigned\s+advisor|academic\s+advisor)\b/i.test(
+      raw,
+    );
+  if (advisorIntent && !/\bacademic\s+advising|department\s+contact|faculty\s+staff|directory\b/i.test(q)) {
+    q = `${q} Winona State academic advising department faculty staff contact`.trim();
+  }
+
+  return q;
+}
 
 export function buildWsuSearchQuery(query) {
   if (/winona state|wsu|winona\.edu/i.test(query)) {
@@ -83,8 +102,11 @@ export function scoreSearchResult(result, queryTerms) {
     if (haystack.includes(term)) score += 2;
   }
   if (/winona\.edu|winonastate\.edu/i.test(result.url || "")) score += 2;
-  if (/housing|residence|admission|tuition|financial aid|program|department|student|catalog|registrar/i.test(result.title || ""))
+  const titleOrUrl = `${result.title || ""} ${result.url || ""}`;
+  if (/housing|residence|admission|tuition|financial aid|program|department|student|catalog|registrar/i.test(titleOrUrl))
     score += 1;
+  if (/advis|chair|coordinator|director|faculty|directory|contact|meet\s+the|staff/i.test(titleOrUrl)) score += 2;
+  if (/advis|chair|coordinator|directory|contact|staff/i.test(String(result.content || "").slice(0, 400))) score += 1;
   return score;
 }
 
@@ -100,7 +122,7 @@ export function shouldPrefetchWebSearch(userQuery, programContext, professorCont
   const hasProfessorMatches = Array.isArray(professorContext) && professorContext.length > 0;
 
   const currentInfoPattern =
-    /tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event|policy|refund|withdraw|credit hour|per credit/i;
+    /tuition|cost|fees|deadline|application|admission|housing|meal plan|financial aid|scholarship|visit|tour|parking|calendar|semester|start date|campus|dorm|residence life|email|phone|address|hours|requirements|gpa|transfer|international|fafsa|test optional|event|policy|refund|withdraw|credit hour|per credit|advisor|advising|who\s+is|who\s+are/i;
   const factualPattern =
     /\b(what|when|where|why|how|who|how much|how many|can i|could i|should i|do i|does|is there|are there|tell me|explain|describe|need to know|looking for|interested in|thinking about|information about|sign up|register|enroll|orientation|offer|offered|available)\b/i;
 
