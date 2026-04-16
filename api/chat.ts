@@ -60,6 +60,22 @@ type TavilySearchResponse = {
 
 type SearchMode = "standard" | "high_accuracy";
 
+function needsGroundedFactAnswer(userQuery: string): boolean {
+  const query = String(userQuery || "").toLowerCase();
+  return (
+    /\b(advisor|advisors|advising|contact|coordinator|director|chair|phone|email|office|accredited|accreditation|aacsb|deadline|tuition|cost|fees|requirements|policy|policies)\b/i.test(
+      query,
+    ) ||
+    /\b(who|what|when|where|how much|is|are|does)\b/i.test(query)
+  );
+}
+
+function isDeflectiveAnswer(text: string): boolean {
+  return /\b(check|visit|refer to|recommend(?:ed)?\s+.*website|official site|contact admissions|please see)\b/i.test(
+    String(text || ""),
+  );
+}
+
 function getClientIp(req: NextApiRequest) {
   const xf = req.headers["x-forwarded-for"];
   const first = (Array.isArray(xf) ? xf[0] : xf ?? "").split(",")[0].trim();
@@ -358,12 +374,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `For anything factual about Winona State (policies, dates, costs, requirements, offerings, advising contacts) that is not explicitly in the provided context, you MUST rely on the web search context below and/or call the web_search tool — do not guess from general knowledge. ` +
       `When snippets include advising coordinators, faculty names, emails, phone numbers, or office locations, state them clearly and link to the page. Do not say the information is not specified if those details appear in the snippets (even briefly). ` +
       `Answer directly without narrating that you searched. Prefer official winona.edu / catalog links and cite them briefly in markdown when you use them. ` +
+      `If the user asks for people/contacts/accreditation/status, start with the direct answer in the first sentence, then list key facts with citations. ` +
       `If web snippets are incomplete, say what you can confirm from them and what students should double-check on the linked page. Only refuse if there is truly no relevant WSU information. ` +
       `If timing matters, note the timeframe or suggest confirming on the live site. ` +
       contextSnippet;
 
+    const requiresGroundedFacts = needsGroundedFactAnswer(userQuery) || shouldPrefetchWebSearch(userQuery, programContext, professorContext);
+    const canSearch = !!TAVILY_API_KEY;
+
     let preFetchedSearchContext = "";
-    if (shouldPrefetchWebSearch(userQuery, programContext, professorContext) && TAVILY_API_KEY) {
+    if (requiresGroundedFacts && canSearch) {
       try {
         preFetchedSearchContext = await runTavilySearch(userQuery);
         if (preFetchedSearchContext) {
@@ -400,8 +420,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     ];
 
     const shouldEnableToolSearch =
-      !!TAVILY_API_KEY &&
-      (!preFetchedSearchContext || preFetchedSearchContext.trim().length < 140);
+      canSearch &&
+      requiresGroundedFacts &&
+      (!preFetchedSearchContext || preFetchedSearchContext.trim().length < 220);
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
@@ -411,9 +432,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         { role: "user", content: userQuery },
       ],
       max_tokens: MAX_OUTPUT_TOKENS,
-      temperature: 0.7,
+      temperature: 0.2,
       tools: shouldEnableToolSearch ? tools : undefined,
-      tool_choice: shouldEnableToolSearch ? "auto" : undefined
+      tool_choice: shouldEnableToolSearch && !preFetchedSearchContext ? "required" : shouldEnableToolSearch ? "auto" : undefined
     });
 
     let responseText = trimToNaturalEnding(
@@ -446,7 +467,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                   { role: "tool", content: searchContext, tool_call_id: searchCall.id }
                 ],
                 max_tokens: MAX_OUTPUT_TOKENS,
-                temperature: 0.7
+                temperature: 0.2
               });
 
               responseText = trimToNaturalEnding(
@@ -454,15 +475,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 followUp.choices[0]?.finish_reason === "length"
               );
             } else {
-              responseText = "I searched the WSU website but couldn't find a clear answer. Please check the official Winona State site at [winona.edu](https://www.winona.edu/) for the most current details.";
+              responseText = "I couldn't find enough detail in the current WSU search snippets to give a reliable answer. If you want, I can try a narrower query (for example: department + advisor/contact page) and return exactly what I find.";
             }
           } catch (error) {
             console.error("Tavily search error:", error);
-            responseText = "I wasn't able to search for that information right now. For current details, please visit the official Winona State website at [winona.edu](https://www.winona.edu/).";
+            responseText = "I couldn't complete live WSU lookup right now because search failed temporarily. Please retry in a moment, and I can provide the direct answer with citations.";
           }
         } else {
           // No Tavily API key configured
-          responseText = `For current information about ${searchQuery.toLowerCase()}, I recommend visiting the official Winona State University website at [winona.edu](https://www.winona.edu/) or contacting the admissions office directly.`;
+          responseText = `Live WSU fact lookup is currently unavailable because \`TAVILY_API_KEY\` is not configured on the server. Add that key to environment variables so I can answer questions like advisors/accreditation directly instead of redirecting to websites.`;
         }
       }
     } else if (!responseText && preFetchedSearchContext) {
@@ -487,6 +508,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } else if (!responseText) {
       responseText = "I'm sorry, I couldn't process that.";
+    }
+
+    if (requiresGroundedFacts && canSearch && preFetchedSearchContext && isDeflectiveAnswer(responseText)) {
+      const rewrite = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          {
+            role: "system",
+            content:
+              "Rewrite the assistant response to be direct and factual. Lead with the answer immediately, include concrete details from the provided WSU snippets, and cite pages with markdown links. Do not tell the user to just check a website unless a specific detail is missing from snippets.",
+          },
+          {
+            role: "user",
+            content: `User question:\n${userQuery}\n\nWSU snippets:\n${preFetchedSearchContext}\n\nDraft answer:\n${responseText}`,
+          },
+        ],
+        max_tokens: MAX_OUTPUT_TOKENS,
+        temperature: 0.1,
+      });
+      const rewritten = trimToNaturalEnding(
+        rewrite.choices[0]?.message?.content ?? "",
+        rewrite.choices[0]?.finish_reason === "length",
+      );
+      if (rewritten) {
+        responseText = rewritten;
+      }
     }
 
 
