@@ -71,7 +71,29 @@ function needsGroundedFactAnswer(userQuery: string): boolean {
 }
 
 function isDeflectiveAnswer(text: string): boolean {
-  return /\b(check|visit|refer to|recommend(?:ed)?\s+.*website|official site|contact admissions|please see)\b/i.test(
+  return /\b(check|visit|refer to|recommend(?:ed)?\s+.*website|official site|contact admissions|please see|not in (?:the )?provided snippets|not specified in (?:the )?snippets)\b/i.test(
+    String(text || ""),
+  );
+}
+
+function isPeopleLookupQuestion(userQuery: string): boolean {
+  const query = String(userQuery || "").trim();
+  const lower = query.toLowerCase();
+  const peopleIntent =
+    /\b(faculty|professor|instructor|advisor|adviser|coordinator|director|dean|chair|staff|who is|who's|who are)\b/i.test(
+      lower,
+    );
+  const hasLikelyName = /\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\b/.test(query);
+  return peopleIntent || hasLikelyName;
+}
+
+function buildPeopleLookupQuery(userQuery: string): string {
+  const cleaned = String(userQuery || "").replace(/[?]+/g, " ").replace(/\s+/g, " ").trim();
+  return `${cleaned} Winona State faculty profile directory email phone office hours`;
+}
+
+function isSnippetMissingAnswer(text: string): boolean {
+  return /\b(not in (?:the )?provided snippets|not specified in (?:the )?snippets|don'?t have (?:that|enough) information|couldn'?t find enough detail)\b/i.test(
     String(text || ""),
   );
 }
@@ -375,6 +397,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       `When snippets include advising coordinators, faculty names, emails, phone numbers, or office locations, state them clearly and link to the page. Do not say the information is not specified if those details appear in the snippets (even briefly). ` +
       `Answer directly without narrating that you searched. Prefer official winona.edu / catalog links and cite them briefly in markdown when you use them. ` +
       `If the user asks for people/contacts/accreditation/status, start with the direct answer in the first sentence, then list key facts with citations. ` +
+      `Never say "not in the provided snippets" to the user. If context is weak, provide the best verified details you do have and say what remains unconfirmed. ` +
+      `If the search context includes a page that likely has the answer, extract what is known from the snippet itself before suggesting verification. Do not default to "check the page" when concrete facts are already present. ` +
       `If web snippets are incomplete, say what you can confirm from them and what students should double-check on the linked page. Only refuse if there is truly no relevant WSU information. ` +
       `If timing matters, note the timeframe or suggest confirming on the live site. ` +
       contextSnippet;
@@ -452,7 +476,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         if (TAVILY_API_KEY) {
           try {
-            const searchContext = preFetchedSearchContext || await runTavilySearch(searchQuery);
+            let searchContext = preFetchedSearchContext;
+            const normalizedUserQuery = userQuery.toLowerCase().replace(/\s+/g, " ").trim();
+            const normalizedSearchQuery = String(searchQuery).toLowerCase().replace(/\s+/g, " ").trim();
+            const shouldRefreshFromToolQuery =
+              !searchContext ||
+              searchContext.trim().length < 450 ||
+              normalizedSearchQuery !== normalizedUserQuery;
+
+            if (shouldRefreshFromToolQuery) {
+              const refinedSearchContext = await runTavilySearch(searchQuery);
+              if (refinedSearchContext) {
+                searchContext = refinedSearchContext;
+                preFetchedSearchContext = refinedSearchContext;
+              }
+            }
 
             if (searchContext) {
 
@@ -495,7 +533,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           { role: "user", content: userQuery }
         ],
         max_tokens: MAX_OUTPUT_TOKENS,
-        temperature: 0.7
+        temperature: 0.2
       });
 
       responseText = trimToNaturalEnding(
@@ -508,6 +546,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     } else if (!responseText) {
       responseText = "I'm sorry, I couldn't process that.";
+    }
+
+    if (
+      requiresGroundedFacts &&
+      canSearch &&
+      isPeopleLookupQuestion(userQuery) &&
+      (isSnippetMissingAnswer(responseText) || !preFetchedSearchContext)
+    ) {
+      try {
+        const peopleSearchContext = await runTavilySearch(buildPeopleLookupQuery(userQuery));
+        if (peopleSearchContext) {
+          preFetchedSearchContext = peopleSearchContext;
+          const peopleRetry = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "Answer the user's faculty/person lookup directly from WSU context. If a person is identified, state their role and contact details clearly with markdown links. If identity is still ambiguous, list the closest verified matches and what is confirmed.",
+              },
+              {
+                role: "user",
+                content: `Question:\n${userQuery}\n\nWSU search context:\n${peopleSearchContext}`,
+              },
+            ],
+            max_tokens: MAX_OUTPUT_TOKENS,
+            temperature: 0.1,
+          });
+          const retried = trimToNaturalEnding(
+            peopleRetry.choices[0]?.message?.content ?? "",
+            peopleRetry.choices[0]?.finish_reason === "length",
+          );
+          if (retried) {
+            responseText = retried;
+          }
+        }
+      } catch (error) {
+        console.error("People lookup retry error:", error);
+      }
     }
 
     if (requiresGroundedFacts && canSearch && preFetchedSearchContext && isDeflectiveAnswer(responseText)) {
@@ -538,7 +615,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
     // Smart cache storage with longer TTL for common patterns
-    const isBadResponse = /I['’]?m sorry|I couldn['’]?t|I was(?:n['’]t| not) able to|I recommend checking the official|I cannot process/i.test(responseText);
+    const isBadResponse = /I['’]?m sorry|I couldn['’]?t|I was(?:n['’]t| not) able to|I recommend checking the official|I cannot process|not in (?:the )?provided snippets|not specified in (?:the )?snippets/i.test(responseText);
 
     if (redis && responseText && !isBadResponse) {
       try {
