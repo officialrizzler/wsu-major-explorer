@@ -887,9 +887,9 @@ export const dataSources: DataSource[] = [
         source_url: 'https://apps.deed.state.mn.us/lmi/oes/'
     },
     {
-        source_id: 'RATE_MY_PROFESSOR_2025',
+        source_id: 'RATE_MY_PROFESSOR_2026',
         source_name: 'Rate My Professors',
-        source_year: '2025',
+        source_year: '2026',
         source_notes: 'Public student ratings used to display basic teaching feedback (average rating, number of reviews, “would take again”) for selected faculty.',
         source_url: 'https://www.ratemyprofessors.com/school/1214'
     },

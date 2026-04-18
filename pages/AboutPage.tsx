@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { AlertTriangle, ArrowRight, User, LineChart, Landmark, MessageSquareText, BarChart3, Globe2, ExternalLink } from 'lucide-react';
+import { AlertTriangle, ArrowRight, LineChart, Landmark, MessageSquareText, BarChart3, Globe2, ExternalLink } from 'lucide-react';
 import DynamicBackground from '../components/DynamicBackground';
 import { dataSources } from '../data/wsuData';
 
@@ -84,136 +84,118 @@ const AboutPage: React.FC = () => {
   useAnimateOnScroll(dataSourceRef);
 
   return (
-    <div className="bg-[#f5f5f7] min-h-screen">
+    <div className="w-full">
       <Helmet>
-        <title>About WSU Explorer | Transparency & Methodology</title>
-        <meta name="description" content="Learn about the methodology and data sources behind WSU Explorer. Discover how we aggregate Winona State University academic and career data." />
+        <title>About WSU Explorer | How It Works</title>
+        <meta name="description" content="See how WSU Explorer organizes official data for major exploration, including data sources, methodology, limitations, and project context." />
         <link rel="canonical" href="https://explorewsu.com/about" />
       </Helmet>
-      <DynamicBackground className="relative isolate py-24 sm:py-32">
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="mx-auto max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gray-900 mb-8 animate-fade-in-up">
-              Transparency in <br className="hidden md:block" /> Academic Exploration.
+      <DynamicBackground className="relative isolate min-h-[calc(100vh-64px)] px-4 py-8 sm:py-12">
+        <div className="w-full max-w-7xl mx-auto bg-white/90 backdrop-blur-xl rounded-[2.5rem] shadow-[0_28px_56px_-20px_rgba(0,0,0,0.16)] border border-white/30 p-6 pt-8 sm:p-10 sm:pt-12 md:p-12 md:pt-14 relative z-10">
+          <div className="mx-auto max-w-5xl mb-14 sm:mb-16 text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight text-gray-950 animate-fade-in-up">
+              Simplifying Academic Planning
             </h1>
-            <p className="mt-6 text-xl text-gray-600 font-body max-w-2xl mx-auto leading-relaxed">
-              Designed to help Winona State students make informed decisions with trusted, verifiable data.
+          </div>
+
+          <div className="mx-auto max-w-5xl mb-12 sm:mb-14">
+            <p className="text-lg text-gray-700 font-body leading-8">
+              WSU Explorer is a student-built platform designed to make major exploration easier for new students navigating a large and complex set of academic options. It brings program details, requirements, career context, and student-relevant insights into one unified experience so students can compare pathways without bouncing across disconnected sites. An AI advisor layer adds on-demand guidance by answering common WSU questions and helping students think through choices with more clarity. This project was supported by the AI Research and Engagement Pilot Fund, is not officially affiliated with Winona State University, and is not monetized.
             </p>
           </div>
-        </div>
-      </DynamicBackground>
 
-      <div className="container mx-auto px-4 py-16 relative z-20"> { }
+          <div ref={dataSourceRef} className="pt-10 sm:pt-12 border-t border-gray-200/80 mb-12 sm:mb-14 scroll-animate max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-4">Where The Data Comes From</h2>
+            <p className="max-w-5xl mx-auto text-lg text-gray-600 font-body leading-8 text-left">
+              Sources are selected based on relevance to student decision-making, public verifiability, and consistency over time, prioritizing official institutional and state-level data first. Supplemental sources are then added to provide additional context that helps students compare programs more clearly.
+            </p>
 
-        { }
-        <div ref={dataSourceRef} className="mb-24 scroll-animate">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Trusted Data Sources</h2>
-
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {dataSources.map((source) => (
-              <div key={source.source_id} className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all group flex flex-col h-full shadow-sm">
-                <div className="flex items-center justify-between mb-4">
-                  <SourceIcon source={source} />
-                  <span className="text-xs font-bold font-mono bg-gray-50 text-gray-600 px-2 py-1 rounded border border-gray-200">
-                    {source.source_year}
-                  </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {dataSources.map((source) => (
+                <div key={source.source_id} className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all group flex flex-col h-full shadow-sm">
+                  <div className="flex items-center justify-between mb-4">
+                    <SourceIcon source={source} />
+                    <span className="text-xs font-bold font-mono bg-gray-50 text-gray-600 px-2 py-1 rounded border border-gray-200">
+                      {source.source_year}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                    {source.source_name}
+                  </h3>
+                  <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
+                    {source.source_notes}
+                  </p>
+                  <div className="mt-auto">
+                    <a
+                      href={source.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-primary-500 hover:text-primary-300 uppercase tracking-widest transition-colors"
+                    >
+                      Go to Source <ArrowRight size={12} />
+                    </a>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
-                  {source.source_name}
-                </h3>
-                <p className="text-sm text-gray-500 font-body leading-relaxed mb-6">
-                  {source.source_notes}
-                </p>
-                <div className="mt-auto">
-                  <a
-                    href={source.source_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-primary-500 hover:text-primary-300 uppercase tracking-widest transition-colors"
-                  >
-                    Go to Source <ArrowRight size={12} />
-                  </a>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
 
-        <div className="space-y-24">
-          { }
-
-          { }
-          { }
-          <div className="space-y-12">
-            <div className="text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Methodology</h2>
-              <p className="text-gray-500 text-lg font-body leading-relaxed">
-                You deserve to see exactly what goes into the data so you can trust what you see. This site prioritizes clarity and honesty over comprehensiveness.
-              </p>
+          <div className="space-y-6 max-w-5xl mx-auto pt-10 sm:pt-12 border-t border-gray-200/80">
+            <div className="text-center">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight text-gray-900 mb-4">Methodology</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <DetailBlock
-                title="Approach"
+                title="What this tool does"
                 items={[
-                  "Unifies data from multiple isolated sources (Catalog, IPAR, State Data)",
-                  "Reformats complex degree requirements for readability",
-                  "Provides 'fit' traits to help students discover programs",
-                  "Links directly to official sources for verification"
+                  "Brings together key data from the catalog, IPAR, and state-level sources",
+                  "Reformats complex major requirements so they are easier to read",
+                  "Highlights fit-oriented traits to support program discovery",
+                  "Links back to source material so you can verify details quickly"
                 ]}
-                colorClass="text-emerald-600"
+                tone="emerald"
               />
               <DetailBlock
-                title="Limitations"
+                title="What this tool does not do"
                 items={[
-                  "Does not replace official academic advising or degree audits",
-                  "Does not reflect real-time catalog changes (data is a snapshot)",
-                  "Does not rank or score programs subjectively",
-                  "Does not track individual student progress or credits"
+                  "It does not replace official advising, degree audits, or academic planning tools",
+                  "It does not update in real time; published data is shown as a snapshot",
+                  "It does not rank majors or score programs subjectively",
+                  "It does not track individual progress, credits, or graduation status"
                 ]}
-                colorClass="text-rose-600"
+                tone="rose"
               />
+            </div>
 
-              { }
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm border-t-4 border-t-amber-400 hover:shadow-md transition-shadow">
-                <div className="flex gap-4">
-                  <div className="p-3 bg-amber-50 rounded-lg text-amber-600 h-fit">
+            <div className="grid grid-cols-1 gap-4">
+              <div className="bg-white border border-amber-200/80 rounded-3xl p-7 sm:p-8 shadow-[0_14px_30px_-20px_rgba(0,0,0,0.3)] hover:shadow-[0_18px_38px_-20px_rgba(0,0,0,0.35)] transition-shadow">
+                <div className="flex gap-4 sm:gap-5">
+                  <div className="p-3 bg-amber-50 rounded-xl text-amber-600 h-fit border border-amber-100">
                     <AlertTriangle size={24} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Disclaimer</h3>
-                    <p className="text-gray-600 font-body text-sm leading-relaxed mb-4">
-                      This tool is for informational purposes only. It is not an official WSU resource and should not be used as the sole basis for academic decisions.
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Important Context</h3>
+                    <p className="text-gray-700 font-body text-base leading-relaxed">
+                      This project is informational only and is not an official WSU advising system.
                     </p>
-                    <div className="space-y-2 font-body text-xs text-gray-500">
-                      <p>• Automated methods including web scraping and public APIs are used to aggregate data. AI is used for chat features and metadata tagging (e.g., "You might like"), no academic data is AI-generated.</p>
-                      <p>• Unavailable or incomplete data is intentionally omitted or flagged, rather than estimated.</p>
-                      <p>• Always verify information with official WSU sources.</p>
-                      <p className="text-gray-900 font-semibold pt-2">Before making any decisions, please consult with an official WSU academic advisor.</p>
-                    </div>
+                    <ul className="mt-4 space-y-2 list-disc pl-5 text-sm text-gray-600 marker:text-amber-500">
+                      <li>Data is aggregated from public sources using APIs and automated collection methods.</li>
+                      <li>AI supports chat and tagging features only; academic requirements are not AI-generated.</li>
+                      <li>Missing or uncertain information is omitted or flagged instead of guessed.</li>
+                    </ul>
+                    <p className="text-gray-900 font-semibold pt-4">
+                      Before making any decisions, please consult with an official WSU academic advisor.
+                    </p>
                   </div>
-                </div>
-              </div>
-
-              { }
-              <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm border-t-4 border-t-blue-400 hover:shadow-md transition-shadow">
-                <div className="flex gap-4">
-                  <div className="p-3 bg-blue-50 rounded-lg text-blue-600 h-fit">
-                    <User size={24} />
-                  </div>
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">Independent Student Project</h3>
-                    <div className="text-gray-600 font-body text-sm leading-relaxed">
-                      WSU Explorer was built as an independent project to explore data visualization in higher education. I earn no money from this project, and it is not officially affiliated with WSU administration. However, complete transparency is essential, so this tool is built strictly with official, verifiable data.
-                    </div>
                 </div>
               </div>
             </div>
           </div>
 
-          { }
-          <div className="relative rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-xl">
+          <div className="relative rounded-[2rem] overflow-hidden bg-white border border-gray-200 shadow-xl max-w-5xl mx-auto mt-14 sm:mt-16">
             <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-primary-100/50 rounded-full blur-3xl"></div>
             <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-purple-100/50 rounded-full blur-3xl"></div>
 
@@ -233,25 +215,31 @@ const AboutPage: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="h-24"></div>
+      </DynamicBackground>
     </div>
   );
 };
 
-const DetailBlock: React.FC<{ title: string, items: string[], colorClass: string }> = ({ title, items, colorClass }) => (
-  <div className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-md transition-all shadow-sm">
-    <h4 className={`text-lg font-bold mb-4 ${colorClass} uppercase tracking-wider text-xs`}>{title}</h4>
-    <ul className="space-y-3 font-body">
+const DetailBlock: React.FC<{ title: string, items: string[], tone: 'emerald' | 'rose' }> = ({ title, items, tone }) => {
+  const isEmerald = tone === 'emerald';
+  const badgeClass = isEmerald
+    ? 'bg-emerald-50 text-emerald-700 border-emerald-100'
+    : 'bg-rose-50 text-rose-700 border-rose-100';
+  const bulletClass = isEmerald ? 'bg-emerald-500' : 'bg-rose-500';
+
+  return (
+  <div className="bg-white rounded-3xl p-7 sm:p-8 border border-gray-200/90 shadow-[0_14px_30px_-20px_rgba(0,0,0,0.25)] hover:shadow-[0_18px_40px_-22px_rgba(0,0,0,0.3)] transition-all">
+    <h4 className={`inline-flex items-center justify-center px-4 py-2 rounded-full border text-sm font-semibold tracking-wide mb-5 mx-auto ${badgeClass}`}>{title}</h4>
+    <ul className="space-y-3.5 font-body">
       {items.map((item, idx) => (
-        <li key={idx} className="flex items-start gap-3 text-gray-600 text-sm">
-          <div className={`mt-1.5 w-1.5 h-1.5 rounded-full ${colorClass.replace('text-', 'bg-')} flex-shrink-0`}></div>
+        <li key={idx} className="flex items-start gap-3 text-gray-700 text-base">
+          <div className={`mt-2 w-2 h-2 rounded-full ${bulletClass} flex-shrink-0`}></div>
           <span className="leading-relaxed">{item}</span>
         </li>
       ))}
     </ul>
   </div>
-);
+  );
+};
 
 export default AboutPage;
